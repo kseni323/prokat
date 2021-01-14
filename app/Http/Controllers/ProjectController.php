@@ -75,10 +75,12 @@ class ProjectController extends Controller
    */
   public function index()
   {
+    
     $data['demo']   =   false;
     if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
         $data['demo']   =   true;
     }
+    
     return view('backend.accounting.project.list');
   }
 
@@ -93,11 +95,9 @@ class ProjectController extends Controller
   
     public function get_table_data(Request $request){
         $company_id = company_id();
-
         $user_type = Auth::user()->user_type;
 
         $projects = Project::select('projects.*')
-                            ->with('members')
                             ->where('company_id',$company_id)
                             ->when($user_type, function ($query, $user_type) {
                                     if($user_type == 'staff'){
@@ -105,8 +105,7 @@ class ProjectController extends Controller
                                                     ->where('project_members.user_id',Auth::id());
                                     }
                                 })
-                                ->orderBy("projects.id","desc");
-
+                                ->orderBy("projects.id","desc")->get();
 
         return Datatables::eloquent($projects)
                         ->filter(function ($query) use ($request) {
