@@ -105,7 +105,7 @@ class ProjectController extends Controller
                                                     ->where('project_members.user_id',Auth::id());
                                     }
                                 })
-                                ->orderBy("projects.id","desc")->get();
+                                ->orderBy("projects.id","desc");
 
         return Datatables::eloquent($projects)
                         ->filter(function ($query) use ($request) {

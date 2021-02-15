@@ -570,6 +570,10 @@ class Request {
             $project             =   \App\Project::find($_POST['id']);
             $project->update();
 
+            if (!file_exists(public_path()."/uploads/project_files/")) {
+                mkdir(public_path()."/uploads/project_files/", 0777, true);
+            }
+    
             file_put_contents(public_path()."/uploads/project_files/".$project->id."_project.supra", $data);
 
             $projectfile                = \App\ProjectFile::where('related_to','projects')->where('related_id',$_POST['id'])->first();
@@ -621,6 +625,9 @@ class Request {
         $data = $_POST['data'];
         if ($mode) {
             $data = stripslashes($data);
+        }
+        if (!file_exists(base_path('public/tmp').'/'.$_POST['userId'].'/'.$_POST['project_id'])) {
+            mkdir(base_path('public/tmp').'/'.$_POST['userId'].'/'.$_POST['project_id'], 0777, true);
         }
 
         $filename = base_path('public/tmp').'/'.$_POST['userId'].'/'.$_POST['project_id'].'/' . uniqid() . "_project.zip";
