@@ -622,6 +622,9 @@ class Request {
         if ($mode) {
             $data = stripslashes($data);
         }
+        if (!file_exists(base_path('public/tmp').'/'.$_POST['userId'].'/'.$_POST['project_id'])) {
+            mkdir(base_path('public/tmp').'/'.$_POST['userId'].'/'.$_POST['project_id'], 0777, true);
+        }
 
         $filename = base_path('public/tmp').'/'.$_POST['userId'].'/'.$_POST['project_id'].'/' . uniqid() . "_project.zip";
         $zip = new ZipArchive();
