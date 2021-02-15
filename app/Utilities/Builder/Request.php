@@ -570,6 +570,10 @@ class Request {
             $project             =   \App\Project::find($_POST['id']);
             $project->update();
 
+            if (!file_exists(public_path()."/uploads/project_files/")) {
+                mkdir(public_path()."/uploads/project_files/", 0777, true);
+            }
+    
             file_put_contents(public_path()."/uploads/project_files/".$project->id."_project.supra", $data);
 
             $projectfile                = \App\ProjectFile::where('related_to','projects')->where('related_id',$_POST['id'])->first();
