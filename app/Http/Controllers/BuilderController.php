@@ -15,7 +15,7 @@ use App\Notifications\ProjectUpdated;
 
 class BuilderController extends Controller
 {
-  
+
      /**
      * Create a new controller instance.
      *
@@ -23,7 +23,7 @@ class BuilderController extends Controller
      */
     public function __construct()
     {
-        date_default_timezone_set(get_company_option('timezone', get_option('timezone','Asia/Dhaka'))); 
+        date_default_timezone_set(get_company_option('timezone', get_option('timezone','Asia/Dhaka')));
 
         $this->middleware(function ($request, $next) {
             if( has_membership_system() == 'enabled' ){
@@ -39,7 +39,7 @@ class BuilderController extends Controller
             return $next($request);
         });
     }
-  
+
   /**
    * Display a listing of the resource.
    *
@@ -47,10 +47,10 @@ class BuilderController extends Controller
    */
   public function index()
   {
-    
+
     return view('backend.accounting.project.builder');
   }
-  
+
   /**
    * Display a listing of the resource.
    *
@@ -58,7 +58,7 @@ class BuilderController extends Controller
    */
   public function larabuilder()
   {
-    
+
     return view('backend.accounting.project.larabuilder');
   }
 
@@ -72,9 +72,9 @@ class BuilderController extends Controller
 
       $data['demo']   =   false;
       if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
-          $data['demo']   =   true;   
+          $data['demo']   =   true;
       }
-      
+
       return view('backend.accounting.project.novi', $data);
   }
 
@@ -88,7 +88,7 @@ class BuilderController extends Controller
 
       $data['demo']   =   false;
       if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
-          $data['demo']   =   true;   
+          $data['demo']   =   true;
       }
 
 
@@ -100,8 +100,8 @@ class BuilderController extends Controller
 
       $data['groups'] =   $Viewbuilder->groups;
 
-  
-      
+
+
       return view('backend.accounting.project.lara', $data);
   }
 
@@ -128,13 +128,12 @@ class BuilderController extends Controller
   {
     return response()->json(['result' => true]);
   }
-  
+
   public function get_table_data(Request $request){
     $company_id = company_id();
     $user_type = Auth::user()->user_type;
 
     $projects = Project::select('projects.*')
-                           ->with('members')
                            ->with('client')
                            ->where('company_id',$company_id)
                            ->when($user_type, function ($query, $user_type) {
@@ -181,28 +180,28 @@ class BuilderController extends Controller
                             }
                             return $members;
                         })
- 
+
                         ->addColumn('action', function ($project) {
                             return '<form action="'.action('ProjectController@destroy', $project['id']).'" class="text-center" method="post">'
                             .'<a href="'.action('ProjectController@show', $project['id']).'" class="btn btn-primary btn-xs"><i class="ti-eye"></i></a>&nbsp;'
-                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Update Project') .'" class="btn btn-warning btn-xs ajax-modal"><i class="ti-pencil"></i></a>&nbsp;'
+                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Update Project') .'" class="btn btn-warning btn-xs ajax-modal"><i class="ti-pencil"></i> Edit</a>&nbsp;'
                             .csrf_field()
                             .'<input name="_method" type="hidden" value="DELETE">'
-                            .'<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i></button>'
+                            .'<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i> Delete</button>'
                             .'</form>';
                         })
                         ->setRowId(function ($project) {
                           return "row_".$project->id;
                         })
                         ->rawColumns(['action','members.name','status','name'])
-                        ->make(true);                 
+                        ->make(true);
     }
-	
+
 	public function get_project_info( $id = '' ){
   		$project = Project::with('client')
 		                  ->where("id",$id)
   					      ->where("company_id",company_id())->first();
-  		echo json_encode($project);				  	
+  		echo json_encode($project);
 	}
 
     /**
@@ -226,7 +225,7 @@ class BuilderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'client_id' => 'required',
@@ -238,15 +237,15 @@ class BuilderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if($request->ajax()){ 
+            if($request->ajax()){
                 return response()->json(['result' => 'error', 'message' => $validator->errors()->all()]);
             }else{
                 return redirect()->route('projects.create')
                                ->withErrors($validator)
                                ->withInput();
-            }     
+            }
         }
-     
+
         DB::beginTransaction();
 
         $project = new Project();
@@ -294,9 +293,9 @@ class BuilderController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'store','message'=>_lang('Saved Sucessfully'), 'data'=>$project, 'table' => '#projects_table']);
         }
-        
+
    }
-  
+
 
     /**
      * Display the specified resource.
@@ -322,8 +321,8 @@ class BuilderController extends Controller
                                   ->first();
 		if(! $data['project']){
 			return back()->with('error', _lang('Sorry, Project not found !'));
-		}						  
-								  
+		}
+
         //get Summary data
         $data['hour_completed'] = \App\TimeSheet::where('project_id',$id)
                                                       ->selectRaw("SUM( TIMESTAMPDIFF(SECOND, start_time, end_time) ) as total_seconds")
@@ -348,12 +347,12 @@ class BuilderController extends Controller
                                            return $query->where('assigned_user_id',Auth::id());
                                         }
                                     })
-                                  ->get();           
+                                  ->get();
 
         $data['timesheets'] = \App\TimeSheet::where('project_id',$id)
                                             ->where('company_id', $company_id)
                                             ->orderBy('id','desc')
-                                            ->get();                     
+                                            ->get();
 
         $data['project_milestones']  = \App\ProjectMilestone::where('project_id',$id)
                                                             ->where('company_id',$company_id)
@@ -371,10 +370,10 @@ class BuilderController extends Controller
                                   ->where('related_to', 'projects')
                                   ->where('company_id', $company_id)
                                   ->orderBy('id','desc')
-                                  ->get();                    
-        
+                                  ->get();
+
         return view('backend.accounting.project.view', $data);
-        
+
     }
 
     /**
@@ -392,8 +391,8 @@ class BuilderController extends Controller
             return view('backend.accounting.project.edit',compact('project','id'));
         }else{
             return view('backend.accounting.project.modal.edit',compact('project','id'));
-        }  
-        
+        }
+
     }
 
     /**
@@ -416,16 +415,16 @@ class BuilderController extends Controller
     ]);
 
     if ($validator->fails()) {
-      if($request->ajax()){ 
+      if($request->ajax()){
         return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
       }else{
         return redirect()->route('projects.edit', $id)
               ->withErrors($validator)
               ->withInput();
-      }     
+      }
     }
-  
-          
+
+
     DB::beginTransaction();
 
         $company_id = company_id();
@@ -449,7 +448,7 @@ class BuilderController extends Controller
         $project->description = $request->input('description');
         $project->user_id = Auth::id();
         $project->company_id = $company_id;
-  
+
         $project->save();
 
         create_log('projects', $project->id, _lang('Updated Project'));
@@ -478,7 +477,7 @@ class BuilderController extends Controller
 
                     create_log('projects', $project->id, _lang('Assign to').' '.$project_member->user->name);
                 }
-          
+
             }
         }else{
              $existing_members  = ProjectMember::where('project_id', $project->id);
@@ -491,13 +490,13 @@ class BuilderController extends Controller
         Notification::send($project->members, new ProjectUpdated($project));
 
         DB::commit();
-    
+
     if(! $request->ajax()){
            return redirect()->route('projects.index')->with('success', _lang('Updated Sucessfully'));
         }else{
        return response()->json(['result'=>'success','action'=>'update', 'message'=>_lang('Updated Sucessfully'), 'data'=>$project, 'table' => '#projects_table']);
     }
-      
+
     }
 
 
@@ -515,7 +514,7 @@ class BuilderController extends Controller
                                        ->where('company_id',company_id())
                                        ->select('project_members.*')
                                        ->first();
-        
+
         create_log('projects', $project_member->project_id, _lang('Removed').' '.$project_member->user->name.' '._lang('from Project'));
 
         $project_member->delete();
@@ -526,13 +525,13 @@ class BuilderController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'delete','message'=>_lang('Member Removed'),'id'=>$member_id, 'table' => '#project_members_table']);
         }
-        
+
     }
 
 
     /* Get Logs Data*/
     public function get_logs_data($project_id){
-        
+
         $logs = \App\ActivityLog::with('created_by')
                                 ->select('activity_logs.*')
                                 ->where("activity_logs.company_id",company_id())
@@ -541,7 +540,7 @@ class BuilderController extends Controller
                                 ->orderBy("activity_logs.id","desc")
                                 ->get();
 
-        echo json_encode($logs);                            
+        echo json_encode($logs);
     }
 
     /**
@@ -551,25 +550,25 @@ class BuilderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function upload_file(Request $request)
-    { 
+    {
 
         $max_size = get_option('file_manager_max_upload_size',2) * 1024;
         $supported_file_types = get_option('file_manager_file_type_supported','png,jpg,jpeg');
-         
+
         $validator = Validator::make($request->all(), [
             'related_id' => 'required',
             'file' => "required|file|max:$max_size|mimes:$supported_file_types",
         ]);
 
         if ($validator->fails()) {
-            if($request->ajax()){ 
+            if($request->ajax()){
                 return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
             }else{
                 return back()->withErrors($validator)
                              ->withInput();
-            }            
+            }
         }
-    
+
         $file_path = '';
         if($request->hasfile('file'))
         {
@@ -599,7 +598,7 @@ class BuilderController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'store','message'=>_lang('File Uploaded Sucessfully'),'data'=>$projectfile, 'table' => '#files_table']);
         }
-        
+
    }
 
    /**
@@ -630,7 +629,7 @@ class BuilderController extends Controller
                    return response()->json(['result'=>'error','message'=>_lang('Sorry only admin or creator can remove this file !')]);
                 }
 
-            }                              
+            }
             unlink(public_path('uploads/project_files/'.$projectfile->file));
             $projectfile->delete();
 
@@ -642,7 +641,7 @@ class BuilderController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'delete','message'=>_lang('Removed Sucessfully'),'id'=>$id, 'table' => '#files_table']);
         }
-        
+
     }
 
     public function download_file(Request $request, $file){
@@ -657,22 +656,22 @@ class BuilderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create_note(Request $request)
-    {    
+    {
         $validator = Validator::make($request->all(), [
             'related_id' => 'required',
             'note' => 'required',
         ]);
 
         if ($validator->fails()) {
-            if($request->ajax()){ 
+            if($request->ajax()){
                 return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
             }else{
                 return redirect()->route('notes.create')
                                  ->withErrors($validator)
                                  ->withInput();
-            }            
+            }
         }
-      
+
         $note = new \App\Note();
         $note->related_to ='projects';
         $note->related_id = $request->input('related_id');
@@ -693,7 +692,7 @@ class BuilderController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'store','message'=>_lang('Saved Sucessfully'),'data'=>$note, 'table' => '#notes_table']);
         }
-        
+
    }
 
    /**
@@ -722,7 +721,7 @@ class BuilderController extends Controller
                    return response()->json(['result'=>'error','message'=>_lang('Sorry only admin or creator can remove this file !')]);
                 }
 
-            }                              
+            }
             $note->delete();
             create_log('projects', $id, _lang('Removed Note'));
         }
@@ -732,7 +731,7 @@ class BuilderController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'delete','message'=>_lang('Removed Sucessfully'),'id'=>$id, 'table' => '#notes_table']);
         }
-        
+
     }
 
 
@@ -771,12 +770,12 @@ class BuilderController extends Controller
 
         $notes = \App\Note::where('related_id', $id)
                           ->where('related_to', 'projects')
-                          ->where('company_id', $company_id);     
+                          ->where('company_id', $company_id);
         $notes->delete();
 
         DB::commit();
-        
-  
+
+
         return redirect()->route('projects.index')->with('success',_lang('Deleted Sucessfully'));
     }
 }

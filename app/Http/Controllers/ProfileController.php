@@ -35,6 +35,15 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+
+        if(env('DEMO_MODE') == true){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
         $this->validate($request, [
             'name' => 'required',
             'email' => [
@@ -93,6 +102,15 @@ class ProfileController extends Controller
      */
     public function update_password(Request $request)
     {
+
+        if(env('DEMO_MODE') == true){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
         $this->validate($request, [
             'oldpassword' => 'required',
             'password' => 'required|string|min:6|confirmed',

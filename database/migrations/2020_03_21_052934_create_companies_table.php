@@ -23,6 +23,7 @@ class CreateCompaniesTable extends Migration
 			$table->date('valid_to');
 			$table->date('last_email')->nullable();
 			$table->string('websites_limit',20)->nullable();
+			$table->string('inventory_module')->nullable();
             $table->string('recurring_transaction',3)->nullable();
 			$table->string('online_payment',3)->nullable();
             $table->timestamps();

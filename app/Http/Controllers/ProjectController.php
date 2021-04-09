@@ -15,15 +15,15 @@ use App\Notifications\ProjectUpdated;
 
 class ProjectController extends Controller
 {
-  
-     /** 
+
+     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        date_default_timezone_set(get_company_option('timezone', get_option('timezone','Asia/Dhaka'))); 
+        date_default_timezone_set(get_company_option('timezone', get_option('timezone','Asia/Dhaka')));
 
         $this->middleware(function ($request, $next) {
             if( has_membership_system() == 'enabled' ){
@@ -41,10 +41,10 @@ class ProjectController extends Controller
                    if( has_feature_limit( 'websites_limit' ) ){
 
                     $company_id = company_id();
-                    $user_type = Auth::user()->user_type; 
+                    $user_type = Auth::user()->user_type;
 
                     $projects = Project::select('projects.*')
-                                        ->with('members')
+//                                        ->with('members')
                                         ->where('company_id',$company_id)
                                         ->when($user_type, function ($query, $user_type) {
                                                 if($user_type == 'staff'){
@@ -67,7 +67,7 @@ class ProjectController extends Controller
             return $next($request);
         });
     }
-  
+
   /**
    * Display a listing of the resource.
    *
@@ -75,24 +75,24 @@ class ProjectController extends Controller
    */
   public function index()
   {
-    
+
     $data['demo']   =   false;
     if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
         $data['demo']   =   true;
     }
-    
+
     return view('backend.accounting.project.list');
   }
 
   public function builder()
   {
-    
+
     if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
         return redirect('membership/extend')->with('message', _lang('Sorry, This feature is not available in your current subscription. You can upgrade your package !'));
     }
     return view('backend.accounting.project.builder');
   }
-  
+
     public function get_table_data(Request $request){
         $company_id = company_id();
         $user_type = Auth::user()->user_type;
@@ -116,24 +116,24 @@ class ProjectController extends Controller
                         })
                         ->addColumn('action', function ($project) {
                             return '<form action="'.action('ProjectController@destroy', $project['id']).'" class="text-center" method="post">'
-                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Edit Project Details') .'" class="btn btn-primary btn-xs ajax-modal"><i class="ti-notepad"></i></a>&nbsp;'
-                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Update Project') .'" class="btn btn-warning btn-xs"><i class="ti-pencil"></i></a>&nbsp;'
+                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Edit Project Details') .'" class="btn btn-primary btn-xs ajax-modal"><i class="ti-notepad"> </i> Settings</a>&nbsp;'
+                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Update Project') .'" class="btn btn-warning btn-xs"><i class="ti-pencil"></i> Edit</a>&nbsp;'
                             .csrf_field()
                             .'<input name="_method" type="hidden" value="DELETE">'
-                            .'<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i></button>'
+                            .'<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i> Delete Delete</button>'
                             .'</form>';
                         })
                         ->setRowId(function ($project) {
                           return "row_".$project->id;
                         })
                         ->rawColumns(['action','members.name','status','name'])
-                        ->make(true);                 
+                        ->make(true);
     }
-	
+
 	public function get_project_info( $id = '' ){
   		$project = Project::where("id",$id)
   					      ->where("company_id",company_id())->first();
-  		echo json_encode($project);				  	
+  		echo json_encode($project);
 	}
 
     /**
@@ -146,10 +146,10 @@ class ProjectController extends Controller
 
         $data['demo']   =   false;
         if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
-            $data['demo']   =   true;   
+            $data['demo']   =   true;
         }
 
-        
+
         return \Redirect::to(url('/builder').'/lara');
         /*
             if(get_option('default_builder') == '' || get_option('default_builder') == 'both'){
@@ -171,21 +171,21 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
 
         if ($validator->fails()) {
-            if($request->ajax()){ 
+            if($request->ajax()){
                 return response()->json(['result' => 'error', 'message' => $validator->errors()->all()]);
             }else{
                 return redirect()->route('projects.create')
                                ->withErrors($validator)
                                ->withInput();
-            }     
+            }
         }
-     
+
         DB::beginTransaction();
 
         $project = new Project();
@@ -204,9 +204,9 @@ class ProjectController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'store','message'=>_lang('Saved Sucessfully'), 'data'=>$project, 'table' => '#projects_table']);
         }
-        
+
    }
-  
+
 
     /**
      * Display the specified resource.
@@ -232,8 +232,8 @@ class ProjectController extends Controller
                                   ->first();
 		if(! $data['project']){
 			return back()->with('error', _lang('Sorry, Project not found !'));
-		}						  
-								  
+		}
+
         //get Summary data
         $data['hour_completed'] = \App\TimeSheet::where('project_id',$id)
                                                       ->selectRaw("SUM( TIMESTAMPDIFF(SECOND, start_time, end_time) ) as total_seconds")
@@ -258,12 +258,12 @@ class ProjectController extends Controller
                                            return $query->where('assigned_user_id',Auth::id());
                                         }
                                     })
-                                  ->get();           
+                                  ->get();
 
         $data['timesheets'] = \App\TimeSheet::where('project_id',$id)
                                             ->where('company_id', $company_id)
                                             ->orderBy('id','desc')
-                                            ->get();                     
+                                            ->get();
 
         $data['project_milestones']  = \App\ProjectMilestone::where('project_id',$id)
                                                             ->where('company_id',$company_id)
@@ -281,10 +281,10 @@ class ProjectController extends Controller
                                   ->where('related_to', 'projects')
                                   ->where('company_id', $company_id)
                                   ->orderBy('id','desc')
-                                  ->get();                    
-        
+                                  ->get();
+
         return view('backend.accounting.project.view', $data);
-        
+
     }
 
     /**
@@ -301,7 +301,7 @@ class ProjectController extends Controller
                           ->where('company_id',company_id())
                           ->first();
         $projectfile = \App\ProjectFile::where('related_to','projects')->where('related_id',$id)->first();;
-        
+
         $data['project']        =   $project;
         $data['id']             =   $project->id;
 
@@ -309,9 +309,9 @@ class ProjectController extends Controller
 
         $data['demo']   =   false;
         if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
-            $data['demo']   =   true;   
+            $data['demo']   =   true;
         }
-        
+
         if( ! $request->ajax()){
 
 
@@ -328,7 +328,7 @@ class ProjectController extends Controller
                             ->where('company_id',company_id())
                             ->first();
             $projectfile = \App\ProjectFile::where('related_to','projects')->where('related_id',$id)->first();;
-            
+
             $data['project']        =   $project;
             $data['projectfile']    =   str_replace(public_path()."/uploads/project_files/",asset('public/uploads/project_files').'/',$projectfile->file);
             $data['id']             =   $project->id;
@@ -368,7 +368,7 @@ class ProjectController extends Controller
         }else{
             return view('backend.accounting.project.modal.edit',$data);
         }
-        
+
     }
 
     /**
@@ -380,21 +380,30 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required',
-    ]);
+        if(env('DEMO_MODE') == true  && !empty($request->input('custom_domain'))){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
 
     if ($validator->fails()) {
-      if($request->ajax()){ 
+      if($request->ajax()){
         return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
       }else{
         return redirect()->route('projects.edit', $id)
               ->withErrors($validator)
               ->withInput();
-      }     
+      }
     }
-  
-          
+
+
     DB::beginTransaction();
 
         $company_id = company_id();
@@ -403,19 +412,20 @@ class ProjectController extends Controller
                           ->where('company_id',$company_id)
                           ->first();
         $project->name = $request->input('name');
+        $project->custom_domain = $request->input('custom_domain');
         $project->description = $request->input('description');
         $project->save();
 
         create_log('projects', $project->id, _lang('Updated Project'));
 
         DB::commit();
-    
+
     if(! $request->ajax()){
            return redirect()->route('projects.index')->with('success', _lang('Updated Sucessfully'));
         }else{
        return response()->json(['result'=>'success','action'=>'update', 'message'=>_lang('Updated Sucessfully'), 'data'=>$project, 'table' => '#projects_table']);
     }
-      
+
     }
 
 
@@ -433,7 +443,7 @@ class ProjectController extends Controller
                                        ->where('company_id',company_id())
                                        ->select('project_members.*')
                                        ->first();
-        
+
         create_log('projects', $project_member->project_id, _lang('Removed').' '.$project_member->user->name.' '._lang('from Project'));
 
         $project_member->delete();
@@ -444,13 +454,13 @@ class ProjectController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'delete','message'=>_lang('Member Removed'),'id'=>$member_id, 'table' => '#project_members_table']);
         }
-        
+
     }
 
 
     /* Get Logs Data*/
     public function get_logs_data($project_id){
-        
+
         $logs = \App\ActivityLog::with('created_by')
                                 ->select('activity_logs.*')
                                 ->where("activity_logs.company_id",company_id())
@@ -459,7 +469,7 @@ class ProjectController extends Controller
                                 ->orderBy("activity_logs.id","desc")
                                 ->get();
 
-        echo json_encode($logs);                            
+        echo json_encode($logs);
     }
 
     /**
@@ -469,25 +479,25 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function upload_file(Request $request)
-    { 
+    {
 
         $max_size = get_option('file_manager_max_upload_size',2) * 1024;
         $supported_file_types = get_option('file_manager_file_type_supported','png,jpg,jpeg');
-         
+
         $validator = Validator::make($request->all(), [
             'related_id' => 'required',
             'file' => "required|file|max:$max_size|mimes:$supported_file_types",
         ]);
 
         if ($validator->fails()) {
-            if($request->ajax()){ 
+            if($request->ajax()){
                 return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
             }else{
                 return back()->withErrors($validator)
                              ->withInput();
-            }            
+            }
         }
-    
+
         $file_path = '';
         if($request->hasfile('file'))
         {
@@ -517,7 +527,7 @@ class ProjectController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'store','message'=>_lang('File Uploaded Sucessfully'),'data'=>$projectfile, 'table' => '#files_table']);
         }
-        
+
    }
 
    /**
@@ -548,7 +558,7 @@ class ProjectController extends Controller
                    return response()->json(['result'=>'error','message'=>_lang('Sorry only admin or creator can remove this file !')]);
                 }
 
-            }                              
+            }
             unlink(public_path('uploads/project_files/'.$projectfile->file));
             $projectfile->delete();
 
@@ -560,7 +570,7 @@ class ProjectController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'delete','message'=>_lang('Removed Sucessfully'),'id'=>$id, 'table' => '#files_table']);
         }
-        
+
     }
 
     public function download_file(Request $request, $file){
@@ -575,22 +585,22 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create_note(Request $request)
-    {    
+    {
         $validator = Validator::make($request->all(), [
             'related_id' => 'required',
             'note' => 'required',
         ]);
 
         if ($validator->fails()) {
-            if($request->ajax()){ 
+            if($request->ajax()){
                 return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
             }else{
                 return redirect()->route('notes.create')
                                  ->withErrors($validator)
                                  ->withInput();
-            }            
+            }
         }
-      
+
         $note = new \App\Note();
         $note->related_to ='projects';
         $note->related_id = $request->input('related_id');
@@ -611,7 +621,7 @@ class ProjectController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'store','message'=>_lang('Saved Sucessfully'),'data'=>$note, 'table' => '#notes_table']);
         }
-        
+
    }
 
    /**
@@ -640,7 +650,7 @@ class ProjectController extends Controller
                    return response()->json(['result'=>'error','message'=>_lang('Sorry only admin or creator can remove this file !')]);
                 }
 
-            }                              
+            }
             $note->delete();
             create_log('projects', $id, _lang('Removed Note'));
         }
@@ -650,7 +660,7 @@ class ProjectController extends Controller
         }else{
            return response()->json(['result'=>'success','action'=>'delete','message'=>_lang('Removed Sucessfully'),'id'=>$id, 'table' => '#notes_table']);
         }
-        
+
     }
 
     function rrmdir($dir) {
@@ -658,8 +668,8 @@ class ProjectController extends Controller
           $objects = scandir($dir);
           foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
-              if (filetype($dir."/".$object) == "dir") 
-                    $this->rrmdir($dir."/".$object); 
+              if (filetype($dir."/".$object) == "dir")
+                    $this->rrmdir($dir."/".$object);
               else unlink   ($dir."/".$object);
             }
           }
@@ -667,7 +677,7 @@ class ProjectController extends Controller
           rmdir($dir);
         }
        }
-      
+
     /**
      * Remove the specified resource from storage.
      *
@@ -689,8 +699,8 @@ class ProjectController extends Controller
         create_log('projects', $id, _lang('File Removed'));
 
         DB::commit();
-        
-  
+
+
         return redirect()->route('projects.index')->with('success',_lang('Deleted Sucessfully'));
     }
 }

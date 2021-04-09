@@ -10,7 +10,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="author" content=""/>
-        
+
 		<!-- App favicon -->
         <link rel="icon" href="{{ get_favicon() }}">
 
@@ -85,7 +85,15 @@
         <script src="./../builder/js/lib/xml.js"></script>
 
         <script>
-            var demoMode    =   @if(isset($demo) && $demo == true) true @else 'no' @endif;
+            @if(env('DEMO_MODE') == true)
+                var demoMode    =    'active';
+            @else
+                var demoMode    =    'no';
+            
+                @if(get_option("google_map_key") == '' || get_option("google_map_key") == null || empty(get_option("google_map_key")))
+                    alert('Please note that you did not add your google map key, so it will accure a javascript problem if you add any component which has a google map without adding the key first from settings');
+                @endif
+            @endif
             var ajaxbase    =   '{{url("api/ajax")}}';
             var baseurl     =   '{{url("/")}}';
             var publicpath    =   "{{base_path('public')}}";
@@ -101,6 +109,6 @@
         <script src="./../builder/js/options.js"></script>
         <script src="./../builder/js/download.js"></script>
         <script src="./../builder/js/builder.min.js"></script>
-		
+
     </body>
 </html>

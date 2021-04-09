@@ -21,15 +21,22 @@ class UtilityController extends Controller
 	public function __construct(){
 		header('Cache-Control: no-cache');
 		header('Pragma: no-cache');
-		date_default_timezone_set( get_option('timezone','Asia/Dhaka') );	
+		date_default_timezone_set( get_option('timezone','Asia/Dhaka') );
 	} 
 	 
     public function settings($store = '',Request $request)
     {
 		if($store == ''){
            return view('backend.administration.general_settings.settings');
-        }else{	   
-		    foreach($_POST as $key => $value){
+        }else{
+            if(env('DEMO_MODE') == true){
+                if($request->ajax()) {
+                    return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+                }else{
+                    return redirect('administration/general_settings')->with('error', _lang('DEMO MODE NOT ALLOWED'));
+                }
+            }
+            foreach($_POST as $key => $value){
 				 if($key == "_token"){
 					 continue;
 				 }
@@ -69,7 +76,15 @@ class UtilityController extends Controller
 	
 	
 	public function upload_logo(Request $request){
-		$this->validate($request, [
+        if(env('DEMO_MODE') == true){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect('administration/general_settings')->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
+        $this->validate($request, [
 			'logo' => 'required|image|mimes:jpeg,png,jpg|max:8192',
 		]);
 
@@ -127,12 +142,20 @@ class UtilityController extends Controller
 	
 	
 	public function theme_option($store = '',Request $request)
-    {		
+    {
 	    if($store == ''){
 			$theme = get_option('active_theme','default');
             return view("theme.$theme.theme_option.theme_option");
         }else{
-			foreach($_POST as $key => $value){
+            if(env('DEMO_MODE') == true){
+                if($request->ajax()) {
+                    return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+                }else{
+                    return redirect('administration/general_settings')->with('error', _lang('DEMO MODE NOT ALLOWED'));
+                }
+            }
+
+            foreach($_POST as $key => $value){
 				 if($key == "_token"){
 					 continue;
 				 }

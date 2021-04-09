@@ -188,7 +188,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-		$validator = Validator::make($request->all(), [
+
+        if(env('DEMO_MODE') == true  && User::find($id)->email == "demo@larabuilder.com"){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
+
+        $validator = Validator::make($request->all(), [
 			'business_name' => 'required|max:191',
 			'name' => 'required|max:191',
 			'email' => [
@@ -276,7 +286,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-		DB::beginTransaction();
+        if(env('DEMO_MODE') == true  && User::find($id)->email == "demo@larabuilder.com"){
+            return redirect('users')->with('error', _lang('DEMO MODE NOT ALLOWED'));
+        }
+        DB::beginTransaction();
 		
         $user = User::find($id);
 

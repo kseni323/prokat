@@ -45,14 +45,20 @@ class Mailer extends Request {
 	}
 
 	private function _simple_mail_php() {
-		$subject = $this->_validation( $this->_current_form->settings->subject,
-			'string' ) ? $this->_current_form->settings->subject : '';
-		$email   = $this->_validation( $this->_current_form->settings->email, 'email' ) ?
-			$this->_current_form->settings->email : '';
-		$id      = $this->_validation( $this->_current_form->settings->id, 'string' ) ?
-			$this->_current_form->settings->id : '';
+	    if(!empty($this->_current_form->settings)){
+            $subject = $this->_validation( $this->_current_form->settings->subject,
+                'string' ) ? $this->_current_form->settings->subject : '';
+            $email   = $this->_validation( $this->_current_form->settings->email, 'email' ) ?
+                $this->_current_form->settings->email : '';
+            $id      = $this->_validation( $this->_current_form->settings->id, 'string' ) ?
+                $this->_current_form->settings->id : '';
+        }else{
+            $subject = '';
+            $email = '';
+            $id = '';
+        }
 
-		$content = '
+        $content = '
 	if($_POST[\'id\'] === "' . $id . '") {
 		$mailto = "' . $email . '";
 

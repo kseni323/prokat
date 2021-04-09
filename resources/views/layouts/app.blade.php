@@ -85,7 +85,7 @@
             </div>
             <div class="kt-header-mobile__toolbar">
                 <button class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
-                <button class="kt-header-mobile__toggler" id="kt_header_mobile_toggler"><span></span></button>
+                <button class="kt-header-mobile__toggler kt-hidden-tablet-and-mobile" id="kt_header_mobile_toggler"><span></span></button>
              <button class="kt-header-mobile__topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
             </div>
         </div>
@@ -399,7 +399,7 @@
                             <div class="kt-container  kt-container--fluid  ">
                                 <div class="kt-subheader__main">
 									@if(isset($page))
-										<h3 class="kt-subheader__title"><button class="kt-subheader__mobile-toggle kt-subheader__mobile-toggle--left" id="kt_subheader_mobile_toggle"><span></span></button>{{$page['title']}}</h3>
+										<h3 class="kt-subheader__title "><button class="kt-subheader__mobile-toggle kt-subheader__mobile-toggle--left" id="kt_subheader_mobile_toggle"></button>{{$page['title']}}</h3>
 										<span class="kt-subheader__separator kt-subheader__separator--v"></span>
 									@endif
 									

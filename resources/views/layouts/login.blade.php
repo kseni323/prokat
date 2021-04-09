@@ -49,6 +49,10 @@
     <!-- end::Head -->
     <body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading"  >
         @yield('content')
+
+        @if(env('DEMO_MODE') == true)
+		    <script src="{{ asset('public/backend/assets/js/vendor/jquery-2.2.4.min.js') }}"></script>
+        @endif
         @yield('js-script')
     </body>
 </html>

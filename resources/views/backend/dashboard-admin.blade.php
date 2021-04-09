@@ -2,6 +2,13 @@
 
 @section('content')
 
+
+@if(env('DEMO_MODE') == true)
+<div class="alert alert-warning text-center">
+	<b>{{ _lang("It’s recommend to login with user account if you want to test the builder, because default admin account is for the general mangament, manage users and packages.")}}</b>
+</div>
+@endif
+
 <div class="row" id="charts" style="position: relative; zoom: 1;">
 	<div class="col-sm-6 col-md-3">
 		<div class="kt-portlet kt-portlet--height-fluid kt-portlet--border-bottom-warning">

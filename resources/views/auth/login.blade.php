@@ -41,6 +41,36 @@
 
 						<!--begin::Signin-->
 						<div class="kt-login__form">
+
+                            @if(env('DEMO_MODE') == true)
+                                <table class="kt-form" style="padding: 10px !important;margin: 0;width: 100%;border: 1px solid #eee;">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4" style="text-align: center;background: #eee;color: #000;font-size: 24px;font-weight: bold;text-transform: uppercase;padding: 10px;">
+                                                {{ _lang('Demo Login Details')}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="text-align: left;background: #fff000;padding: 10px;color: #000;border: 1px solid #ccc;">
+                                                {{ _lang("It’s recommend to login with user account if you want to test the builder, because default admin account is for the general mangament, manage users and packages.")}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;border-bottom: 1px solid #eee;font-weight:bold">{{ _lang('ADMIN')}}</td>
+                                            <td style="text-align: center;border-bottom: 1px solid #eee;">admin@larabuilder.com</td>
+                                            <td style="text-align: center;border-bottom: 1px solid #eee;">123456</td>
+                                            <td style="border-bottom: 1px solid #eee;"><button type="submit" class="btn btn-primary btn-elevate btn-sm m-1 kt-login__btn-primary" id="login_admin">{{ _lang('Copy') }}</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;font-weight:bold">{{ _lang('USER')}}</td>
+                                            <td style="text-align: center;">demo@larabuilder.com</td>
+                                            <td style="text-align: center;">123456</td>
+                                            <td><button type="submit" class="btn btn-primary btn-elevate btn-sm m-1 kt-login__btn-primary" id="login_user">{{ _lang('Copy') }}</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endif
+
                             @if(Session::has('error'))
                                 <div class="alert alert-danger text-center">
                                     <strong>{{ session('error') }}</strong>
@@ -93,7 +123,7 @@
                                     <a href="{{ route('password.request') }}" class="kt-link kt-login__link-forgot">
 									    {{ _lang('Forgot Password?') }}
                                     </a>
-									<button type="submit" class="btn btn-primary btn-elevate kt-login__btn-primary">{{ _lang('Login') }}</button>
+									<button type="submit" id="signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">{{ _lang('Login') }}</button>
 								</div>
 							</form>
 							<!--end::Form-->
@@ -128,4 +158,20 @@
 			</div>
 		</div>
 	</div>
+@endsection
+
+@section('js-script')
+    <script type="text/javascript">
+        "use strict";
+        $('body').on('click','#login_admin', function(e){
+            $('#email').val('admin@larabuilder.com');
+            $('#password').val('123456');
+            $('#signin_submit').trigger('click');
+        });
+        $('body').on('click','#login_user', function(e){
+            $('#email').val('demo@larabuilder.com');
+            $('#password').val('123456');
+            $('#signin_submit').trigger('click');
+        });
+    </script>
 @endsection

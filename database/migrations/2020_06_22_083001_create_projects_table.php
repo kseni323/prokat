@@ -27,7 +27,8 @@ class CreateProjectsTable extends Migration
             $table->text('description')->nullable();
             $table->longText('custom_fields')->nullable();
 			$table->bigInteger('user_id');
-			$table->bigInteger('company_id');
+            $table->string('custom_domain');
+            $table->bigInteger('company_id');
             $table->timestamps();
         });
     }
