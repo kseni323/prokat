@@ -21,7 +21,9 @@
         "pusher/pusher-php-server": "^4.1",
         "razorpay/razorpay": "2.*",
         "stripe/stripe-php": "7.0.0",
-        "yajra/laravel-datatables": "^1.5"
+        "yajra/laravel-datatables": "^1.5",
+      "ext-ftp": "*",
+      "ext-curl": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

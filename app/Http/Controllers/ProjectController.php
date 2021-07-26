@@ -116,11 +116,11 @@ class ProjectController extends Controller
                         })
                         ->addColumn('action', function ($project) {
                             return '<form action="'.action('ProjectController@destroy', $project['id']).'" class="text-center" method="post">'
-                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Edit Project Details') .'" class="btn btn-primary btn-xs ajax-modal"><i class="ti-notepad"> </i> Settings</a>&nbsp;'
-                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Update Project') .'" class="btn btn-warning btn-xs"><i class="ti-pencil"></i> Edit</a>&nbsp;'
+                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Edit Project Details') .'" class="btn btn-primary btn-xs ajax-modal"><i class="ti-notepad"> </i> '._lang('Settings').'</a>&nbsp;'
+                            .'<a href="'.action('ProjectController@edit', $project['id']).'" data-title="'. _lang('Update Project') .'" class="btn btn-warning btn-xs"><i class="ti-pencil"></i> '._lang('Edit').'</a>&nbsp;'
                             .csrf_field()
                             .'<input name="_method" type="hidden" value="DELETE">'
-                            .'<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i> Delete Delete</button>'
+                            .'<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i> '._lang('Delete').'</button>'
                             .'</form>';
                         })
                         ->setRowId(function ($project) {
