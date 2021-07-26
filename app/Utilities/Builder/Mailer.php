@@ -59,7 +59,6 @@ class Mailer extends Request {
         }
 
         $content = '
-	if($_POST[\'id\'] === "' . $id . '") {
 		$mailto = "' . $email . '";
 
 		$data_array = json_decode($_POST[\'data\']);
@@ -121,7 +120,7 @@ class Mailer extends Request {
 			echo "mail send ... ERROR!";
 			print_r( error_get_last() );
 		}
-	}';
+	';
 
 			return $content;
 		}
@@ -211,7 +210,7 @@ class Mailer extends Request {
 				$this->_current_form->settings->port : '';
 
 			$content = '
-	if($_POST[\'id\'] === "' . $id . '") {
+	
 		require_once \'smtp/PHPMailerAutoload.php\';
 
 		$to = "' . $email . '"; // Your e-mail address here.
@@ -263,11 +262,11 @@ class Mailer extends Request {
 		} else {
 			echo \'Message has been sent\';
 		}
-	}';
+	';
 
 			if ($this->_smtp_trigger) {
 				$this->_smtp_trigger = false;
-				$this->_add_api('include/common/smtp', 'scripts/smtp');
+				$this->_add_api(SUPRA_BASE_PATH.'/include/common/smtp', 'scripts/smtp');
 			}
 
 			return $content;
@@ -620,7 +619,7 @@ class Mailer extends Request {
 
 		if ($this->_aweber_trigger) {
 			$this->_aweber_trigger = false;
-			$this->_add_api('include/common/aweber_api', 'scripts/aweber_api');
+			$this->_add_api(SUPRA_BASE_PATH.'/include/common/aweber_api', 'scripts/aweber_api');
 		}
 
 		return $content;
