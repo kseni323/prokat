@@ -115,7 +115,7 @@ class LanguageController extends Controller
 		$contents.='$language = array();'."\n\n";	  
 		foreach($_POST['language'] as $key => $value){
 		  $l_value = str_replace('"','',$value);
-		  $contents.='$language["'.str_replace("_"," ",$key).'"] = "'.$l_value.'";'."\n";
+		  $contents.='$language["'.str_replace("_"," ",str_replace('"', "",$key)).'"] = "'.$l_value.'";'."\n";
 		}
         if( @ini_get('max_input_vars') < 2000 ){
             return redirect('languages')->with('error',_lang('Error! You must need to set max_input_vars = 2000 for updating translations'));
