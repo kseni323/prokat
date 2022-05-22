@@ -234,4 +234,3 @@ Route::post('membership/paypal_ipn','MembershipController@paypal_ipn');
 Route::post('client/paypal_ipn','ClientController@paypal_ipn');
 
 Route::get('console/run','CronJobsController@run');
-
