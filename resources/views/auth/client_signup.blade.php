@@ -144,10 +144,18 @@
                                     </div>
                                 </div>
 
-
-
-
-
+                                <div class="form-group row mt-3">
+                                   <div class="col-md-12">
+                                        {!! NoCaptcha::renderJs('en', false, 'recaptchaCallback') !!}
+                                        {!! NoCaptcha::display() !!}
+                                        
+                                        @if ($errors->has('g-recaptcha-response'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                            </span>
+                                        @endif
+                                   </div>
+                               </div>
                                 
 								<div class="kt-login__actions mt-3">
 									<button type="submit" class="btn btn-primary btn-elevate kt-login__btn-primary">{{ _lang('Sign Up') }}</button>

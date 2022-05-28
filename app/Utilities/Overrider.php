@@ -29,7 +29,9 @@ class Overrider
             config(['mail.password' => get_option('smtp_password')]);
             config(['mail.encryption' => get_option('smtp_encryption')]);
         }	
-		
+        
+        config(['captcha.secret' => get_option('secret_key')]);
+        config(['captcha.sitekey' => get_option('site_key')]);
 		
     }
 	

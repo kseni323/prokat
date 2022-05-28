@@ -160,6 +160,7 @@ class RegisterController extends Controller
 				'package_type' => 'required',
 				'package_type' => 'required',
 				'package' => 'required',
+                'g-recaptcha-response' => 'required|captcha',
             ]);
             
 			

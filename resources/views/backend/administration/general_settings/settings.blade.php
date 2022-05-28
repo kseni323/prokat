@@ -45,6 +45,17 @@
 						</a>
 					</li>
 					<li class="kt-nav__item">
+						<a  href="#recaptcha" data-toggle="tab" class="kt-nav__link">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-nav__link-icon">
+								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<rect id="bound" x="0" y="0" width="24" height="24"></rect>
+									<path d="M5,8.6862915 L5,5 L8.6862915,5 L11.5857864,2.10050506 L14.4852814,5 L19,5 L19,9.51471863 L21.4852814,12 L19,14.4852814 L19,19 L14.4852814,19 L11.5857864,21.8994949 L8.6862915,19 L5,19 L5,15.3137085 L1.6862915,12 L5,8.6862915 Z M12,15 C13.6568542,15 15,13.6568542 15,12 C15,10.3431458 13.6568542,9 12,9 C10.3431458,9 9,10.3431458 9,12 C9,13.6568542 10.3431458,15 12,15 Z" id="Combined-Shape" fill="#000000"></path>
+								</g>
+							</svg>
+							<span class="kt-nav__link-text">{{ _lang('Recaptcha Settings') }}</span>
+						</a>
+					</li>
+					<li class="kt-nav__item">
 						<a href="#membership_settings" data-toggle="tab" class="kt-nav__link">
 							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-nav__link-icon">
 								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -391,6 +402,43 @@
 							</div>
 							</div>
 							
+							<div class="col-md-12">
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">{{ _lang('Save Settings') }}</button>
+							</div>
+							</div>
+						</div>						
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div id="recaptcha" class="tab-pane fade">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+				<h3 class="kt-portlet__head-title">{{ _lang('Recaptcha Settings') }}</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body kt-portlet__body--fit-x">
+				<div class="col-12">
+					<form method="post" class="appsvan-submit params-panel" autocomplete="off" action="{{ url('administration/general_settings/update') }}" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						<div class="row">
+							
+							<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">{{ _lang('Site Key') }}</label>						
+								<input type="text" class="form-control" name="site_key" value="{{ get_option('site_key') }}" required>
+							</div>
+							</div>
+							
+							<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">{{ _lang('Secret Key') }}</label>						
+								<input type="text" class="form-control" name="secret_key" value="{{ get_option('secret_key') }}" required>
+							</div>
+							</div>
+														
 							<div class="col-md-12">
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary">{{ _lang('Save Settings') }}</button>

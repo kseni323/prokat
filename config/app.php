@@ -171,7 +171,7 @@ return [
          */
 
         App\Providers\TenancyProvider::class,
-
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -238,6 +238,7 @@ return [
 		'Image' => Intervention\Image\Facades\Image::class,
 		'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
 
     ],
 
