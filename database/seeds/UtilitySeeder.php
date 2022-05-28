@@ -9,6 +9,7 @@ class UtilitySeeder extends Seeder
      *
      * @return void
      */
+     
     public function run()
     {
 		//Default Settings
@@ -57,6 +58,21 @@ class UtilitySeeder extends Seeder
 			  'name' => 'language',
 			  'value' => 'English'
 			],		
+		]);
+		
+		//Default users
+		DB::table('users')->insert([
+			[
+			  'name' => 'larabuilder',
+			  'email' => 'admin@larabuilder.com',
+                'password' => '$2a$12$JLxS.LrPKvZ8gGzHK8DAeOLfWyV3eDqW4scMxLZxFkQa5GYWYahvm',
+			  'email_verified_at' => '2022-05-26 15:07:52',
+			  'user_type' => 'admin',
+			  'role_id' => 1,
+			  'status' => 1,
+			  'company_id' => 0,
+			],
+			
 		]);
 		
 		//Email Template

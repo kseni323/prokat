@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'main_database' => env('MAIN_DATABASE', 'example'),
+
     'short_url' => preg_replace( '#^https?://#', '', rtrim(env('APP_URL', 'http://localhost'), '/')),
 
     'asset_url' => env('ASSET_URL', null),
@@ -167,6 +169,8 @@ return [
         /*
          * Package Service Providers...
          */
+
+        App\Providers\TenancyProvider::class,
 
         /*
          * Application Service Providers...

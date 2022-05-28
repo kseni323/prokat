@@ -24,7 +24,19 @@ Route::group(['middleware' => ['install']], function () {
         });
     });
 
-	Route::get('/', 'WebsiteController@index');
+	Route::group([], function () {
+		if(str_contains(Request::url(), config('app.url'))) { 
+		    Route::get('/', 'WebsiteController@index');
+		} else {
+		    $main_domain = substr(Request::getHttpHost(), 0, strpos(Request::getHttpHost(), "."));
+		     $p = \App\Project::where('main_domain', $main_domain)->first();
+		     if($p != null ) {
+		    return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
+		    
+		     }
+		}
+	 });
+
 	Route::get('sign_up', 'WebsiteController@sign_up');
 	Route::get('site/contactus', 'WebsiteController@contactus');
 	Route::get('site/{page}', 'WebsiteController@site');
