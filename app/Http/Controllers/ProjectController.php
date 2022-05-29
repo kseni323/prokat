@@ -434,7 +434,7 @@ class ProjectController extends Controller
              
              if($request->input('main_domain') != null) {
                  
-                  $tenant->domain = 'http://' . $request->input('main_domain') . '.com';
+                  $tenant->domain = 'http://' . $request->input('main_domain');
              } else {
                  
                 $main_domain = parse_url(config('app.url'), PHP_URL_HOST);
@@ -451,7 +451,7 @@ class ProjectController extends Controller
             Tenant::insert([
                 'id' => $id,
                 'name' => $request->input('name'),
-                 'domain' => 'http://' . $request->input('main_domain') . '.com',
+                 'domain' => 'http://' . $request->input('main_domain'),
                 'database' => 'larabuilder',
             ]);
             

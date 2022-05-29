@@ -38,9 +38,6 @@
             				<label class="control-label">{{ _lang('Maindomain') }}</label>
             				<div class="input-group mb-3">
             					<input type="text" class="form-control" name="main_domain" value="{{ $project->main_domain }}" @if(env('DEMO_MODE') == true) disabled @endif>
-            					<div class="input-group-append">
-            						<span class="input-group-text" id="basic-addon2">.com</span>
-            					</div>
             				</div>
                     		@if(env('DEMO_MODE') == true)
             					<span class="required">{{ _lang("UNFORTUNATELY IT'S NOT ALLOWED AT DEMO MODE!")}}</span>
