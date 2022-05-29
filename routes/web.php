@@ -129,6 +129,9 @@ Route::group(['middleware' => ['install']], function () {
 			Route::match(['get', 'post'],'api/ajax','BuilderController@ajax');
 			Route::get('test/backend/assets/builder','BuilderController@empty');
 
+			Route::post('/img/remove','ProjectController@imgRemove')->name('delete.image');
+			Route::post('/video/remove','ProjectController@videoRemove')->name('delete.video');
+
 			//Payment Method
 			Route::resource('payment_methods','PaymentMethodController');
 

@@ -13,6 +13,7 @@ use DB;
 use Notification;
 use App\Notifications\ProjectCreated;
 use App\Notifications\ProjectUpdated;
+use File;
 
 class ProjectController extends Controller
 {
@@ -754,5 +755,33 @@ class ProjectController extends Controller
 
 
         return redirect()->route('projects.index')->with('success',_lang('Deleted Sucessfully'));
+    }
+
+    public function imgRemove(Request $request){
+        $path = $request->path;
+        $name = $request->name;
+        $id = $request->userId;
+
+        $imgPath = public_path('backend/assets/builder/images/gallery/uploaded/'.$id.'/'.$name.'.jpg');
+    
+        if(File::exists($imgPath)) {
+            File::delete($imgPath);
+        }
+   
+        return response()->json(["status" => "ok"]);
+    }
+
+    public function videoRemove(Request $request){
+        $path = $request->path;
+        $videoName = $request->videoName;
+        $id = $request->userId;
+
+        $videoPath = public_path('backend/assets/builder/'.$path);
+
+        if(File::exists($videoPath)) {
+            File::delete($videoPath);
+        }
+   
+        return response()->json(["status" => "ok"]);
     }
 }
