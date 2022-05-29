@@ -28,12 +28,7 @@ Route::group(['middleware' => ['install']], function () {
 		if(str_contains(Request::url(), config('app.url'))) { 
 		    Route::get('/', 'WebsiteController@index');
 		} else {
-		    $main_domain = substr(Request::getHttpHost(), 0, strpos(Request::getHttpHost(), "."));
-		     $p = \App\Project::where('main_domain', $main_domain)->first();
-		     if($p != null ) {
-		    return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
-		    
-		     }
+			 Route::get('/', 'WebsiteController@demo');
 		}
 	 });
 

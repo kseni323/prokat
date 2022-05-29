@@ -11,6 +11,7 @@ use App\Utilities\Overrider;
 use DB;
 use Auth;
 use Validator;
+use File;
 
 class WebsiteController extends Controller
 {
@@ -41,6 +42,14 @@ class WebsiteController extends Controller
     public function index()
     {
 	    return view('theme.default.index');
+    }
+
+    public function demo(Request $request)
+    {
+        $main_domain = substr($request->getHttpHost(), 0, strpos($request->getHttpHost(), "."));
+        $p = \App\Project::where('main_domain', 'test')->first();
+        abort_if(is_null($p),'404');
+	    return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
     }
 
     /**
