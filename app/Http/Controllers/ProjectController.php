@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\ProjectMember;
+use App\Tenant;
 use Validator;
 use DataTables;
 use Auth;
