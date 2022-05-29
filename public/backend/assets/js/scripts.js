@@ -277,26 +277,6 @@
 		return false;
 	});
 
-	$(document).on('click', '.img-remove', function () {
-		//Sweet Alert for delete action
-		Swal.fire({
-			title: $lang_alert_title,
-			text: $lang_alert_message,
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: $lang_confirm_button_text,
-			cancelButtonText: $lang_cancel_button_text
-		}).then((result) => {
-			if (result.value) {
-				$(this).closest('form').submit();
-			}
-		});
-
-		return false;
-	});
-
 	$(".select2").select2();
 
 
