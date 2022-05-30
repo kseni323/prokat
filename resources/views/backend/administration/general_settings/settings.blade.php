@@ -314,7 +314,14 @@
 								<label class="control-label">{{ _lang('File Manager Max Upload Size in MB') }}</label>						
 								<input type="text" class="form-control" name="file_manager_max_upload_size" value="{{ get_option('file_manager_max_upload_size',2) }}" required>
 							</div>
-							</div>							
+							</div>			
+							
+							<div class="col-md-6">
+								<div class="form-group">
+								<label class="control-label">{{ _lang('Server Ip') }}</label>						
+								<input type="text" class="form-control" name="server_ip" value="{{ get_option('server_ip') }}">
+								</div>
+							</div>
 								
 							<div class="col-md-12">
 							<div class="form-group">

@@ -39,7 +39,12 @@
             				<div class="input-group mb-3">
             					<input type="text" class="form-control" name="main_domain" value="{{ $project->main_domain }}" @if(env('DEMO_MODE') == true) disabled @endif>
             				</div>
-                    		@if(env('DEMO_MODE') == true)
+							@if(get_option('server_ip') != '')
+							<p>Add this Ip Address <span style="font-weight:bold;color:red;">{{get_option('server_ip')}}</span> in <span style="font-weight:bold;color:red;">A Record</span> in your domain DNS Settings </p>
+                    		@else 
+							<p>Call Customer Service to provide you wih IP Address</p>
+							@endif
+							@if(env('DEMO_MODE') == true)
             					<span class="required">{{ _lang("UNFORTUNATELY IT'S NOT ALLOWED AT DEMO MODE!")}}</span>
             				@endif
             			</div>
