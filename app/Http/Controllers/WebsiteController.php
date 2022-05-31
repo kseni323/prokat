@@ -44,9 +44,9 @@ class WebsiteController extends Controller
 	    return view('theme.default.index');
     }
 
-    public function demo(Request $request)
+    public function demo()
     {
-        $p = \App\Project::where('main_domain', $request->getHttpHost())->first();
+        $p = \App\Project::where('main_domain', request()->getHttpHost())->first();
         abort_if(is_null($p),'404');
 	    return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
     }

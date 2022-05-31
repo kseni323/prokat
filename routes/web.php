@@ -14,23 +14,7 @@
 
 
 Route::group(['middleware' => ['install']], function () {
-    //Subdomains
-    $domain = '{subdomain}.' . parse_url(config('app.url'), PHP_URL_HOST);
-    Route::domain($domain)->group(function () {
-        Route::get('/', function ($subdomain) {
-            $p = \App\Project::where('custom_domain', $subdomain)->first();
-            abort_if(is_null($p),'404');
-            return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
-        });
-    });
 
-	Route::group([], function () {
-		if(str_contains(Request::url(), config('app.url'))) { 
-		    Route::get('/', 'WebsiteController@index');
-		} else {
-			 Route::get('/', 'WebsiteController@demo');
-		}
-	 });
 
 	Route::get('sign_up', 'WebsiteController@sign_up');
 	Route::get('site/contactus', 'WebsiteController@contactus');

@@ -74,6 +74,19 @@ class UtilitySeeder extends Seeder
 			],
 			
 		]);
+
+		//Default users
+		DB::table('settings')->insert([
+			[
+				'name' => 'site_key',
+				'value' => '6LcxrCYgAAAAAMagA8q6zL6ZwESVtTVBKh1enNUJ'
+			  ],	
+			  [
+				'name' => 'secret_key',
+				'value' => '6LcxrCYgAAAAAMJJNWp5pCNUh9m8CSAdZkBEf6mZ'
+			  ],	
+			
+		]);
 		
 		//Email Template
 		DB::table('email_templates')->insert([

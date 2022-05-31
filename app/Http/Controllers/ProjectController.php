@@ -422,53 +422,14 @@ class ProjectController extends Controller
                           ->where('company_id',$company_id)
                           ->first();
         $project->name = $request->input('name');
-        $project->custom_domain = $request->input('custom_domain');
         $project->main_domain = $request->input('main_domain');
         $project->description = $request->input('description');
         $project->save();
 
-        $tenant = Tenant::where('id',$id)->first();
-        
-        if($tenant != null) {
-            $tenant->id = $id;
-             $tenant->name = $request->input('name');
-             
-             if($request->input('main_domain') != null) {
-                 
-                  $tenant->domain = 'http://' . $request->input('main_domain');
-             } else {
-                 
-                $main_domain = parse_url(config('app.url'), PHP_URL_HOST);
-                $tenant->domain = 'http://' . $request->input('custom_domain') . '.' . $main_domain;
-             }
-             
-           
-            $tenant->database = 'larabuilder';
-            $tenant->save();
-        } else {
-            
-            if($request->input('main_domain') != null) {
-                
-            Tenant::insert([
-                'id' => $id,
-                'name' => $request->input('name'),
-                 'domain' => 'http://' . $request->input('main_domain'),
-                'database' => 'larabuilder',
-            ]);
-            
-            } else {
-                
-                $main_domain = parse_url(config('app.url'), PHP_URL_HOST);
-                
-                Tenant::insert([
-                'id' => $id,
-                'name' => $request->input('name'),
-                 'domain' => 'http://' . $request->input('custom_domain') . '.' . $main_domain,
-                'database' => 'larabuilder',
-            ]);
-            }
-        }
-
+        if(tenant()->getTenantIdByDomain('http://' . $request->input('main_domain')) == '') {
+            tenant()->create('http://' . $request->input('main_domain'));
+        } 
+                            
         create_log('projects', $project->id, _lang('Updated Project'));
 
         DB::commit();

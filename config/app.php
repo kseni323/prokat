@@ -170,8 +170,8 @@ return [
          * Package Service Providers...
          */
 
-        App\Providers\TenancyProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -239,7 +239,7 @@ return [
 		'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
-
+        'Cpanel' => ZanySoft\Cpanel\Facades\Cpanel::class,
     ],
 
 ];
