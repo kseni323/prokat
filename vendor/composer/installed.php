@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'cf5415dcccc417a41afda9885308e6e2b99eded7',
+    'reference' => 'ad9a286856a10e8506db51d708728cd9110c6c2d',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -474,7 +474,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'cf5415dcccc417a41afda9885308e6e2b99eded7',
+      'reference' => 'ad9a286856a10e8506db51d708728cd9110c6c2d',
     ),
     'laravel/socialite' => 
     array (
@@ -631,12 +631,12 @@
     ),
     'nikic/php-parser' => 
     array (
-      'pretty_version' => 'v4.13.2',
-      'version' => '4.13.2.0',
+      'pretty_version' => 'v4.14.0',
+      'version' => '4.14.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '210577fe3cf7badcc5814d99455df46564f3c077',
+      'reference' => '34bea19b6e03d8153165d8f30bba4c3be86184c1',
     ),
     'nunomaduro/collision' => 
     array (
@@ -836,15 +836,6 @@
       ),
       'reference' => '9467db479d1b0487c99733bb1e7944d32deded2c',
     ),
-    'predis/predis' => 
-    array (
-      'pretty_version' => 'v1.1.10',
-      'version' => '1.1.10.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'a2fb02d738bedadcffdbb07efa3a5e7bd57f8d6e',
-    ),
     'psr/container' => 
     array (
       'pretty_version' => '1.1.2',
@@ -922,8 +913,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 
@@ -1103,15 +1094,6 @@
       array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
-    ),
-    'stancl/tenancy' => 
-    array (
-      'pretty_version' => 'v1.8.0',
-      'version' => '1.8.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '8a548f9459dcc4a76089cbf40dba6debf66bca48',
     ),
     'stripe/stripe-php' => 
     array (
@@ -1414,15 +1396,6 @@
       array (
       ),
       'reference' => '6964c76c7804814a842473e0c8fd15bab0f18e25',
-    ),
-    'webpatser/laravel-uuid' => 
-    array (
-      'pretty_version' => '3.0.2',
-      'version' => '3.0.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'a7ce65cdabbc9970fc2a87fdf67b48e0b1641d23',
     ),
     'yajra/laravel-datatables' => 
     array (

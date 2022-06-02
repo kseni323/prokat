@@ -46,7 +46,6 @@ $date_format = get_company_option('date_format','Y-m-d');
 										<input name="_method" type="hidden" value="DELETE">
 										<button class="btn btn-danger btn-xs btn-remove" type="submit"><i class="ti-eraser"></i>  {{_lang('Delete')}}</button>
 									</form>
-								</td>
 							</tr>
 						@endforeach
 					</tbody>

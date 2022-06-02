@@ -15,7 +15,7 @@
 
 Route::group(['middleware' => ['install']], function () {
 
-
+	
 	Route::get('sign_up', 'WebsiteController@sign_up');
 	Route::get('site/contactus', 'WebsiteController@contactus');
 	Route::get('site/{page}', 'WebsiteController@site');

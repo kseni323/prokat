@@ -39,7 +39,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapTenantRoutes();
+
     }
 
     /**
@@ -56,6 +57,12 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/web.php'));
     }
 
+    protected function mapTenantRoutes()
+    {
+        Route::middleware(['web','App\Http\Middleware\CustomDomain'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/tenant.php'));
+    }
     /**
      * Define the "api" routes for the application.
      *

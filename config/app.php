@@ -54,11 +54,11 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'main_database' => env('MAIN_DATABASE', 'example'),
-
-    'short_url' => preg_replace( '#^https?://#', '', rtrim(env('APP_URL', 'http://localhost'), '/')),
+    'domain' => env('APP_DOMAIN', ''),
 
     'asset_url' => env('ASSET_URL', null),
+
+    'SERVER_IP' => env('SERVER_IP'),
 
     /*
     |--------------------------------------------------------------------------

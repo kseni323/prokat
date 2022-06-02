@@ -23,7 +23,6 @@
         "mews/purifier": "^3.2",
         "pusher/pusher-php-server": "^4.1",
         "razorpay/razorpay": "2.*",
-        "stancl/tenancy": "~1.8",
         "stripe/stripe-php": "7.0.0",
         "yajra/laravel-datatables": "^1.5"
     },

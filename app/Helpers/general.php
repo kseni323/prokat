@@ -40,6 +40,17 @@ if ( ! function_exists('_lang')){
 	}
 }
 
+if (!function_exists('getAppDomain')) {
+
+    function getAppDomain() {
+        $app_url = config('app.url');
+        $parse = parse_url($app_url);
+        $domain_main =  $parse['host'];
+        return $domain_main;
+    }
+}
+
+
 if ( ! function_exists('_dlang')){
 	function _dlang( $string = '' ){
 		

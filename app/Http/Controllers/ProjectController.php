@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\ProjectMember;
-use App\Tenant;
 use Validator;
 use DataTables;
 use Auth;
@@ -329,6 +328,8 @@ class ProjectController extends Controller
             $project = Project::where('id',$id)
                             ->where('company_id',company_id())
                             ->first();
+
+                            
             $projectfile = \App\ProjectFile::where('related_to','projects')->where('related_id',$id)->first();;
 
             $data['project']        =   $project;
@@ -382,25 +383,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(env('DEMO_MODE') == true  && !empty($request->input('custom_domain'))){
-            if($request->ajax()) {
-                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
-            }else{
-                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
-            }
-        }
-
-        if(env('DEMO_MODE') == true  && !empty($request->input('main_domain'))){
-            if($request->ajax()) {
-                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
-            }else{
-                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
-            }
-        }
-
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'domain_type'   => 'required|integer',
+            'sub_domain'           => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,sub_domain,' . $id,
+            'custom_domain'     => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,custom_domain,' . $id
         ]);
 
     if ($validator->fails()) {
@@ -422,14 +410,24 @@ class ProjectController extends Controller
                           ->where('company_id',$company_id)
                           ->first();
         $project->name = $request->input('name');
-        $project->main_domain = $request->input('main_domain');
         $project->description = $request->input('description');
+
+        $domain_main = '.'.getAppDomain();
+        if (isset($request->sub_domain)) {
+            # code...
+            if (strpos($domain_main, $request->sub_domain)) {
+                return back()->with('error', __('Subdomain must have ').$domain_main);
+            }
+        }
+
+        $project->custom_domain = $request->custom_domain;
+        $project->sub_domain = $request->sub_domain;
+        $project->domain_type = $request->domain_type;
+
+
+
         $project->save();
 
-        if(tenant()->getTenantIdByDomain('http://' . $request->input('main_domain')) == '') {
-            tenant()->create('http://' . $request->input('main_domain'));
-        } 
-                            
         create_log('projects', $project->id, _lang('Updated Project'));
 
         DB::commit();
@@ -708,7 +706,7 @@ class ProjectController extends Controller
                                      ->where('company_id',$company_id);
         $project->delete();
 
-        $this->rrmdir(public_path('backend/assets/novi/projects/'.Auth::user()->id.'/'.$id));
+        $this->rrmdir(public_path('tmp/'.Auth::user()->id.'/'.$id));
 
         create_log('projects', $id, _lang('File Removed'));
 

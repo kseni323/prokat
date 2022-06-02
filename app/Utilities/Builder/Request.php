@@ -148,7 +148,7 @@ class Request {
                                     $zip->extractTo( 'public/tmp/' );
                                     $zip->close();
                                     unlink( $file_name );
-                                    $this->_readFileProject('public/tmp/project.supra');
+                                    $this->_readFileProject('public/tmp/'.$file_name);
                                 }
                             } else if (preg_match('/.*\.supra/i', $file_name)) {
                                 $this->_readFileProject($file_name);

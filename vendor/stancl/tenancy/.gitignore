@@ -1,9 +1,0 @@
-.env
-composer.lock
-vendor/
-.vscode/
-psysh
-.phpunit.result.cache
-phpunit_var_*.xml
-coverage/
-clover.xml

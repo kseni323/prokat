@@ -102,7 +102,8 @@
             var userId      =   '{{Auth::user()->id}}';
 
 			var project_id    			=   '{{$id}}';
-            var main_domain    			=   '{{\App\Project::where('id', $id)->first()->main_domain}}';
+            var custom_domain    			=   '{{\App\Project::where('id', $id)->first()->custom_domain}}';
+            var sub_domain    			=   '{{\App\Project::where('id', $id)->first()->sub_domain}}';
 			var project_file    		=   '{{$projectfile}}';
 			var project_file_name    	=   '';
 
