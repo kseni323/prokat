@@ -51,8 +51,8 @@ class WebsiteController extends Controller
         if ($request->domain == getAppDomain()) {
             return view('theme.default.index');
         } else {
-            $p = \App\Project::where('custom_domain', 'http://'.$request->domain)
-            ->orWhere('sub_domain', 'http://'.$request->domain)->first();
+            $p = \App\Project::where('custom_domain', $request->domain)
+            ->orWhere('sub_domain', $request->domain)->first();
 
             return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
           

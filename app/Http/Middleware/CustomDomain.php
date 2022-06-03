@@ -28,8 +28,8 @@ class CustomDomain
         }
         
         // check domain customize landing page
-        $page = Project::where('custom_domain', 'http://'.$domain)
-                        ->orWhere('sub_domain', 'http://'.$domain)->first();
+        $page = Project::where('custom_domain', $domain)
+                        ->orWhere('sub_domain', $domain)->first();
 
                        
                         
