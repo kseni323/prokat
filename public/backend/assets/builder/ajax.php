@@ -124,6 +124,7 @@
 							} else if ($mode === 'import') {
 								$zip = new ZipArchive();
 								$file_name = 'tmp/'.$userId.'/'.$project_id.'/' . $file_name;
+								
 								if (preg_match('/.*\.zip/i', $file_name)) {
 									if ( $zip->open( $file_name ) ) {
 										$zip->extractTo( 'tmp/'.$userId.'/'.$project_id.'/' );

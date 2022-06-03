@@ -143,14 +143,17 @@ class Request {
                         } else if ($mode === 'import') {
                             $zip = new ZipArchive();
                             $file_name = 'public/uploads/project_files/' . $file_name;
+                            
                             if (preg_match('/.*\.zip/i', $file_name)) {
+                                
                                 if ( $zip->open( $file_name ) ) {
                                     $zip->extractTo( 'public/tmp/' );
                                     $zip->close();
                                     unlink( $file_name );
-                                    $this->_readFileProject('public/tmp/'.$file_name);
+                                    $this->_readFileProject('public/tmp/project.supra');
                                 }
                             } else if (preg_match('/.*\.supra/i', $file_name)) {
+                                
                                 $this->_readFileProject($file_name);
                                 // unlink( $file_name );
                             }
@@ -691,7 +694,7 @@ class Request {
      * Calling from ajax to get a file that contains intermediate work of the project
      */
     public function DB() {
-
+        
         $this->_clearTmp();
         $mode = ini_get('magic_quotes_gpc');
         $data = $_POST['data'];
@@ -716,7 +719,7 @@ class Request {
 
 
         }else{
-
+            
             $project                 =   new \App\Project;
             $project->user_id        =   $this->_current_user;
             $project->company_id     =   $this->_company_id;

@@ -384,6 +384,22 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
 
+        if(env('DEMO_MODE') == true  && !empty($request->input('sub_domain'))){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
+        if(env('DEMO_MODE') == true  && !empty($request->input('custom_domain'))){
+            if($request->ajax()) {
+                return response()->json(['result' => 'error', 'action' => 'update', 'message' => _lang('DEMO MODE NOT ALLOWED')]);
+            }else{
+                return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
+            }
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'domain_type'   => 'required|integer',

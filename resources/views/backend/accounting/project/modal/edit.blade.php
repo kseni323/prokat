@@ -41,14 +41,22 @@
                         <div class="col-md-3">
                             <div class="form-group form_customdomain">
                                 <label class="form-label">@lang('Sub domain')</label>
-                                <input type="text" name="sub_domain" value="{{$project->sub_domain}}" class="form-control" {{ $project->domain_type ? 'disabled' : '' }} id="input_sub_domain">
+                                <input type="text" name="sub_domain" value="{{$project->sub_domain}}" class="form-control" {{ $project->domain_type ? 'disabled' : '' }} id="input_sub_domain" @if(env('DEMO_MODE') == true) disabled @endif>
+                                <span>test.example.com</span>
+                                @if(env('DEMO_MODE') == true)
+					        <span class="required">{{ _lang("UNFORTUNATELY IT'S NOT ALLOWED AT DEMO MODE!")}}</span>
+				            @endif
                             </div>
                         </div>
 
                         <div class="col-md-9">
                             <div class="form-group form_subdomain">
                                 <label class="form-label">@lang('Custom your domain')</label>
-                                <input type="text" name="custom_domain" value="{{$project->custom_domain}}" class="form-control" {{ !$project->domain_type ? 'disabled' : '' }} placeholder="@lang('Enter your custom domain')" id="input_custom_domain">
+                                <input type="text" name="custom_domain" value="{{$project->custom_domain}}" class="form-control" {{ !$project->domain_type ? 'disabled' : '' }} placeholder="@lang('Enter your custom domain')" id="input_custom_domain" @if(env('DEMO_MODE') == true) disabled @endif>
+                                <span>example.com</span>
+                                @if(env('DEMO_MODE') == true)
+					<span class="required">{{ _lang("UNFORTUNATELY IT'S NOT ALLOWED AT DEMO MODE!")}}</span>
+				@endif
                             </div>
                         </div>
 
