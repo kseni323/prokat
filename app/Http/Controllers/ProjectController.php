@@ -402,9 +402,9 @@ class ProjectController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'domain_type'   => 'required|integer',
-            'sub_domain'           => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,sub_domain,' . $id,
-            'custom_domain'     => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,custom_domain,' . $id
+            // 'domain_type'   => 'required|integer',
+            // 'sub_domain'           => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,sub_domain,' . $id,
+            // 'custom_domain'     => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,custom_domain,' . $id
         ]);
 
     if ($validator->fails()) {

@@ -162,7 +162,6 @@ class RegisterController extends Controller
 				'package' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
-            
 			
 			if ($validator->fails()) {
 				if($request->ajax()){ 
@@ -172,7 +171,6 @@ class RegisterController extends Controller
 								 ->withInput();
 				}			
             }
-            
 
             $trial_period = get_option('trial_period', 14);
             
