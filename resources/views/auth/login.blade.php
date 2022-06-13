@@ -166,12 +166,10 @@
         $('body').on('click','#login_admin', function(e){
             $('#email').val('admin@larabuilder.com');
             $('#password').val('123456');
-            $('#signin_submit').trigger('click');
         });
         $('body').on('click','#login_user', function(e){
             $('#email').val('demo@larabuilder.com');
             $('#password').val('123456');
-            $('#signin_submit').trigger('click');
         });
     </script>
 @endsection

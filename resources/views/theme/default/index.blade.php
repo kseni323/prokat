@@ -1,5 +1,12 @@
 @extends('theme.default.layouts.website')
 
+<style>
+    .pricing .label {
+        top: 1.785714em !important;
+        right: 0.785714em !important;
+    }
+</style>
+
 @section('content')
 
     <section>
@@ -46,7 +53,7 @@
 
             <div class="row pricing-headline">
                 <div class="col-md-12 text-center"> 
-                    <button class="btn btn--primary type--uppercase btn-hop" id="btn-monthly">
+                    <button class="btn btn--primary type--uppercase btn-hop mb-0" id="btn-monthly">
                         {{ _lang('Monthly Plan') }}
                     </button>
                     <button class="btn btn--primary type--uppercase btn-not-hop"  id="btn-yearly">
@@ -77,7 +84,7 @@
                                     <span>{{ _dlang(unserialize($package->websites_limit)['monthly']).' '._lang('Websites') }}</span>
                                 </li>
                             </ul>
-                            <a class="btn btn--{{ $package->is_featured == 1 ? 'primary-1' : 'primary' }}" href="{{ url('register/client_signup?package_type=monthly&package='.$package->id) }}">
+                            <a class="btn btn--{{ $package->is_featured == 1 ? 'primary-1' : 'primary' }} pt-0" href="{{ url('register/client_signup?package_type=monthly&package='.$package->id) }}">
                                 <span class="btn__text">
                                     {{ _lang('Get Started') }}
                                 </span>
@@ -102,7 +109,7 @@
                                     <span>{{ _dlang(unserialize($package->websites_limit)['yearly']).' '._lang('Websites') }}</span>
                                 </li>
                             </ul>
-                            <a class="btn btn--{{ $package->is_featured == 1 ? 'primary-1' : 'primary' }}" href="{{ url('register/client_signup?package_type=yearly&package='.$package->id) }}">
+                            <a class="btn btn--{{ $package->is_featured == 1 ? 'primary-1' : 'primary' }} pt-0" href="{{ url('register/client_signup?package_type=yearly&package='.$package->id) }}">
                                 <span class="btn__text">
                                     {{ _lang('Get Started') }}
                                 </span>
