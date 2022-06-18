@@ -148,6 +148,7 @@ class UtilitySeeder extends Seeder
 		DB::table('packages')->insert([
 		    [
 				'package_name'=>'Basic',
+				'type' => 'paid',
 				'cost_per_month'=>'10.00',
 				'cost_per_year'=>'99.00',
 				'websites_limit'=>'a:2:{s:7:"monthly";s:1:"3";s:6:"yearly";s:2:"10";}',
@@ -158,6 +159,7 @@ class UtilitySeeder extends Seeder
 			],
 			[
 				'package_name'=>'Standard',
+				'type' => 'paid',
 				'cost_per_month'=>'25.00',
 				'cost_per_year'=>'199.00',
 				'websites_limit'=>'a:2:{s:7:"monthly";s:2:"10";s:6:"yearly";s:2:"20";}',
@@ -168,6 +170,7 @@ class UtilitySeeder extends Seeder
 			],
 			[
 				'package_name'=>'Business Plus',
+				'type' => 'paid',
 				'cost_per_month'=>'40.00',
 				'cost_per_year'=>'399.00',
 				'websites_limit'=>'a:2:{s:7:"monthly";s:2:"30";s:6:"yearly";s:9:"Unlimited";}',

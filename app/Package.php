@@ -12,5 +12,10 @@ class Package extends Model
      * @var string
      */
     protected $table = 'packages';
+
+    public function company()
+    {
+        return $this->hasMany('App\Company',"package_id")->orderBy('id','desc');
+    }
 	
 }

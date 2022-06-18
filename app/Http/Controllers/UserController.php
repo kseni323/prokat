@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use App\User;
 use App\Company;
 use App\Role;
+use App\Package;
 use App\AccessControl;
 use Validator;
 use Hash;
@@ -55,29 +56,75 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {	
-		$validator = Validator::make($request->all(), [
-			'business_name' => 'required|max:191',
-			'name' => 'required|max:191',
-			'email' => 'required|email|unique:users|max:191',
-			'password' => 'required|max:20|min:6|confirmed',
-			'membership_type' => 'required',
-			'status' => 'required',
-			'package_id' => 'required',
-			'package_type' => 'required',
-			'profile_picture' => 'nullable|image|max:5120',
-		]);
+		$package = Package::findOrFail($request->package_id);
+		if($package->type == 'free') {
+			
+			$validator = Validator::make($request->all(), [
+				'business_name' => 'required|max:191',
+				'name' => 'required|max:191',
+				'email' => 'required|email|unique:users|max:191',
+				'password' => 'required|max:20|min:6|confirmed',
+				'status' => 'required',
+				'package_id' => 'required',
+				'profile_picture' => 'nullable|image|max:5120',
+			]);
+			
+			if ($validator->fails()) {
+				if($request->ajax()){ 
+					return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+				}else{
+					return redirect('users/create')
+								->withErrors($validator)
+								->withInput();
+				}			
+			}
+
+			DB::beginTransaction();
+
+		//Create Company
+		$company = new Company();
+		$company->business_name = $request->business_name;
+		$company->status = $request->status;
+		$company->package_id = $request->package_id;
+		$company->package_type = 'Free';
+		$company->membership_type = 'Free';
 		
-		if ($validator->fails()) {
-			if($request->ajax()){ 
-			    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
-			}else{
-				return redirect('users/create')
-							->withErrors($validator)
-							->withInput();
-			}			
-		}
+		$company->valid_to = '3022-06-20';
 		
-		DB::beginTransaction();
+		//Package Details
+		$package = $company->package;
+		$company->websites_limit = $package->websites_limit;
+		$company->recurring_transaction = 'No';
+		$company->online_payment = 'No';
+
+		$company->save();
+			
+
+		} else {
+
+			$validator = Validator::make($request->all(), [
+				'business_name' => 'required|max:191',
+				'name' => 'required|max:191',
+				'email' => 'required|email|unique:users|max:191',
+				'password' => 'required|max:20|min:6|confirmed',
+				'membership_type' => 'required',
+				'status' => 'required',
+				'package_id' => 'required',
+				'package_type' => 'required',
+				'profile_picture' => 'nullable|image|max:5120',
+			]);
+			
+			if ($validator->fails()) {
+				if($request->ajax()){ 
+					return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+				}else{
+					return redirect('users/create')
+								->withErrors($validator)
+								->withInput();
+				}			
+			}
+
+			DB::beginTransaction();
 
 		//Create Company
 		$company = new Company();
@@ -99,7 +146,9 @@ class UserController extends Controller
 		$company->online_payment = unserialize($company->package->online_payment)[$company->package_type];
 
 		$company->save();
-		
+	
+		}
+
 
         $role = new Role();
         $role->name = 'manager';
@@ -196,9 +245,64 @@ class UserController extends Controller
                 return redirect()->back()->with('error', _lang('DEMO MODE NOT ALLOWED'));
             }
         }
+		$user = User::find($id);
+
+		$package = Package::findOrFail($request->package_id);
+		if($package->type == 'free') {
 
 
-        $validator = Validator::make($request->all(), [
+			$validator = Validator::make($request->all(), [
+				'business_name' => 'required|max:191',
+				'name' => 'required|max:191',
+				'email' => [
+					'required',
+					Rule::unique('users')->ignore($id),
+				],
+				'password' => 'nullable|max:20|min:6|confirmed',
+				'status' => 'required',
+				'package_id' => 'required',
+				'profile_picture' => 'nullable|image|max:5120',
+			]);
+			
+			if ($validator->fails()) {
+				if($request->ajax()){ 
+					return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+				}else{
+					return redirect()->route('users.edit', $id)
+								->withErrors($validator)
+								->withInput();
+				}			
+			}
+
+			DB::beginTransaction();
+
+			//Update Company
+			$company = Company::find($user->company_id);
+			$previous_package = $company->package_id;
+
+			$company->business_name = $request->business_name;
+			$company->status = $request->status;
+			$company->package_id = $request->package_id;
+			$company->package_type = 'Free';
+			$company->membership_type = 'Free';
+
+			//Package Details Update
+			if( $previous_package != $request->package_id ){
+				
+				$company->valid_to = '3022-06-20';
+
+				$package = $company->package;
+				
+				$company->websites_limit = $package->websites_limit;
+				$company->recurring_transaction = 'NO';
+				$company->online_payment = 'NO';
+			}
+
+			$company->save();
+
+		} else {
+
+		$validator = Validator::make($request->all(), [
 			'business_name' => 'required|max:191',
 			'name' => 'required|max:191',
 			'email' => [
@@ -222,10 +326,37 @@ class UserController extends Controller
 							->withInput();
 			}			
 		}
-	
+
 		DB::beginTransaction();
 
-        $user = User::find($id);
+		//Update Company
+		$company = Company::find($user->company_id);
+		$previous_package = $company->package_id;
+		
+		$company->business_name = $request->business_name;
+		$company->status = $request->status;
+		$company->package_id = $request->package_id;
+		$company->package_type = $request->package_type;
+		$company->membership_type = $request->membership_type;
+
+	
+			if($company->package_type == 'monthly'){
+				$company->valid_to = date('Y-m-d', strtotime('+1 months'));
+			}else{
+				$company->valid_to = date('Y-m-d', strtotime('+1 year'));
+			}
+			
+			$company->websites_limit = unserialize($company->package->websites_limit)[$company->package_type];
+			$company->recurring_transaction = unserialize($company->package->recurring_transaction)[$company->package_type];
+			$company->online_payment = unserialize($company->package->online_payment)[$company->package_type];
+
+		$company->save();
+
+		}
+
+        
+		
+		
 		$user->name = $request->input('name');
 		$user->email = $request->input('email');
 		if($request->password){
@@ -239,33 +370,7 @@ class UserController extends Controller
            Image::make($image)->crop(300, 300)->save(base_path('public/uploads/profile/') .$file_name);
 		   $user->profile_picture = $file_name;
 		}
-        $user->save();
-		
-		//Update Company
-		$company = Company::find($user->company_id);
-		$previous_package = $company->package_id;
-
-		$company->business_name = $request->business_name;
-		$company->status = $request->status;
-		$company->package_id = $request->package_id;
-		$company->package_type = $request->package_type;
-		$company->membership_type = $request->membership_type;
-
-		//Package Details Update
-		if( $previous_package != $request->package_id ){
-			
-			if($company->package_type == 'monthly'){
-				$company->valid_to = date('Y-m-d', strtotime('+1 months'));
-			}else{
-				$company->valid_to = date('Y-m-d', strtotime('+1 year'));
-			}
-			
-			$company->websites_limit = unserialize($company->package->websites_limit)[$company->package_type];
-			$company->recurring_transaction = unserialize($company->package->recurring_transaction)[$company->package_type];
-			$company->online_payment = unserialize($company->package->online_payment)[$company->package_type];
-		}
-
-		$company->save();
+        $user->save();		
 
 		DB::commit();
 		

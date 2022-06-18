@@ -403,8 +403,8 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             // 'domain_type'   => 'required|integer',
-            // 'sub_domain'           => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,sub_domain,' . $id,
-            // 'custom_domain'     => 'regex:/^(?:[-A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/|unique:projects,custom_domain,' . $id
+            'sub_domain'           => 'unique:projects,sub_domain,' . $id,
+            'custom_domain'     => 'unique:projects,custom_domain,' . $id
         ]);
 
     if ($validator->fails()) {
@@ -436,9 +436,17 @@ class ProjectController extends Controller
             }
         }
 
-        $project->custom_domain = $request->custom_domain;
-        $project->sub_domain = $request->sub_domain;
-        $project->domain_type = $request->domain_type;
+
+        if(isset($request->sub_domain) && $request->sub_domain != ''){
+            if(str_contains($request->sub_domain, getAppDomain())) {
+                $project->sub_domain = $request->sub_domain;
+            } else {
+                $project->sub_domain = $request->sub_domain . $domain_main;
+            }
+        } else {
+                $project->custom_domain = $request->custom_domain;
+        }
+
 
 
 

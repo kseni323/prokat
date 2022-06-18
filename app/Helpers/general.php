@@ -117,7 +117,10 @@ if ( ! function_exists('create_option')){
 		
 		$query = DB::select("SELECT * FROM $table $condition");
 		foreach($query as $d){
-			if( $selected!="" && $selected == $d->$value ){   
+			if($d->type == "free") {
+				$options.="<option value='".$d->$value."' class='d-none'>".ucwords($d->$display)."</option>";
+				
+			} else if( $selected!="" && $selected == $d->$value){   
 				if(! isset($display_array)){
 					$options.="<option value='".$d->$value."' selected='true'>".ucwords($d->$display)."</option>";
 			    }else{

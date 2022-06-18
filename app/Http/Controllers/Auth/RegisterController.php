@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Company;
 use App\Contact;
+use App\Package;
 use App\EmailTemplate;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -97,31 +98,60 @@ class RegisterController extends Controller
         @ini_set('max_execution_time', 0);
         @set_time_limit(0);
 
-		$trial_period = get_option('trial_period', 14);
 		
-		if($trial_period < 1){
-			$valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " -1 day"));
-		}else{
-			$valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " + $trial_period days"));
-		}
+        $package = Package::findOrFail($request->package);
+		if($package->type == 'free') {
+
+            $valid_to = '3022-06-20';
+
+            DB::beginTransaction();
+            //Create Company
+            $company = new Company();
+            $company->business_name = $data['business_name'];
+            $company->package_type = 'Free';
+            $company->package_id = $data['package'];
+            $company->membership_type = 'Free';
+            $company->status = 1;
+            $company->valid_to = '3022-06-20';
+    
+            //Package Details
+            $package = $company->package;
+            $company->websites_limit = $package->websites_limit;
+            $company->recurring_transaction = 'NO';
+            $company->online_payment = 'NO';
+    
+            $company->save();
+    
+        } else {
+
+            $trial_period = get_option('trial_period', 14);
 		
-        DB::beginTransaction();
-        //Create Company
-        $company = new Company();
-        $company->business_name = $data['business_name'];
-        $company->package_id = $data['package'];
-        $company->package_type = $data['package_type'];
-        $company->membership_type = 'trial';
-        $company->status = 1;
-        $company->valid_to = $valid_to;
+            if($trial_period < 1){
+                $valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " -1 day"));
+            }else{
+                $valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " + $trial_period days"));
+            }
 
-        //Package Details
-        $package = $company->package;
-        $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
-        $company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
-        $company->online_payment = unserialize($package->online_payment)[$company->package_type];
-
-        $company->save();
+            DB::beginTransaction();
+            //Create Company
+            $company = new Company();
+            $company->business_name = $data['business_name'];
+            $company->package_id = $data['package'];
+            $company->package_type = $data['package_type'];
+            $company->membership_type = 'trial';
+            $company->status = 1;
+            $company->valid_to = $valid_to;
+    
+            //Package Details
+            $package = $company->package;
+            $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
+            $company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
+            $company->online_payment = unserialize($package->online_payment)[$company->package_type];
+    
+            $company->save();
+        }
+		
+       
 
          //Create User      
         $user = new User();
@@ -147,60 +177,107 @@ class RegisterController extends Controller
         @set_time_limit(0);
 
 		if($request->isMethod('get')){
-			
-			return view('auth.client_signup');
+
+            if(get_option('allow_singup','yes') != 'yes'){
+                return redirect('login');
+            }else{
+                return view('auth.client_signup');
+            }
 			
 		}else if($request->isMethod('post')){
-			
-			$validator = Validator::make($request->all(), [
-				'name' => 'required|max:191',
-				'email' => 'required|email|unique:users|max:191',
-				'password' => 'required|max:20|min:6|confirmed',
-				'business_name' => 'required',
-				'package_type' => 'required',
-				'package_type' => 'required',
-				'package' => 'required',
-                'g-recaptcha-response' => 'required|captcha',
-            ]);
-			
-			if ($validator->fails()) {
-				if($request->ajax()){ 
-					return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
-				}else{
-					return back()->withErrors($validator)
-								 ->withInput();
-				}			
+            $package = Package::findOrFail($request->package);
+            if($package->type == 'free') {
+
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|max:191',
+                    'email' => 'required|email|unique:users|max:191',
+                    'password' => 'required|max:20|min:6|confirmed',
+                    'business_name' => 'required',
+                    'package' => 'required',
+                    'g-recaptcha-response' => 'required|captcha',
+                ]);
+
+                if ($validator->fails()) {
+                    if($request->ajax()){ 
+                        return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+                    }else{
+                        return back()->withErrors($validator)
+                                    ->withInput();
+                    }			
+                }
+
+
+                DB::beginTransaction();
+
+                //Create Company
+                $company = new Company();
+                $company->business_name = $request->business_name;
+                $company->business_name = $request->business_name;
+                $company->package_id = $request->package;
+                $company->package_type = 'Free';
+                $company->membership_type = 'Free';
+                $company->status = 1;
+                $company->valid_to = '3022-06-20';
+
+                //Package Details
+                $package = $company->package;
+                $company->websites_limit = $package->websites_limit;
+                $company->recurring_transaction = 'NO';
+                $company->online_payment = 'NO';
+
+                $company->save();
+
+            } else {
+                
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|max:191',
+                    'email' => 'required|email|unique:users|max:191',
+                    'password' => 'required|max:20|min:6|confirmed',
+                    'business_name' => 'required',
+                    'package_type' => 'required',
+                    'package_type' => 'required',
+                    'package' => 'required',
+                    'g-recaptcha-response' => 'required|captcha',
+                ]);
+                
+                if ($validator->fails()) {
+                    if($request->ajax()){ 
+                        return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+                    }else{
+                        return back()->withErrors($validator)
+                                     ->withInput();
+                    }			
+                }
+    
+                $trial_period = get_option('trial_period', 14);
+                
+                if($trial_period < 1){
+                    $valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " -1 day"));
+                }else{
+                    $valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " + $trial_period days"));
+                }
+                
+                DB::beginTransaction();
+    
+                //Create Company
+                $company = new Company();
+                $company->business_name = $request->business_name;
+                $company->business_name = $request->business_name;
+                $company->package_id = $request->package;
+                $company->package_type = $request->package_type;
+                $company->membership_type = 'trial';
+                $company->status = 1;
+                $company->valid_to = $valid_to;
+    
+                //Package Details
+                $package = $company->package;
+                $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
+                $company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
+                $company->online_payment = unserialize($package->online_payment)[$company->package_type];
+    
+                $company->save();
+    
             }
-
-            $trial_period = get_option('trial_period', 14);
-            
-            if($trial_period < 1){
-                $valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " -1 day"));
-            }else{
-                $valid_to = date('Y-m-d', strtotime(date('Y-m-d'). " + $trial_period days"));
-            }
-            
-            DB::beginTransaction();
-
-            //Create Company
-            $company = new Company();
-            $company->business_name = $request->business_name;
-            $company->business_name = $request->business_name;
-            $company->package_id = $request->package;
-            $company->package_type = $request->package_type;
-            $company->membership_type = 'trial';
-            $company->status = 1;
-            $company->valid_to = $valid_to;
-
-            //Package Details
-            $package = $company->package;
-            $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
-            $company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
-            $company->online_payment = unserialize($package->online_payment)[$company->package_type];
-
-            $company->save();
-
-
 
             //Create User      
             $user = new User();

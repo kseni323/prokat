@@ -36,18 +36,22 @@
 		 </div>
 		</div>
 		
+		@php $free = DB::table('packages')->where('type', 'free')->first(); @endphp
 		<div class="col-md-6">
 		  <div class="form-group">
 			<label class="control-label">{{ _lang('Package') }}</label>						
-			<select class="form-control select2" name="package_id" required>
+			<select id="package" class="form-control" name="package_id" required>
 				<option value="">{{ _lang('Select Package') }}</option>
+				@if(isset($free) && $free != '')
+					<option type="{{$free->type}}" value="{{$free->id}}">{{$free->package_name}}</option>
+				@endif
 				{{ create_option('packages','id','package_name',old('package_id')) }}
 			</select>
 		  </div>
 		</div>
 		  
 		<div class="col-md-6">
-		  <div class="form-group">
+		  <div id="packageType" class="form-group">
 			<label class="control-label">{{ _lang('Package Type') }}</label>						
 			<select class="form-control" id="package_type" name="package_type" required>
 				<option value="">{{ _lang('Select Package') }}</option>
@@ -59,7 +63,7 @@
 
 		
 		<div class="col-md-6">
-		  <div class="form-group">
+		  <div id="membershipType" class="form-group">
 			<label class="control-label">{{ _lang('Membership Type') }}</label>						
 			<select class="form-control select2" name="membership_type" id="membership_type" required>
 			  <option value="trial">{{ _lang('Trial') }}</option>
@@ -94,3 +98,33 @@
 		</div>
 	</div>
 </form>
+
+<script>
+
+	const select = document.getElementById('package');
+
+select.addEventListener('change', function handleChange(event) {
+    if( select.options[select.selectedIndex].getAttribute('type') == 'free') {
+        $('#packageType').removeClass('d-block');
+        $('#packageType').addClass('d-none');
+        $('#package_type').removeAttr('required');
+        $('#package_type').attr('disabled', 'disabled');
+
+		$('#membershipType').removeClass('d-block');
+        $('#membershipType').addClass('d-none');
+        $('#membership_type').removeAttr('required');
+        $('#membership_type').attr('disabled', 'disabled');
+    
+    } else {
+        $('#packageType').removeClass('d-none');
+        $('#packageType').addClass('d-block');
+        $('#package_type').attr('required', 'required');
+        $('#package_type').removeAttr('disabled');
+
+		$('#membershipType').removeClass('d-none');
+        $('#membershipType').addClass('d-block');
+        $('#membership_type').attr('required', 'required');
+        $('#membership_type').removeAttr('disabled');
+    }
+    });
+</script>

@@ -93,11 +93,14 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                @php $free = DB::table('packages')->where('type', 'free')->first(); @endphp
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <select id="package" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="package" required>
                                             <option value="">{{ _lang('Select Package') }}</option>
+                                            @if(isset($free) && $free != '')
+                                                <option type="{{$free->type}}" value="{{$free->id}}">{{$free->package_name}}</option>
+                                            @endif
                                             {{ create_option('packages','id','package_name') }}
                                         </select>    
 
@@ -109,7 +112,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div class="package_type form-group row">
                                     <div class="col-md-12">
                                         <select id="package_type" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="package_type" required>
                                             <option value="">{{ _lang('Select Package Type') }}</option>
@@ -183,6 +186,24 @@ $("#package").val(package);
 
 var package_type = "{{ isset($_GET['package_type']) ? $_GET['package_type'] : '' }}";
 $("#package_type").val(package_type);
+
+const select = document.getElementById('package');
+
+select.addEventListener('change', function handleChange(event) {
+    if( select.options[select.selectedIndex].getAttribute('type') == 'free') {
+        
+        $('.package_type').removeClass('d-block');
+        $('.package_type').addClass('d-none');
+        $('#package_type').removeAttr('required');
+        $('#package_type').attr('disabled', 'disabled');
+    
+    } else {
+        $('.package_type').removeClass('d-none');
+        $('.package_type').addClass('d-block');
+        $('#package_type').attr('required', 'required');
+        $('#package_type').removeAttr('disabled');
+    }
+    });
 
 </script>
 @endsection

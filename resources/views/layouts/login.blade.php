@@ -45,6 +45,25 @@
             <link href="./admin/css/demo1/skins/aside/light.css" rel="stylesheet" type="text/css" />
             <!--end::Layout Skins -->
         @endif
+
+        <style>
+            @media (max-width: 1024px) {
+                .kt-login__head {
+                    text-align: center !important;
+                }
+                
+                .kt-login__body {
+                    margin-top: 0 !important;
+                    height: 60% !important;
+                }
+
+                @if(env('DEMO_MODE') == true)
+                .kt-login__body {
+                    margin-top: 50px !important;
+                }
+              @endif
+            }
+        </style>
     </head>
     <!-- end::Head -->
     <body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading"  >

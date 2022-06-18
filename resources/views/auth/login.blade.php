@@ -8,7 +8,7 @@
 				<!--begin::Aside-->
 				<div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside">
 					<div class="kt-grid__item">
-						<a href="#" class="kt-login__logo">
+						<a href="{{url('/')}}" class="kt-login__logo">
            				<img alt="Logo" src="{{ get_logo() }}"/>
 						</a>
 					</div>

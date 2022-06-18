@@ -73,7 +73,9 @@
                             <span class="h2">
                                 <strong>{{ g_decimal_place($package->cost_per_month, $currency) }}</strong>
                             </span>
+                            @if ($package->type != 'free')
                             <span class="type--fine-print">{{ _lang('Per Month') }}.</span>
+                            @endif
                             @if ($package->is_featured == 1)
                                 <span class="label">{{ _lang('Value') }}</span>
                             @endif
@@ -81,7 +83,11 @@
                             <ul>
                                 <li>
                                     <span class="checkmark bg--primary-1"></span>
+                                    @if ($package->type == 'free')
+                                    <span>{{ _dlang($package->websites_limit).' '._lang('Websites') }}</span>
+                                    @else
                                     <span>{{ _dlang(unserialize($package->websites_limit)['monthly']).' '._lang('Websites') }}</span>
+                                    @endif
                                 </li>
                             </ul>
                             <a class="btn btn--{{ $package->is_featured == 1 ? 'primary-1' : 'primary' }} pt-0" href="{{ url('register/client_signup?package_type=monthly&package='.$package->id) }}">
@@ -98,7 +104,9 @@
                             <span class="h2">
                                 <strong>{{ g_decimal_place($package->cost_per_year, $currency) }}</strong>
                             </span>
+                             @if ($package->type != 'free')
                             <span class="type--fine-print">{{ _lang('Per Year') }}.</span>
+                            @endif
                             @if ($package->is_featured == 1)
                                 <span class="label">{{ _lang('Value') }}</span>
                             @endif
@@ -106,7 +114,11 @@
                             <ul>
                                 <li>
                                     <span class="checkmark bg--primary-1"></span>
+                                    @if ($package->type == 'free')
+                                    <span>{{ _dlang($package->websites_limit).' '._lang('Websites') }}</span>
+                                    @else 
                                     <span>{{ _dlang(unserialize($package->websites_limit)['yearly']).' '._lang('Websites') }}</span>
+                                    @endif
                                 </li>
                             </ul>
                             <a class="btn btn--{{ $package->is_featured == 1 ? 'primary-1' : 'primary' }} pt-0" href="{{ url('register/client_signup?package_type=yearly&package='.$package->id) }}">

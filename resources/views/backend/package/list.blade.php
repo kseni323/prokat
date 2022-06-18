@@ -25,7 +25,11 @@
                         </div>
 					   
 						<ul class="text-left p-3">
+							@if($package->type == 'free')
+							<li {{ $package->websites_limit != 'No' ? 'class=yes-feature' : 'class=no-feature' }}>{{ $package->websites_limit.' '._lang('Websites') }}</li>
+							@else
 							<li {{ unserialize($package->websites_limit)['monthly'] != 'No' ? 'class=yes-feature' : 'class=no-feature' }}>{{ unserialize($package->websites_limit)['monthly'].' '._lang('Websites') }}</li>
+							@endif
 							<li {{ unserialize($package->recurring_transaction)['monthly'] == 'Yes' ? 'class=yes-feature' : 'class=no-feature' }}>{{ _lang('Recurring Transaction') }}</li>
 							<li {{ unserialize($package->online_payment)['monthly'] == 'Yes'? 'class=yes-feature' : 'class=no-feature' }}>{{ _lang('Online Payment') }}</li>
 						</ul>
@@ -54,7 +58,11 @@
 						</div>
 					   
 						<ul class="text-left p-3">
+							@if($package->type == 'free')
+							<li {{ $package->websites_limit != 'No' ? 'class=yes-feature' : 'class=no-feature' }}>{{ $package->websites_limit.' '._lang('Websites') }}</li>
+							@else
 							<li {{ unserialize($package->websites_limit)['yearly'] != 'No' ? 'class=yes-feature' : 'class=no-feature' }}>{{ unserialize($package->websites_limit)['yearly'].' '._lang('Websites') }}</li>
+							@endif
 							<li {{ unserialize($package->recurring_transaction)['yearly'] == 'Yes' ? 'class=yes-feature' : 'class=no-feature' }}>{{ _lang('Recurring Transaction') }}</li>
 							<li {{ unserialize($package->online_payment)['yearly'] == 'Yes' ? 'class=yes-feature' : 'class=no-feature' }}>{{ _lang('Online Payment') }}</li>
 						</ul>

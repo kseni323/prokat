@@ -31,7 +31,11 @@
 							</td>
 							<td class='name'>{{ $user->company->business_name }}</td>
 							<td class='email'>{{ $user->email }}</td>					
+							@if($user->company->package->type == 'free')
+							<td class='package_id'>{!! status($user->company->package->package_name, 'success') !!}</td>
+							@else 
 							<td class='package_id'>{{ $user->company->package->package_name }}({{ ucwords($user->company->package_type) }})</td>
+							@endif
 							<td class='membership_type text-center'>{!! $user->company->membership_type == 'trial' ? clean(status(ucwords($user->company->membership_type), 'danger')) : clean(status(ucwords($user->company->membership_type), 'success')) !!}</td>					
 							<td class='status'>{!! $user->company->status == 1 ? clean(status(_lang('Active'), 'success')) : clean(status(_lang('In-Active'), 'danger')) !!}</td>					
 							<td class="text-center">

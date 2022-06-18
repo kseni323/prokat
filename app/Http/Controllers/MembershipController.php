@@ -182,9 +182,18 @@ class MembershipController extends Controller
 
 			 //Update Package Details
 	        $package = $payment->package;
-	        $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
-	        $company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
-	        $company->online_payment = unserialize($package->online_payment)[$company->package_type];
+
+			if($company->package_type == 'Free') {
+				$company->websites_limit = unserialize($package->websites_limit)[$payment->package_type];
+				$company->recurring_transaction = unserialize($package->recurring_transaction)[$payment->package_type];
+				$company->inventory_module = unserialize($package->inventory_module)[$payment->package_type];
+				$company->package_type = $payment->package_type;
+			  } else {
+				$company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
+				$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
+				$company->inventory_module = unserialize($package->inventory_module)[$company->package_type];
+				$company->package_type = $payment->package_type;
+			  }
 
 			$company->save();
 
@@ -252,9 +261,17 @@ class MembershipController extends Controller
 
 		//Update Package Details
         $package = $payment->package;
-        $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
-		$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
-		$company->inventory_module = unserialize($package->inventory_module)[$company->package_type];
+		if($company->package_type == 'Free') {
+			$company->websites_limit = unserialize($package->websites_limit)[$payment->package_type];
+			$company->recurring_transaction = unserialize($package->recurring_transaction)[$payment->package_type];
+			$company->inventory_module = unserialize($package->inventory_module)[$payment->package_type];
+			$company->package_type = $payment->package_type;
+		  } else {
+			$company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
+			$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
+			$company->inventory_module = unserialize($package->inventory_module)[$company->package_type];
+			$company->package_type = $payment->package_type;
+		  }
 
 		$company->save();
 		
@@ -332,9 +349,17 @@ class MembershipController extends Controller
 
 			//Update Package Details
 	        $package = $payment->package;
-	        $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
-			$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
-			$company->inventory_module = unserialize($package->inventory_module)[$company->package_type];
+			if($company->package_type == 'Free') {
+				$company->websites_limit = unserialize($package->websites_limit)[$payment->package_type];
+				$company->recurring_transaction = unserialize($package->recurring_transaction)[$payment->package_type];
+				$company->inventory_module = unserialize($package->inventory_module)[$payment->package_type];
+				$company->package_type = $payment->package_type;
+			  } else {
+				$company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
+				$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
+				$company->inventory_module = unserialize($package->inventory_module)[$company->package_type];
+				$company->package_type = $payment->package_type;
+			  }
 
 			$company->save();
 			
@@ -430,9 +455,17 @@ class MembershipController extends Controller
 
 		//Update Package Details
         $package = $payment->package;
-        $company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
-		$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
-        $company->online_payment = unserialize($package->online_payment)[$company->package_type];
+        if($company->package_type == 'Free') {
+			$company->websites_limit = unserialize($package->websites_limit)[$payment->package_type];
+			$company->recurring_transaction = unserialize($package->recurring_transaction)[$payment->package_type];
+			$company->inventory_module = unserialize($package->inventory_module)[$payment->package_type];
+			$company->package_type = $payment->package_type;
+		  } else {
+			$company->websites_limit = unserialize($package->websites_limit)[$company->package_type];
+			$company->recurring_transaction = unserialize($package->recurring_transaction)[$company->package_type];
+			$company->inventory_module = unserialize($package->inventory_module)[$company->package_type];
+			$company->package_type = $payment->package_type;
+		  }
 
 		$company->save();
 		

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Package;
+use App\Company;
 use Validator;
 use Illuminate\Validation\Rule;
 
@@ -53,35 +54,77 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {	
-		$validator = Validator::make($request->all(), [
-			'package_name' => 'required|max:50',
-			'is_featured' => 'required',
-			'websites_limit' => 'required',
-			'online_payment' => 'required',
-			'cost_per_month' => 'required|numeric',
-			'cost_per_year' => 'required|numeric',
-		]);
-		
-		if ($validator->fails()) {
-			if($request->ajax()){ 
-			    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
-			}else{
-				return redirect()->route('packages.create')
-							->withErrors($validator)
-							->withInput();
-			}			
-		}
-			
 
-        $package = new Package();
-	    $package->package_name = $request->package_name;
-		$package->is_featured = $request->is_featured;
-		$package->websites_limit = serialize($request->websites_limit);
-		$package->online_payment = serialize($request->online_payment);
-		$package->recurring_transaction = serialize($request->recurring_transaction);
-		$package->cost_per_month = $request->cost_per_month;
-		$package->cost_per_year = $request->cost_per_year;
-		//$package->others = $request->others;
+        if($request->type == 'free') {
+            
+            $validator = Validator::make($request->all(), [
+                'package_name' => 'required|unique:packages,package_name|max:50',
+                'is_featured' => 'required',
+                'websites_limit' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                if($request->ajax()){ 
+                    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+                }else{
+                    return redirect()->route('packages.create')
+                                ->withErrors($validator)
+                                ->withInput();
+                }			
+            }
+                
+    
+            $package = new Package();
+            $package->type = $request->type;
+            $package->package_name = $request->package_name;
+            $package->is_featured = $request->is_featured;
+            $package->websites_limit = $request->websites_limit;
+            $package->online_payment = serialize([
+                'monthly' => 'No',
+                'yearly' => 'No',
+            ]);
+
+            $package->recurring_transaction = serialize([
+                'monthly' => 'No',
+                'yearly' => 'No',
+            ]);
+            $package->cost_per_month = 0;
+            $package->cost_per_year = 0;
+            //$package->others = $request->others;
+
+        } else {
+
+            $validator = Validator::make($request->all(), [
+                'package_name' => 'required|unique:packages,package_name|max:50',
+                'is_featured' => 'required',
+                'websites_limit' => 'required',
+                'online_payment' => 'required',
+                'cost_per_month' => 'required|numeric',
+                'cost_per_year' => 'required|numeric',
+            ]);
+
+            if ($validator->fails()) {
+                if($request->ajax()){ 
+                    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+                }else{
+                    return redirect()->route('packages.create')
+                                ->withErrors($validator)
+                                ->withInput();
+                }			
+            }
+                
+            $package = new Package();
+            $package->package_name = $request->package_name;
+            $package->type  = $request->type;
+            $package->is_featured = $request->is_featured;
+            $package->websites_limit = serialize($request->websites_limit);
+            $package->online_payment = serialize($request->online_payment);
+            $package->recurring_transaction = serialize($request->recurring_transaction);
+            $package->cost_per_month = $request->cost_per_month;
+            $package->cost_per_year = $request->cost_per_year;
+            //$package->others = $request->others;
+		
+        }
 	
         $package->save();
         
@@ -137,37 +180,93 @@ class PackageController extends Controller
      */
     public function update(Request $request, $id)
     {
-		$validator = Validator::make($request->all(), [
-			'package_name' => 'required|max:50',
-			'websites_limit' => 'required',
-			'online_payment' => 'required',
-			'cost_per_month' => 'required|numeric',
-			'cost_per_year' => 'required|numeric',
-		]);
+
+        if($request->type == 'free') {
+            
+            $validator = Validator::make($request->all(), [
+                'package_name' => 'required|max:50',
+            ]);
+
+            if ($validator->fails()) {
+                if($request->ajax()){ 
+                    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+                }else{
+                    return redirect()->route('packages.edit', $id)
+                                ->withErrors($validator)
+                                ->withInput();
+                }			
+            }
+
+            $package = Package::find($id);
+            $package->package_name = $request->package_name;
+            $package->type = $request->type;
+            $package->is_featured = $request->is_featured;
+            $package->websites_limit = $request->websites_limit;
+            $package->online_payment = serialize([
+                'monthly' => 'No',
+                'yearly' => 'No',
+            ]);
+              $package->recurring_transaction = serialize([
+                'monthly' => 'No',
+                'yearly' => 'No',
+            ]);
+            $package->cost_per_month = 0;
+            $package->cost_per_year = 0;
+
+            $package->save();
+
+            foreach($package->company as $data) {
+                $data->websites_limit = $package->websites_limit;    
+                $data->save();
+            }
+            
+
+        } else {
+
+            $validator = Validator::make($request->all(), [
+                'package_name' => 'required|max:50',
+                'websites_limit' => 'required',
+                'online_payment' => 'required',
+                'cost_per_month' => 'required|numeric',
+                'cost_per_year' => 'required|numeric',
+            ]);
+            
+            if ($validator->fails()) {
+                if($request->ajax()){ 
+                    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
+                }else{
+                    return redirect()->route('packages.edit', $id)
+                                ->withErrors($validator)
+                                ->withInput();
+                }			
+            }
+        
+                
+            
+            $package = Package::find($id);
+            $package->package_name = $request->package_name;
+            $package->type = $request->type;
+            $package->is_featured = $request->is_featured;
+            $package->websites_limit = serialize($request->websites_limit);
+            $package->online_payment = serialize($request->online_payment);
+            $package->recurring_transaction = serialize($request->recurring_transaction);
+            $package->cost_per_month = $request->cost_per_month;
+            $package->cost_per_year = $request->cost_per_year;
+            //$package->others = $request->others;
+
+            $package->save();
+
+            foreach($package->company as $data) {
+                $data->websites_limit = unserialize($package->websites_limit)[$data->package_type];
+                $data->recurring_transaction = unserialize($package->recurring_transaction)[$data->package_type];
+                $data->online_payment = unserialize($package->online_payment)[$data->package_type];
+    
+                $data->save();
+            }
+            
+        }
 		
-		if ($validator->fails()) {
-			if($request->ajax()){ 
-			    return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
-			}else{
-				return redirect()->route('packages.edit', $id)
-							->withErrors($validator)
-							->withInput();
-			}			
-		}
 	
-        	
-		
-        $package = Package::find($id);
-		$package->package_name = $request->package_name;
-		$package->is_featured = $request->is_featured;
-		$package->websites_limit = serialize($request->websites_limit);
-		$package->online_payment = serialize($request->online_payment);
-		$package->recurring_transaction = serialize($request->recurring_transaction);
-		$package->cost_per_month = $request->cost_per_month;
-		$package->cost_per_year = $request->cost_per_year;
-		//$package->others = $request->others;
-	
-        $package->save();
 		
 		if(! $request->ajax()){
            return redirect()->route('packages.index')->with('success', _lang('Updated Sucessfully'));

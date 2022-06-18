@@ -15,7 +15,8 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('package_name',50);
+            $table->string('package_name',50)->unique();
+            $table->string('type',50)->nullable();
 			$table->decimal('cost_per_month',10,2);
 			$table->decimal('cost_per_year',10,2);
             $table->string('websites_limit');

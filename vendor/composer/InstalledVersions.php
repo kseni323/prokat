@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '13f3c33e42626855a8b434128392947edbf0812c',
+    'reference' => '037c8615555250f14edfea4363c5ff753d576c4e',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -220,15 +220,6 @@ private static $installed = array (
       ),
       'reference' => 'a63e5e8f26ebbebf8ed3c5c691637325512eb0dc',
     ),
-    'fzaninotto/faker' => 
-    array (
-      'pretty_version' => 'v1.9.2',
-      'version' => '1.9.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
-    ),
     'graham-campbell/result-type' => 
     array (
       'pretty_version' => 'v1.0.4',
@@ -240,12 +231,12 @@ private static $installed = array (
     ),
     'guzzlehttp/guzzle' => 
     array (
-      'pretty_version' => '7.4.3',
-      'version' => '7.4.3.0',
+      'pretty_version' => '7.4.4',
+      'version' => '7.4.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '74a8602c6faec9ef74b7a9391ac82c5e65b1cdab',
+      'reference' => 'e3ff079b22820c2029d4c2a87796b6a0b8716ad8',
     ),
     'guzzlehttp/promises' => 
     array (
@@ -523,7 +514,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '13f3c33e42626855a8b434128392947edbf0812c',
+      'reference' => '037c8615555250f14edfea4363c5ff753d576c4e',
     ),
     'laravel/serializable-closure' => 
     array (

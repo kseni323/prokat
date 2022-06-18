@@ -12,7 +12,11 @@
 	    <table class="table table-bordered">
 			@if($user->user_type == 'user')
 				<tr><td>{{ _lang('Package Name') }}</td><td>{{ $user->company->package->package_name }}</td></tr>	
+				@if(date($date_format, strtotime($user->company->valid_to)) > '3022-01-01')
+				<tr><td>{{ _lang('Package Valid Until') }}</td><td>Forever</td></tr>	
+				@else 
 				<tr><td>{{ _lang('Package Valid Until') }}</td><td>{{ date($date_format, strtotime($user->company->valid_to)) }}</td></tr>	
+				@endif
 		        <tr>
 		        	<td>{{ _lang('Membersip Type') }}</td><td>{!! $user->company->membership_type == 'trial' ? clean(status(ucwords($user->company->membership_type), 'danger')) : clean(status(ucwords($user->company->membership_type), 'success')) !!}</td>
 		        </tr>

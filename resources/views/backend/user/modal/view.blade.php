@@ -9,8 +9,13 @@
 		<tr><td>{{ _lang('Admin Email') }}</td><td>{{ $user->email }}</td></tr>
 		<tr><td>{{ _lang('Status') }}</td><td>{!! $user->company->status == 1 ? clean(status(_lang('Active'), 'success')) : clean(status(_lang('In-Active'), 'danger')) !!}</td></tr>
 		@if($user->user_type == 'user')
+			@if($user->company->package->type == 'free')
+			<tr><td>{{ _lang('Package') }}</td><td>{!! status($user->company->package->package_name, 'success') !!}</td></tr>	
+			<tr><td>{{ _lang('Package Valid To') }}</td><td>{{ _lang('Forever') }}</td></tr>	
+			@else
 			<tr><td>{{ _lang('Package') }}</td><td>{{ $user->company->package->package_name }}({{ ucwords($user->company->package_type) }})</td></tr>	
 			<tr><td>{{ _lang('Package Valid To') }}</td><td>{{ date($date_format, strtotime($user->company->valid_to)) }}</td></tr>	
+			@endif
 	        <tr>
 	        	<td>{{ _lang('Membersip Type') }}</td><td>{!! $user->company->membership_type == 'trial' ? clean(status(ucwords($user->company->membership_type), 'danger')) : clean(status(ucwords($user->company->membership_type), 'success')) !!}</td>
 	        </tr>

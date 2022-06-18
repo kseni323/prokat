@@ -1,5 +1,11 @@
 @extends('theme.default.layouts.website')
 
+<style>
+    .pricing .label {
+        top: 1.785714em !important;
+        right: 0.785714em !important;
+    }
+</style>
 
 @section('header')
 <section class="text-center imagebg space--lg" data-overlay="3">
@@ -44,7 +50,7 @@
 
             <div class="row pricing-headline">
                 <div class="col-md-12 text-center"> 
-                    <button class="btn btn--primary type--uppercase btn-hop" id="btn-monthly">
+                    <button class="btn btn--primary type--uppercase btn-hop mb-0" id="btn-monthly">
                         {{ _lang('Monthly Plan') }}
                     </button>
                     <button class="btn btn--primary type--uppercase btn-not-hop"  id="btn-yearly">

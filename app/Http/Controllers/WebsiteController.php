@@ -48,11 +48,15 @@ class WebsiteController extends Controller
     public function getLandingPage(Request $request)
     {
         
+        $url = $request->domain;
+        $values = parse_url($url);
+        $host = explode('.',$values['path']);
+
         if ($request->domain == getAppDomain()) {
             return view('theme.default.index');
         } else {
             $p = \App\Project::where('custom_domain', $request->domain)
-            ->orWhere('sub_domain', $request->domain)->first();
+            ->orWhere('sub_domain', $request->domain)->orWhere('sub_domain', $host[0])->first();
 
             return File::get(public_path() . '/sites/'. $p->user_id .'/'. $p->id .'/index.html');
           

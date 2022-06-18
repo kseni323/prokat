@@ -336,7 +336,7 @@
 													</div>
 												</div>
 											</a>
-
+											@if(Auth::user()->company->membership_type != 'Free')
 											<a href="{{ url('membership/extend') }}" class="kt-notification__item">
 												<div class="kt-notification__item-icon">
                                                 	<i class="flaticon2-cardiogram kt-font-warning"></i>
@@ -350,6 +350,7 @@
 													</div>
 												</div>
 											</a>
+											@endif
 										@endif
 										<a href="{{ url('profile/edit') }}" class="kt-notification__item">
 											<div class="kt-notification__item-icon">
