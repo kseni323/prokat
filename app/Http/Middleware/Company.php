@@ -20,12 +20,11 @@ class Company
     	$user = Auth::user();
 		$user_type = $user->user_type;
 
-		if($user_type == 'user' || $user_type == 'staff'){
+		if($user_type == 'user' || $user_type == 'staff' || $user_type == 'admin'){
 			$route_name = \Request::route()->getName();
-
+			
 			/** If User Type = Staff **/
-			if( $route_name != '' && $user_type != 'user'){
-				
+			if( $route_name != '' && $user_type != 'user' &&  $user_type != 'admin'){
 				if(explode(".",$route_name)[1] == "update"){
 					$route_name = explode(".",$route_name)[0].".edit";
 				}else if(explode(".",$route_name)[1] == "store"){
@@ -47,13 +46,13 @@ class Company
 				return new Response('<h5 class="text-center red">'._lang('Permission denied !').'</h5>');
 			}
 		}
-
+		
 		if(has_membership_system() == 'enabled'){
-			if( membership_validity() < date('Y-m-d')){
+			if( membership_validity() != null && membership_validity() < date('Y-m-d')){
 				return redirect('membership/extend')->with('message',_lang('Please make your membership payment for further process !'));
 			}
 		}
-			
+		
         return $next($request);
     }
 }

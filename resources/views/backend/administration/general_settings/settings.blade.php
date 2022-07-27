@@ -349,8 +349,8 @@
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Mail Type') }}</label>						
 								<select class="form-control niceselect wide" name="mail_type" id="mail_type" required>
-								<option value="mail" {{ get_option('mail_type')=="mail" ? "selected" : "" }}>{{ _lang('PHP Mail') }}</option>
-								<option value="smtp" {{ get_option('mail_type')=="smtp" ? "selected" : "" }}>{{ _lang('SMTP') }}</option>
+								<option value="sendmail" {{ get_option('mail_type')=="sendmail" ? "selected" : "" }}>{{ _lang('PHP Mail') }}</option>
+								<option value="sendmail" {{ get_option('mail_type')=="sendmail" ? "selected" : "" }}>{{ _lang('SMTP') }}</option>
 								<option value="sendmail" {{ get_option('mail_type')=="sendmail" ? "selected" : "" }}>{{ _lang('Sendmail') }}</option>
 								</select>
 							</div>

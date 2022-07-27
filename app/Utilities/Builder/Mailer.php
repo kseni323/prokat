@@ -57,7 +57,7 @@ class Mailer extends Request {
             $email = '';
             $id = '';
         }
-
+        
         $content = '
 		$mailto = "' . $email . '";
 

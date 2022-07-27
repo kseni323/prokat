@@ -52,6 +52,8 @@ return [
     |
     */
 
+    'app_install' => env('APP_INSTALLED', true),
+
     'url' => env('APP_URL', 'http://localhost'),
 
     'domain' => env('APP_DOMAIN', ''),

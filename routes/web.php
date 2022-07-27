@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::group(['middleware' => ['install']], function () {
 
 	
@@ -20,8 +18,6 @@ Route::group(['middleware' => ['install']], function () {
 	Route::get('site/contactus', 'WebsiteController@contactus');
 	Route::get('site/{page}', 'WebsiteController@site');
 	Route::post('contact/send_message', 'WebsiteController@send_message');
-
-	Auth::routes(['verify' => true]);
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     Route::match(['get', 'post'],'register/client_signup','\App\Http\Controllers\Auth\RegisterController@client_signup');
@@ -194,6 +190,7 @@ Route::group(['middleware' => ['install']], function () {
 
 	//Invoice & Quotation PDF Download
 	Route::get('invoices/download_pdf/{id}','ClientController@download_invoice_pdf');
+
 
 });
 

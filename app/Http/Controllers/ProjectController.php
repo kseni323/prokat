@@ -13,6 +13,7 @@ use Notification;
 use App\Notifications\ProjectCreated;
 use App\Notifications\ProjectUpdated;
 use File;
+use Session;
 
 class ProjectController extends Controller
 {
@@ -25,9 +26,10 @@ class ProjectController extends Controller
     public function __construct()
     {
         date_default_timezone_set(get_company_option('timezone', get_option('timezone','Asia/Dhaka')));
-
+        
         $this->middleware(function ($request, $next) {
             if( has_membership_system() == 'enabled' ){
+                
                 if( ! has_feature( 'websites_limit' ) ){
                     if( ! $request->ajax()){
                         return redirect('membership/extend')->with('message', _lang('Sorry, This feature is not available in your current subscription. You can upgrade your package !'));
@@ -38,33 +40,39 @@ class ProjectController extends Controller
 
                 //If request is create/store
                 $route_name = \Request::route()->getName();
+                
                 if( $route_name == 'projects.create'){
                    if( has_feature_limit( 'websites_limit' ) ){
 
                     $company_id = company_id();
                     $user_type = Auth::user()->user_type;
 
-                    $projects = Project::select('projects.*')
-//                                        ->with('members')
-                                        ->where('company_id',$company_id)
-                                        ->when($user_type, function ($query, $user_type) {
-                                                if($user_type == 'staff'){
-                                                return $query->join('project_members','projects.id','project_members.project_id')
-                                                                ->where('project_members.user_id',Auth::id());
-                                                }
-                                            })
-                                            ->orderBy("projects.id","desc")->count();
-                    if($projects >= Auth::user()->company->websites_limit && Auth::user()->company->websites_limit != 'Unlimited'){
-                        if( ! $request->ajax()){
-                            return redirect('membership/extend')->with('message', _lang('Your have already reached your usages limit. You can upgrade your package !'));
-                        }else{
-                            return response()->json(['result'=>'error','message'=> _lang('Your have already reached your usages limit. You can upgrade your package !') ]);
+                    if($user_type == 'admin') {
+                        $projects = Project::select('projects.*')->orderBy("projects.id","desc")->count();
+                    } else {
+                        $projects = Project::select('projects.*')
+    //                                        ->with('members')
+                                            ->where('company_id',$company_id)
+                                            ->when($user_type, function ($query, $user_type) {
+                                                    if($user_type == 'staff'){
+                                                    return $query->join('project_members','projects.id','project_members.project_id')
+                                                                    ->where('project_members.user_id',Auth::id());
+                                                    }
+                                                })
+                                                ->orderBy("projects.id","desc")->count();
+                            if($projects >= Auth::user()->company->websites_limit && Auth::user()->company->websites_limit != 'Unlimited'){
+                                if( ! $request->ajax()){
+                                    return redirect('membership/extend')->with('message', _lang('Your have already reached your usages limit. You can upgrade your package !'));
+                                }else{
+                                    return response()->json(['result'=>'error','message'=> _lang('Your have already reached your usages limit. You can upgrade your package !') ]);
+                                }
+                            }
                         }
-                      }
-                   }
+                    }
+
+                    
                 }
             }
-
             return $next($request);
         });
     }
@@ -81,6 +89,7 @@ class ProjectController extends Controller
     if(Auth::getUser()->company->membership_type == 'trial' && membership_validity() > date('Y-m-d')){
         $data['demo']   =   true;
     }
+    
 
     return view('backend.accounting.project.list');
   }
@@ -97,16 +106,20 @@ class ProjectController extends Controller
     public function get_table_data(Request $request){
         $company_id = company_id();
         $user_type = Auth::user()->user_type;
-
-        $projects = Project::select('projects.*')
-                            ->where('company_id',$company_id)
-                            ->when($user_type, function ($query, $user_type) {
-                                    if($user_type == 'staff'){
-                                    return $query->join('project_members','projects.id','project_members.project_id')
-                                                    ->where('project_members.user_id',Auth::id());
-                                    }
-                                })
-                                ->orderBy("projects.id","desc");
+        
+        if($user_type == 'admin') {
+            $projects = Project::select('projects.*')->orderBy("projects.id","desc");
+        } else {
+            $projects = Project::select('projects.*')
+            ->where('company_id',$company_id)
+            ->when($user_type, function ($query, $user_type) {
+                    if($user_type == 'staff'){
+                    return $query->join('project_members','projects.id','project_members.project_id')
+                                    ->where('project_members.user_id',Auth::id());
+                    }
+                })
+                ->orderBy("projects.id","desc");
+        }
 
         return Datatables::eloquent($projects)
                         ->filter(function ($query) use ($request) {
@@ -220,69 +233,114 @@ class ProjectController extends Controller
         $company_id = company_id();
         $user_type = Auth::user()->user_type;
         $data = array();
+        
+        if(Auth()->user()->user_type == 'admin') {
+            $data['project'] = Project::where('projects.id', $id)->first();
+        } else {
+            $data['project'] = Project::where('projects.id', $id)
+            ->where('company_id', $company_id)
+            ->when($user_type, function ($query, $user_type) {
+                  if($user_type == 'staff'){
+                      $query->whereHas('members', function( $q ) use( $user_type ){
+                          $q->where('user_id', Auth::id());
+                      });
+                  }
+              })
+            ->first();
+        }
 
-        $data['project'] = Project::where('projects.id', $id)
-                                  ->where('company_id', $company_id)
-                                  ->when($user_type, function ($query, $user_type) {
-                                        if($user_type == 'staff'){
-                                            $query->whereHas('members', function( $q ) use( $user_type ){
-                                                $q->where('user_id', Auth::id());
-                                            });
-                                        }
-                                    })
-                                  ->first();
+       
 		if(! $data['project']){
 			return back()->with('error', _lang('Sorry, Project not found !'));
 		}
 
-        //get Summary data
-        $data['hour_completed'] = \App\TimeSheet::where('project_id',$id)
-                                                      ->selectRaw("SUM( TIMESTAMPDIFF(SECOND, start_time, end_time) ) as total_seconds")
-                                                      ->where('company_id', $company_id)
-                                                      ->first();
+        if(Auth()->user()->user_type == 'admin') {
+
+            //get Summary data
+            $data['hour_completed'] = \App\TimeSheet::where('project_id',$id)
+            ->selectRaw("SUM( TIMESTAMPDIFF(SECOND, start_time, end_time) ) as total_seconds")
+            ->first();
 
 
-        $data['invoices'] = \App\Invoice::where('related_to','projects')
-                                        ->where('related_id', $id)
-                                        ->where('company_id', $company_id)
-                                        ->get();
+            $data['invoices'] = \App\Invoice::where('related_to','projects')
+            ->where('related_id', $id)
+            ->get();
 
-        $data['expenses'] = \App\Transaction::where("transactions.company_id",$company_id)
-                                            ->where("project_id",$id)
-                                            ->orderBy("transactions.id","desc")
-                                            ->get();
+            $data['tasks'] = \App\Task::where('project_id',$id)->get();
 
-        $data['tasks'] = \App\Task::where('project_id',$id)
-                                  ->where('company_id', $company_id)
-                                  ->when($user_type, function ($query, $user_type) {
-                                        if($user_type == 'staff'){
-                                           return $query->where('assigned_user_id',Auth::id());
-                                        }
-                                    })
-                                  ->get();
+            $data['timesheets'] = \App\TimeSheet::where('project_id',$id)
+            ->orderBy('id','desc')
+            ->get();
 
-        $data['timesheets'] = \App\TimeSheet::where('project_id',$id)
-                                            ->where('company_id', $company_id)
-                                            ->orderBy('id','desc')
-                                            ->get();
-
-        $data['project_milestones']  = \App\ProjectMilestone::where('project_id',$id)
-                                                            ->where('company_id',$company_id)
-                                                            ->orderBy('id','desc')
-                                                            ->get();
+            $data['project_milestones']  = \App\ProjectMilestone::where('project_id',$id)
+                        ->orderBy('id','desc')
+                        ->get();
 
 
-        $data['projectfiles'] = \App\ProjectFile::where('related_id', $id)
-                                                ->where('related_to', 'projects')
-                                                ->where('company_id', $company_id)
-                                                ->orderBy('id','desc')
-                                                ->get();
+            $data['projectfiles'] = \App\ProjectFile::where('related_id', $id)
+            ->where('related_to', 'projects')
+            ->orderBy('id','desc')
+            ->get();
 
-        $data['notes'] = \App\Note::where('related_id', $id)
-                                  ->where('related_to', 'projects')
-                                  ->where('company_id', $company_id)
-                                  ->orderBy('id','desc')
-                                  ->get();
+            $data['notes'] = \App\Note::where('related_id', $id)
+            ->where('related_to', 'projects')
+            ->orderBy('id','desc')
+            ->get();
+
+        } else {
+
+            //get Summary data
+            $data['hour_completed'] = \App\TimeSheet::where('project_id',$id)
+            ->selectRaw("SUM( TIMESTAMPDIFF(SECOND, start_time, end_time) ) as total_seconds")
+            ->where('company_id', $company_id)
+            ->first();
+
+
+            $data['invoices'] = \App\Invoice::where('related_to','projects')
+            ->where('related_id', $id)
+            ->where('company_id', $company_id)
+            ->get();
+
+            $data['expenses'] = \App\Transaction::where("transactions.company_id",$company_id)
+            ->where("project_id",$id)
+            ->orderBy("transactions.id","desc")
+            ->get();
+
+            $data['tasks'] = \App\Task::where('project_id',$id)
+            ->where('company_id', $company_id)
+            ->when($user_type, function ($query, $user_type) {
+            if($user_type == 'staff'){
+            return $query->where('assigned_user_id',Auth::id());
+            }
+            })
+            ->get();
+
+            $data['timesheets'] = \App\TimeSheet::where('project_id',$id)
+            ->where('company_id', $company_id)
+            ->orderBy('id','desc')
+            ->get();
+
+            $data['project_milestones']  = \App\ProjectMilestone::where('project_id',$id)
+                        ->where('company_id',$company_id)
+                        ->orderBy('id','desc')
+                        ->get();
+
+
+            $data['projectfiles'] = \App\ProjectFile::where('related_id', $id)
+            ->where('related_to', 'projects')
+            ->where('company_id', $company_id)
+            ->orderBy('id','desc')
+            ->get();
+
+            $data['notes'] = \App\Note::where('related_id', $id)
+            ->where('related_to', 'projects')
+            ->where('company_id', $company_id)
+            ->orderBy('id','desc')
+            ->get();
+
+        }
+
+        
 
         return view('backend.accounting.project.view', $data);
 
@@ -296,16 +354,22 @@ class ProjectController extends Controller
      */
     public function edit(Request $request,$id)
     {
-
-
-        $project = Project::where('id',$id)
-                          ->where('company_id',company_id())
-                          ->first();
+        
+        if(Auth()->user()->user_type == 'admin') {
+            $project = Project::where('id',$id)
+            ->first();
+        } else {
+            $project = Project::where('id',$id)
+            ->where('company_id',company_id())
+            ->first();
+        }
+       
+        
         $projectfile = \App\ProjectFile::where('related_to','projects')->where('related_id',$id)->first();;
 
         $data['project']        =   $project;
         $data['id']             =   $project->id;
-
+        $data['company_id']             =   $project->company_id;
 
 
         $data['demo']   =   false;
@@ -325,10 +389,14 @@ class ProjectController extends Controller
 
             $data['groups'] =   $Viewbuilder->groups;
 
-            $project = Project::where('id',$id)
-                            ->where('company_id',company_id())
-                            ->first();
-
+            if(Auth()->user()->user_type == 'admin') {
+                $project = Project::where('id',$id)
+                ->first();
+            } else {
+                $project = Project::where('id',$id)
+                ->where('company_id',company_id())
+                ->first();
+            }           
                             
             $projectfile = \App\ProjectFile::where('related_to','projects')->where('related_id',$id)->first();;
 
@@ -402,9 +470,8 @@ class ProjectController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            // 'domain_type'   => 'required|integer',
-            'sub_domain'           => 'unique:projects,sub_domain,' . $id,
-            'custom_domain'     => 'unique:projects,custom_domain,' . $id
+            'sub_domain'           => 'nullable|sometimes|unique:projects,sub_domain,' . $id,
+            'custom_domain'     => 'nullable|sometimes|unique:projects,custom_domain,' . $id
         ]);
 
     if ($validator->fails()) {
@@ -418,36 +485,40 @@ class ProjectController extends Controller
     }
 
 
-    DB::beginTransaction();
+    DB::beginTransaction();    
 
-        $company_id = company_id();
-
-        $project = Project::where('id',$id)
-                          ->where('company_id',$company_id)
-                          ->first();
+    $company_id = $request->company_id;
+    Session::put('company_id', $company_id);
+    $project = Project::where('id',$id)
+            ->where('company_id',$company_id)
+            ->first();
+     
         $project->name = $request->input('name');
         $project->description = $request->input('description');
 
+
+        
         $domain_main = '.'.getAppDomain();
+        
         if (isset($request->sub_domain)) {
             # code...
             if (strpos($domain_main, $request->sub_domain)) {
                 return back()->with('error', __('Subdomain must have ').$domain_main);
             }
         }
-
-
+        
         if(isset($request->sub_domain) && $request->sub_domain != ''){
             if(str_contains($request->sub_domain, getAppDomain())) {
                 $project->sub_domain = $request->sub_domain;
+                $project->custom_domain = Null;
             } else {
                 $project->sub_domain = $request->sub_domain . $domain_main;
+                $project->custom_domain = Null;
             }
         } else {
+                $project->sub_domain = Null;
                 $project->custom_domain = $request->custom_domain;
         }
-
-
 
 
         $project->save();
@@ -455,6 +526,8 @@ class ProjectController extends Controller
         create_log('projects', $project->id, _lang('Updated Project'));
 
         DB::commit();
+
+
 
     if(! $request->ajax()){
            return redirect()->route('projects.index')->with('success', _lang('Updated Sucessfully'));
@@ -474,11 +547,20 @@ class ProjectController extends Controller
     public function delete_project_member(Request $request, $member_id)
     {
         DB::beginTransaction();
-        $project_member = ProjectMember::join('projects','projects.id','project_members.project_id')
-                                       ->where('project_members.user_id', $member_id)
-                                       ->where('company_id',company_id())
-                                       ->select('project_members.*')
-                                       ->first();
+
+        if(Auth()->user()->user_type == 'admin') {
+            $project_member = ProjectMember::join('projects','projects.id','project_members.project_id')
+            ->where('project_members.user_id', $member_id)
+            ->select('project_members.*')
+            ->first();
+        } else {
+            $project_member = ProjectMember::join('projects','projects.id','project_members.project_id')
+            ->where('project_members.user_id', $member_id)
+            ->where('company_id',company_id())
+            ->select('project_members.*')
+            ->first();
+        }
+        
 
         create_log('projects', $project_member->project_id, _lang('Removed').' '.$project_member->user->name.' '._lang('from Project'));
 
@@ -496,14 +578,24 @@ class ProjectController extends Controller
 
     /* Get Logs Data*/
     public function get_logs_data($project_id){
-
-        $logs = \App\ActivityLog::with('created_by')
-                                ->select('activity_logs.*')
-                                ->where("activity_logs.company_id",company_id())
-                                ->where('related_to','projects')
-                                ->where('related_id',$project_id)
-                                ->orderBy("activity_logs.id","desc")
-                                ->get();
+        dd(5);
+        if(Auth()->user()->user_type == 'admin') {
+            $logs = \App\ActivityLog::with('created_by')
+            ->select('activity_logs.*')
+            ->where('related_to','projects')
+            ->where('related_id',$project_id)
+            ->orderBy("activity_logs.id","desc")
+            ->get();
+        } else {
+            $logs = \App\ActivityLog::with('created_by')
+            ->select('activity_logs.*')
+            ->where("activity_logs.company_id",company_id())
+            ->where('related_to','projects')
+            ->where('related_id',$project_id)
+            ->orderBy("activity_logs.id","desc")
+            ->get();
+        }
+       
 
         echo json_encode($logs);
     }
@@ -547,6 +639,7 @@ class ProjectController extends Controller
         $projectfile->related_id = $request->input('related_id');
         $projectfile->file = $file_path;
         $projectfile->user_id = Auth::id();
+
         $projectfile->company_id = company_id();
 
         $projectfile->save();
@@ -642,8 +735,9 @@ class ProjectController extends Controller
         $note->related_id = $request->input('related_id');
         $note->note = $request->input('note');
         $note->user_id = Auth::id();
-        $note->company_id = company_id();
-
+        if(Auth()->user()->user_type != 'admin') { 
+            $note->company_id = company_id();
+        }
         $note->save();
 
         create_log('projects', $note->related_id, _lang('Added Note'));
@@ -726,8 +820,13 @@ class ProjectController extends Controller
 
         $company_id = company_id();
 
-        $project = $project = Project::where('id',$id)
-                                     ->where('company_id',$company_id);
+        if(Auth()->user()->user_type == 'admin') { 
+
+        $project = $project = Project::where('id',$id);
+        } else {
+            $project = $project = Project::where('id',$id)
+            ->where('company_id',$company_id);
+        }
         $project->delete();
 
         $this->rrmdir(public_path('tmp/'.Auth::user()->id.'/'.$id));

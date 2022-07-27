@@ -20,9 +20,7 @@ class WebsiteController extends Controller
     {	
 		if(env('APP_INSTALLED',true) == true){
 			$this->middleware(function ($request, $next) {
-				if( get_option('website_enable','yes') == 'no' ){	
-					return redirect('login');
-				}
+				
                 if(isset($_GET['language'])){
                     session(['language' => $_GET['language']]);
                     return back();

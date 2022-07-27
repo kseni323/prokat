@@ -43,10 +43,15 @@ if ( ! function_exists('_lang')){
 if (!function_exists('getAppDomain')) {
 
     function getAppDomain() {
-        $app_url = config('app.url');
-        $parse = parse_url($app_url);
-        $domain_main =  $parse['host'];
-        return $domain_main;
+		if(config('app.url') != '') {
+			$app_url = config('app.url');
+			$parse = parse_url($app_url);
+			$domain_main =  $parse['host'];
+			return $domain_main;
+		}
+		
+		return true;
+		
     }
 }
 
@@ -672,7 +677,7 @@ if ( ! function_exists('company_id')){
 				// Return company id from session
 				return session('company_id');
 			}else if(Auth::user()->user_type == 'admin'){
-                return '';
+                return session('company_id');
 			}else{
                 return Auth::user()->id;
 			}
@@ -1136,6 +1141,10 @@ if ( ! function_exists('has_feature'))
     	}
     	
         if(Auth::user()->user_type == 'client'){
+        	return true;
+        }
+
+		if(Auth::user()->user_type == 'admin'){
         	return true;
         }
 

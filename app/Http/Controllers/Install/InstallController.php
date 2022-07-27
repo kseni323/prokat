@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Utilities\Installer;
 use Validator;
 use Hash;
+use Artisan;
 
 class InstallController extends Controller
 {	
@@ -36,8 +37,9 @@ class InstallController extends Controller
 		$database = $request->database;
 		$username = $request->username;
 		$password = $request->password;
+		$appurl = $request->appurl;
 		
-		if(Installer::createDbTables($host, $database, $username, $password) == false){
+		if(Installer::createDbTables($host, $database, $username, $password, $appurl) == false){
            return redirect()->back()->with("error","Invalid Database Settings !");
 		}
 		
@@ -54,7 +56,7 @@ class InstallController extends Controller
 		$validator = Validator::make($request->all(), [	
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|min:6',
         ]);
 		
 		if ($validator->fails()) {	
@@ -66,8 +68,10 @@ class InstallController extends Controller
 		$name = $request->name;
 		$email = $request->email;
 		$password = Hash::make($request->password);
-		
-		Installer::createUser($name, $email, $password);
+		$role_id = 1;
+		$company_id = 0;
+
+		Installer::createUser($name, $email, $password, $role_id, $company_id);
         
 		return redirect('install/system_settings');
     }
@@ -81,7 +85,8 @@ class InstallController extends Controller
     {
         Installer::updateSettings($request->all());
         Installer::finalTouches($request->site_title);
-		return redirect('administration/general_settings');
+
+		return redirect('/');
     }
 	
 }

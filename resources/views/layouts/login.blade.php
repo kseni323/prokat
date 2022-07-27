@@ -57,11 +57,6 @@
                     height: 60% !important;
                 }
 
-                @if(env('DEMO_MODE') == true)
-                .kt-login__body {
-                    margin-top: 50px !important;
-                }
-              @endif
             }
         </style>
     </head>

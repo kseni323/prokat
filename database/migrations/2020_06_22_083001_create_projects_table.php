@@ -28,8 +28,8 @@ class CreateProjectsTable extends Migration
             $table->longText('custom_fields')->nullable();
 			$table->bigInteger('user_id');
             $table->integer('domain_type')->nullable();
-            $table->string('sub_domain')->nullable();
-            $table->string('custom_domain')->nullable();
+            $table->string('sub_domain')->unique()->nullable();
+            $table->string('custom_domain')->unique()->nullable();
             $table->bigInteger('company_id');
             $table->timestamps();
         });

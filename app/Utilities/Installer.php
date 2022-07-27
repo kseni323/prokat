@@ -9,6 +9,7 @@ use \App\Setting;
 use DB;
 use Carbon\Carbon;
 use File;
+use Illuminate\Support\Str;
 
 /**
  * Class Installer
@@ -19,14 +20,14 @@ use File;
  */
 class Installer
 { 
-    private static $minPhpVersion = '7.1.3';
+    private static $minPhpVersion = '7.3';
 
     public static function checkServerRequirements()
     {
         $requirements = array();
 
 		if (phpversion() < self::$minPhpVersion) {
-            $requirements[] = 'Minimum PHP Version 7.1.3 required';
+            $requirements[] = 'Minimum PHP Version 7.3 required';
         }
 		
         if (ini_get('safe_mode')) {
@@ -108,14 +109,14 @@ class Installer
         return $requirements;
     }
 
-    public static function createDbTables($host, $database, $username, $password)
+    public static function createDbTables($host, $database, $username, $password, $appurl)
     {
-        if (!static::isDbValid($host, $database, $username, $password)) {
+        if (!static::isDbValid($host, $database, $username, $password, $appurl)) {
             return false;
         }
 
         // Set database details
-        static::saveDbVariables($host, 3306, $database, $username, $password);
+        static::saveDbVariables($host, 3306, $database, $username, $password, $appurl);
 
         // Try to increase the maximum execution time
         set_time_limit(300); // 5 minutes
@@ -130,6 +131,8 @@ class Installer
 		
         // Create Roles
         Artisan::call('db:seed', ['--force' => true]);
+
+         // Create Roles
 
         return true;
     }
@@ -147,7 +150,7 @@ class Installer
      *
      * @return bool
      */
-    public static function isDbValid($host, $database, $username, $password)
+    public static function isDbValid($host, $database, $username, $password, $appurl)
     {
         Config::set('database.connections.install_test', [
             'host'      => $host,
@@ -171,9 +174,9 @@ class Installer
         return true;
     }
 
-    public static function saveDbVariables($host, $port, $database, $username, $password)
+    public static function saveDbVariables($host, $port, $database, $username, $password, $appurl)
     {
-        $prefix = strtolower(str_random(3) . '_');
+        $prefix = strtolower(Str::random(3) . '_');
 
         // Update .env file
         static::updateEnv([
@@ -182,6 +185,7 @@ class Installer
             'DB_DATABASE'   =>  $database,
             'DB_USERNAME'   =>  $username,
             'DB_PASSWORD'   =>  $password,
+            'APP_URL'       =>  $appurl,
             //'DB_PREFIX'     =>  $prefix,
         ]);
 
@@ -210,6 +214,7 @@ class Installer
 			 }
 			 
 			 $data = array();
+             
 			 $data['value'] = $value; 
 			 $data['updated_at'] = Carbon::now();
 			 if(Setting::where('name', $key)->exists()){				
@@ -222,12 +227,14 @@ class Installer
 		}
     }
 
-    public static function createUser($name, $email, $password)
+    public static function createUser($name, $email, $password, $role_id, $company_id)
     {
         // Create the user
 		$user = new User();
 		$user->name = $name;
 		$user->email = $email;
+        $user->role_id = $role_id;
+        $user->company_id = $company_id;
 		$user->email_verified_at = date('Y-m-d H:i:s');
 		$user->password = $password;
 		$user->status = 1;

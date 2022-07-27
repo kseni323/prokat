@@ -9,7 +9,8 @@
 </style>
 <form method="post" class="ajax-submit" autocomplete="off" action="{{ action('ProjectController@update', $id) }}" enctype="multipart/form-data">
 	{{ csrf_field()}}
-	<input name="_method" type="hidden" value="PATCH">				
+	<input name="_method" type="hidden" value="PATCH">	
+    <input value="{{$company_id}}" type="hidden" name="company_id">			
 	
 	<div class="row">
 		<div class="col-md-12">

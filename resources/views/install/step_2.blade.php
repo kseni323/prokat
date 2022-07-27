@@ -14,6 +14,10 @@
 			@endif
 		   <form action="{{ url('install/process_install') }}" method="post" autocomplete="off">
 			   {{ csrf_field() }}
+			   <div class="form-group">
+				<label>App URL:</label>
+				<input type="text" class="form-control" value="appurl" name="appurl" id="appurl">
+			  </div>
 			  <div class="form-group">
 				<label>Hostname:</label>
 				<input type="text" class="form-control" value="localhost" name="hostname" id="hostname">

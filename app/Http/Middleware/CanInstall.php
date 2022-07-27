@@ -15,7 +15,8 @@ class CanInstall
      */
     public function handle($request, Closure $next)
     {
-		if(env('APP_INSTALLED',true) == true){
+      
+		if(config('app.app_install') == true){
 			update_currency_exchange_rate();
 			return $next($request);
 		}
