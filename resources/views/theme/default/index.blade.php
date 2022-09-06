@@ -84,9 +84,9 @@
                                 <li>
                                     <span class="checkmark bg--primary-1"></span>
                                     @if ($package->type == 'free')
-                                    <span>{{ _dlang($package->websites_limit).' '._lang('Websites') }}</span>
+                                    <span>{{ $package->websites_limit.' '._lang('Websites') }}</span>
                                     @else
-                                    <span>{{ _dlang(unserialize($package->websites_limit)['monthly']).' '._lang('Websites') }}</span>
+                                    <span>{{ unserialize($package->websites_limit)['monthly'].' '._lang('Websites') }}</span>
                                     @endif
                                 </li>
                             </ul>
@@ -115,9 +115,9 @@
                                 <li>
                                     <span class="checkmark bg--primary-1"></span>
                                     @if ($package->type == 'free')
-                                    <span>{{ _dlang($package->websites_limit).' '._lang('Websites') }}</span>
+                                    <span>{{ $package->websites_limit.' '._lang('Websites') }}</span>
                                     @else 
-                                    <span>{{ _dlang(unserialize($package->websites_limit)['yearly']).' '._lang('Websites') }}</span>
+                                    <span>{{ unserialize($package->websites_limit)['yearly'].' '._lang('Websites') }}</span>
                                     @endif
                                 </li>
                             </ul>

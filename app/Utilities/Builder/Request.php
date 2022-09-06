@@ -120,7 +120,10 @@ class Request {
      */
     protected function _upload_file($path, $arr, $mode,$userId,$project_id) {
         if ($mode === 'import') {
-            $file_name = $project_id.'_'.'project.supra';
+            $projects = \App\Project::all();
+            foreach($projects as $project) {
+                $file_name = $project->id.'_'.'project.supra';
+            }
         }else{
             $file_name = $_POST['name_file'];
         }

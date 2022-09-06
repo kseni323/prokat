@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" @if(_lang('SYSDIRECTIONDIR') == 'rtl')direction="rtl" dir="rtl" style="direction: rtl"@endif >
+<html lang="{{ get_option('language') == "Arabic" ? "ar" : "en" }}" @if(_lang('SYSDIRECTIONDIR') == 'rtl' || get_option('backend_direction') == 'rtl') direction="rtl" dir="rtl" style="direction: rtl" @endif >
 
     <!-- begin::Head -->
     <head><!--begin::Base Path (base relative path for assets of this page) -->
@@ -39,10 +39,10 @@
             <link href="./admin/vendors/global/vendors.bundle.css" rel="stylesheet" type="text/css" />
 			<link href="{{ asset('public/backend/plugins/dropify/css/dropify.min.css') }}" rel="stylesheet">
 			<link href="{{ asset('public/backend/plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
-            @if (_lang('SYSDIRECTIONDIR') == 'rtl')
+            @if (_lang('SYSDIRECTIONDIR') == 'rtl' || get_option('backend_direction') == 'rtl')
                 <link href="./admin/css/demo1/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
-                <link href="{{ asset('public/backend/admin/vendors/custom/notifications/css/ns-default.rtl.css') }}" rel="stylesheet" type="text/css" />
-                <link href="{{ asset('public/backend/admin/vendors/custom/notifications/css/ns-style-other.rtl.css') }}" rel="stylesheet" type="text/css" />
+                <link href="./admin/vendors/custom/notifications/css/ns-default.rtl.css" rel="stylesheet" type="text/css" />
+                <link href="./admin/vendors/custom/notifications/css/ns-style-other.rtl.css" rel="stylesheet" type="text/css" />
                 <link href="//fonts.googleapis.com/css?family=Cairo:300,400,600,700" rel="stylesheet">
 
 
@@ -150,7 +150,7 @@
                                     </div>
                                 @else
                                     <span class="kt-media kt-media--lg kt-media--brand ">
-                                        <span>{{ Auth::user()->name }}</span>
+									<img src="{{asset('public/images/avatar.png')}}" alt="image">
                                     </span>
                                 @endif
                                 <div class="kt-widget__content kt-padding-t-10">
@@ -296,8 +296,9 @@
 										@if(Auth::user()->profile_picture != '')
                                              <img alt="Pic" src="{{asset('public/uploads/profile/'.Auth::user()->profile_picture)}}" />
                                 		@else
-                                           <span class="kt-badge kt-badge--username kt-badge--unified-brand kt-badge--lg kt-badge--rounded kt-font-light kt-badge--bold">{{ Auth::user()->name }}</span>
+											<img class="kt-badge kt-badge--username kt-badge--unified-brand kt-badge--lg kt-badge--rounded kt-font-light kt-badge--bold" src="{{asset('public/images/avatar.png')}}" alt="image">
                                         @endif
+										
                                     </div>
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">

@@ -397,7 +397,7 @@ class ProjectController extends Controller
                 ->where('company_id',company_id())
                 ->first();
             }           
-                            
+                        
             $projectfile = \App\ProjectFile::where('related_to','projects')->where('related_id',$id)->first();;
 
             $data['project']        =   $project;
@@ -578,7 +578,6 @@ class ProjectController extends Controller
 
     /* Get Logs Data*/
     public function get_logs_data($project_id){
-        dd(5);
         if(Auth()->user()->user_type == 'admin') {
             $logs = \App\ActivityLog::with('created_by')
             ->select('activity_logs.*')

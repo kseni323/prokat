@@ -16,7 +16,17 @@ if ( ! function_exists('_lang')){
 		// 	$target_lang = get_language();
 		// }		
 		
-		$target_lang = session('language') == '' ? get_option('language') : session('language');
+		
+		//Get Target language
+		$target_lang = get_option('language');
+
+		if(company_id() !=''){
+			$target_lang = get_company_option('language');
+		}
+
+		if($target_lang == ''){
+			$target_lang = 'language';
+		}
 		
 		if(session('language') == ''){
 			session(['language' => $target_lang]);
@@ -673,11 +683,11 @@ if ( ! function_exists('company_id')){
 		if(Auth::check()){
 			if( Auth::user()->company_id != ''){	 
 				return Auth::user()->company_id; 
-			}else if(Auth::user()->company_id == '' || Auth::user()->user_type == 'client'){
+			}else if(Auth::user()->user_type == 'client'){
 				// Return company id from session
 				return session('company_id');
 			}else if(Auth::user()->user_type == 'admin'){
-                return session('company_id');
+				return Auth::user()->company_id; 
 			}else{
                 return Auth::user()->id;
 			}

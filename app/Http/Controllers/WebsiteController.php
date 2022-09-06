@@ -51,7 +51,12 @@ class WebsiteController extends Controller
         $host = explode('.',$values['path']);
 
         if ($request->domain == getAppDomain()) {
-            return view('theme.default.index');
+            if( get_option('website_enable','yes') == 'no' ){	
+                return redirect('login');
+            } else {
+                return view('theme.default.index');
+
+            }
         } else {
             $p = \App\Project::where('custom_domain', $request->domain)
             ->orWhere('sub_domain', $request->domain)->orWhere('sub_domain', $host[0])->first();
