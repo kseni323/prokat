@@ -16,25 +16,7 @@ if ( ! function_exists('_lang')){
 		// 	$target_lang = get_language();
 		// }		
 		
-		
-		//Get Target language
 		$target_lang = get_option('language');
-
-		if(company_id() !=''){
-			$target_lang = get_company_option('language');
-		}
-
-		if($target_lang == ''){
-			$target_lang = 'language';
-		}
-		
-		if(session('language') == ''){
-			session(['language' => $target_lang]);
-		} 
-		
-		if($target_lang == ''){
-			$target_lang = "language";
-		}
 		
 		if(file_exists(resource_path() . "/language/$target_lang.php")){
 			include(resource_path() . "/language/$target_lang.php"); 
