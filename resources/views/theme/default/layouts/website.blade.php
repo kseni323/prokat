@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ get_option('language') == "Arabic" ? "ar" : "en" }}" @if(_lang('SYSDIRECTIONDIR') == 'rtl' || get_option('backend_direction') == 'rtl') direction="rtl" dir="rtl" style="direction: rtl" @endif >
     <head>
         <meta charset="utf-8">
         <title>{{ get_option('website_title','LaraBuilder') }}</title>
@@ -22,7 +22,12 @@
         <link href="{{ asset('public/theme/default/assets/css/flickity.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('public/theme/default/assets/css/iconsmind.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('public/theme/default/assets/css/jquery.steps.css') }}" rel="stylesheet" type="text/css" media="all" />
+        @if (_lang('SYSDIRECTIONDIR') == 'rtl' || get_option('backend_direction') == 'rtl')
         <link href="{{ asset('public/theme/default/assets/css/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('public/theme/default/assets/css/theme-rtl.css') }}" rel="stylesheet" type="text/css" media="all" />
+        @else 
+        <link href="{{ asset('public/theme/default/assets/css/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
+        @endif
         <link href="{{ asset('public/theme/default/assets/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('public/theme/default/assets/css/font-rubiklato.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700%7CMerriweather:300,300i" rel="stylesheet">
@@ -33,7 +38,7 @@
         </style>
         
     </head>
-    <body class="{{ _lang('SYSDIRECTIONDIR') }} ">
+    <body class="{{ get_option('backend_direction') }} ">
         <a id="start"></a>
         <div class="nav-container ">
             <div class="bar bar--sm visible-xs">
