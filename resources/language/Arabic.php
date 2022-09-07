@@ -1202,3 +1202,7 @@ $language["Contact Us"] = "Contact Us";
 $language["Your Subject"] = "Your Subject";
 $language["send message!"] = "send message!";
 $language["No questions added yet!"] = "No questions added yet!";
+$language["This subdomain is already exist"] = "هذا الدومين الفرعي موجود بالفعل";
+$language["It&rsquo;s recommend to login with user account if you want to test the builder, because default admin account is for the general mangament, manage users and packages."] = "It&rsquo;s recommend to login with user account if you want to test the builder, because default admin account is for the general mangament, manage users and packages.";
+$language["UNFORTUNATELY IT'S NOT ALLOWED AT DEMO MODE!"] = "UNFORTUNATELY IT'S NOT ALLOWED AT DEMO MODE!";
+$language["Add records below in your domain provider's DNS settings"] = "Add records below in your domain provider's DNS settings";

@@ -492,6 +492,11 @@ class ProjectController extends Controller
     $project = Project::where('id',$id)
             ->where('company_id',$company_id)
             ->first();
+
+            if(str_contains($project->sub_domain, $request->sub_domain)) {
+                return response()->json(['result'=>'error','message'=>_lang('This subdomain is already exist')]);
+                   return back();
+             }
      
         $project->name = $request->input('name');
         $project->description = $request->input('description');
