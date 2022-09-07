@@ -229,7 +229,6 @@ class Request {
         }
 
         $output_dir = base_path('public/sites').'/'.$_POST['userId'].'/'.$p_id;
-
         $file_name = $this->saveSiteToTmp($dataPost, 'sites', $_POST['userId'],$p_id );
 
 
@@ -705,11 +704,9 @@ class Request {
             $data = stripslashes($data);
         }
 
-
         if(isset($_POST['id'])){
             $project             =   \App\Project::find($_POST['id']);
             $project->update();
-
             unlink(public_path() . "/uploads/project_files/" . $project->id . "_project.supra");
             file_put_contents(public_path()."/uploads/project_files/".$project->id."_project.supra", $data);
             // file_put_contents(public_path()."/tmp/".$project->id."_project.supra", $data);
@@ -720,7 +717,6 @@ class Request {
             $projectfile->company_id    = $this->_company_id;
             $projectfile->update();
 
-
         }else{
             
             $project                 =   new \App\Project;
@@ -730,10 +726,8 @@ class Request {
             $project->name           =   'Project_'.date('Y-m-d_H:i:s');
             $project->save();
 
-
             file_put_contents(public_path()."/uploads/project_files/".$project->id."_project.supra", $data);
             file_put_contents(public_path()."/tmp/".$project->id."_project.supra", $data);
-
 
             $projectfile                = new \App\ProjectFile();
             $projectfile->related_to    = 'projects';
@@ -742,7 +736,6 @@ class Request {
             $projectfile->user_id       = $this->_current_user;
             $projectfile->company_id    = $this->_company_id;
             $projectfile->save();
-
 
             create_log('projects', $projectfile->related_id, _lang('Uploaded File'));
         }
