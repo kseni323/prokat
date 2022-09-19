@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Utilities\Builder\FontsToDownload;
 use App\Utilities\Builder\Ftpuploading;
 use Illuminate\Support\Facades\Cache;
+use Auth;
 class Request {
     protected $_base_path = null;
     protected $_base_url = null;
@@ -20,7 +21,11 @@ class Request {
         $this->_base_path = SUPRA_BASE_PATH;
         $this->_base_url = SUPRA_BASE_URL;
         $this->_current_user = CURRENT_USER;
-        $this->_company_id = CURRENT_COMPANY;
+        if(Auth::user()->user_type == 'admin') {
+            $this->_company_id = 0;
+        } else {
+            $this->_company_id = CURRENT_COMPANY;
+        }
     }
 
     /**
@@ -119,14 +124,15 @@ class Request {
      * @param $mode {string}
      */
     protected function _upload_file($path, $arr, $mode,$userId,$project_id) {
-        if ($mode === 'import') {
-            $projects = \App\Project::all();
-            foreach($projects as $project) {
-                $file_name = $project->id.'_'.'project.supra';
-            }
-        }else{
-            $file_name = $_POST['name_file'];
-        }
+       
+        if($_POST['name_file'] == null) {
+        $file_name = $project_id.'_'.'project.supra';
+
+       } else {
+        $file_name = $_POST['name_file'];
+
+       }
+       
         $sub_folder = $mode === 'import' ? '' : '/'.$userId.'/';
 
         if (!file_exists($path . $sub_folder)) {
@@ -777,11 +783,11 @@ class Request {
             mkdir($dir, 0777, true);
         }
 
-        $filename = $dir .'/' . uniqid() . "_project.zip";
+        $filename = $dir .'/' . $_POST['project_id'] . "_project.zip";
         $zip = new ZipArchive();
         $zip->open($filename, ZipArchive::CREATE);
 
-        $zip->addFromString('project.supra',$data);
+        $zip->addFromString($_POST['project_id'].'_project.supra',$data);
 
         $zip->close();
 

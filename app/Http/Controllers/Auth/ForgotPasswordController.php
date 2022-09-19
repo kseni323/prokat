@@ -28,7 +28,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-		Overrider::load("Settings");
+		setMailConfig();
         $this->middleware('guest');
     }
 }

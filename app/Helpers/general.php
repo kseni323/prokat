@@ -1246,6 +1246,37 @@ if ( ! function_exists('xss_clean')){
 	}
 }
 
+if (!function_exists('setMailConfig')) {
+    function setMailConfig()
+    {
+        //Get the data from settings table
+        $MAIL_DRIVER = get_option('mail_type');
+        $MAIL_HOST = get_option('smtp_host');
+        $MAIL_PORT = get_option('smtp_port');
+        $MAIL_USERNAME = get_option('smtp_username');
+        $MAIL_PASSWORD = get_option('smtp_password');
+        $MAIL_ENCRYPTION = get_option('smtp_encryption');
+        $MAIL_FROM_ADDRESS = get_option('from_email');
+        $MAIL_FROM_NAME = get_option('from_name');
+
+        //Set the data in an array variable from settings table
+        $mailConfig = [
+            'driver'     => 'smtp',
+            'host'       => $MAIL_HOST,
+            'port'       => $MAIL_PORT,
+            'username'   => $MAIL_DRIVER == 'mailgun' ? $MAILGUN_DOMAIN : $MAIL_USERNAME,
+            'password'   => $MAIL_DRIVER == 'mailgun' ? $MAILGUN_SECRET : $MAIL_PASSWORD,
+            'encryption' => $MAIL_ENCRYPTION,
+            'from'       => array('address' => $MAIL_FROM_ADDRESS, 'name' => $MAIL_FROM_NAME),
+        ];
+
+        //To set configuration values at runtime, pass an array to the config helper
+        \Illuminate\Support\Facades\Config::set('mail', $mailConfig);
+
+        return $mailConfig;
+    }
+}
+
 /** Create Activity Log **/
 if ( ! function_exists('create_log')){
     function create_log($related_to, $related_id, $activity){
@@ -1254,7 +1285,11 @@ if ( ! function_exists('create_log')){
     	$log->related_id = $related_id;
     	$log->activity = $activity;
     	$log->user_id = Auth::id();
-    	$log->company_id = company_id();
+		if(Auth::user()->user_type == 'admin') {
+			$log->company_id = 0;
+        } else {
+			$log->company_id = company_id();
+        }
     	$log->save();
     }
 }
