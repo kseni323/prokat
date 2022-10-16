@@ -2,41 +2,6 @@
 
 window.addEventListener('load', function() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//------------------------------------------------------------------------
-//						OWL CAROUSEL OPTIONS
-//------------------------------------------------------------------------
-
-$('.carousel-single').owlCarousel({
-    loop: false,
-    margin: 0,
-    nav: true,
-    autoplay: true,
-    autoplayHoverPause: true,
-    autoHeight: false,
-    items: 1,
-    dots: true,
-    navText: ['',''],
-    rewind: true
-});
-
-
-
-
 //------------------------------------------------------------------------------------
 //						CONTACT FORM VALIDATION'S SETTINGS
 //------------------------------------------------------------------------------------
@@ -111,11 +76,11 @@ $('#contact-form-2-form').submit(function () {
             contentType: false,
             processData: false,
             success: function () {
-	$('#contact-form-2-form').find('[type=submit]').button('complete');
-},
+                $('#contact-form-2-form').find('[type=submit]').button('complete');
+            },
             error: function () {
-	$('#contact-form-2-form').find('[type=submit]').button('reset');
-}
+                $('#contact-form-2-form').find('[type=submit]').button('reset');
+            }
         });
     } else {
         //if data was invalidated

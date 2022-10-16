@@ -474,36 +474,28 @@ class ProjectController extends Controller
             'custom_domain'     => 'nullable|sometimes|unique:projects,custom_domain,' . $id
         ]);
 
-    if ($validator->fails()) {
-      if($request->ajax()){
-        return response()->json(['result'=>'error','message'=>$validator->errors()->all()]);
-      }else{
-        return redirect()->route('projects.edit', $id)
-              ->withErrors($validator)
-              ->withInput();
-      }
-    }
+
 
 
     DB::beginTransaction();    
+    $domain_main = '.'.getAppDomain();
 
     $company_id = $request->company_id;
     Session::put('company_id', $company_id);
-    $project = Project::where('id',$id)
-            ->where('company_id',$company_id)
-            ->first();
+    $project = Project::where('id',$id)->first();
 
-            if(str_contains($project->sub_domain, $request->sub_domain)) {
+            if( $request->sub_domain && Project::where('sub_domain', $request->sub_domain.$domain_main)->first()){
                 return response()->json(['result'=>'error','message'=>_lang('This subdomain is already exist')]);
-                   return back();
-             }
-     
+                return redirect()->back();
+            } elseif ($request->custom_domain  && Project::where('custom_domain', $request->custom_domain)->first()) {
+                return response()->json(['result'=>'error','message'=>_lang('This custom domain is already exist')]);
+                return redirect()->back();
+            }
+
+           
         $project->name = $request->input('name');
         $project->description = $request->input('description');
 
-
-        
-        $domain_main = '.'.getAppDomain();
         
         if (isset($request->sub_domain)) {
             # code...

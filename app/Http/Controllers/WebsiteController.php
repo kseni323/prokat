@@ -135,7 +135,7 @@ class WebsiteController extends Controller
     {
        @ini_set('max_execution_time', 0);
        @set_time_limit(0);
-       Overrider::load("Settings");
+		setMailConfig();
         
        $this->validate($request, [
             'name' => 'required',
@@ -156,13 +156,12 @@ class WebsiteController extends Controller
         $mail->subject = $subject;
         $mail->message = $message;
 
-        
         if(get_option('contact_email') != ''){
             try{
                 Mail::to(get_option('contact_email'))->send(new ContactUs($mail));      
-                echo json_encode(array('result'=>true,'message'=>_lang('Your Message send sucessfully.')));
+                return response(_lang('message has been sent successfully'), 200);
             }catch (\Exception $e) {
-                echo json_encode(array('result'=>false,'message'=>_lang('Error Occured, Please try again !')));
+                return response(_lang('Error Occured, Please try again !'), 200);
             }        
         }
 
