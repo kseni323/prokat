@@ -33,7 +33,7 @@ class VerificationController extends Controller
      * @return void
      */
     public function __construct()
-    {
+    {   
 		setMailConfig();
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
