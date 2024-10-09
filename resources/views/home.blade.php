@@ -20,13 +20,6 @@
         </div>
     </div>
 
-    <p>
-
-         User count: {{App\Models\User::count()}}
-
-    </p>
-
-
     <div class="container marketing"> 
     <div class="section-title"> Какие услуги мы предлагаем нашим клиентам</div>
     <div class="row text-center">
