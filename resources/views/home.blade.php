@@ -86,7 +86,7 @@
                             contactDriveGo@gmail.com
                         </li>
                         <li>
-                            <span style="font-weight: bold">Phone:</span> 
+                            <span style="font-weight: bold">Телефон:</span> 
                             +7 (923) 456-32-321
                         </li>
                     </ul>
@@ -147,7 +147,7 @@
                     <h3><ya-tr-span data-index="102-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Контактная информация" data-translation="Контактная информация" data-ch="0" data-type="trSpan" style="visibility: inherit !important;" data-selected="false">Контактная информация</ya-tr-span></h3>
                     <ul class="contact_info">
                         <li>
-                            <i class="fas fa-map-marker-alt"></i><ya-tr-span data-index="103-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="962 Fifth Avenue, 3rd Floor New York, NY10022 " data-translation="962 Пятая авеню, 3 этаж, Нью-Йорк, NY10022 " data-ch="0" data-type="trSpan" style="visibility: inherit !important;">Воронеж, ул.Колисниченко,15</ya-tr-span></li>
+                            <i class="fas fa-map-marker-alt"></i><ya-tr-span data-index="103-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="962 Fifth Avenue, 3rd Floor New York, NY10022 " data-translation="962 Пятая авеню, 3 этаж, Нью-Йорк, NY10022 " data-ch="0" data-type="trSpan" style="visibility: inherit !important;">Воронеж, ул.Колесниченко,15</ya-tr-span></li>
                         <li>
                             <i class="far fa-envelope"></i><ya-tr-span data-index="104-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="contact@barbershop.com " data-translation="contact@barbershop.com " data-ch="0" data-type="trSpan" style="visibility: inherit !important;">contact@carrental.com </ya-tr-span></li>
                         <li>
@@ -173,7 +173,21 @@
     </div>
 </section>
 
-
+<footer class="footer_section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="copyright">
+							driveGo © 
+							<script type="text/javascript"> 
+								document.write(new Date().getFullYear())
+							</script>2024
+							Все правы защищены
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
 
 
 </body>
