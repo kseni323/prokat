@@ -72,29 +72,22 @@
             <div class="col-lg-6 sm-padding">
                 <div class="contact-info">
                     <h2>
-                        Get in touch with us &amp; 
-                        <br>send us message today!
+                        Свяжитесь с нами!
                     </h2>
                     <p>
-                        Getting dressed up and traveling with good friends makes for a shared, unforgettable experience.
+                        Путешествие с хорошими друзьями подарит вам незабываемые впечатления.
                     </p>
                     <h3>
-                        198 West 21th Street, Suite 721 
-                        <br>
-                        New York, NY 10010
+                        Воронеж, ул. Антона Овсеенка, 31/2
                     </h3>
                     <ul>
                         <li>
                             <span style="font-weight: bold">Email:</span> 
-                            contact@yahyacarrental.com
+                            contactDriveGo@gmail.com
                         </li>
                         <li>
                             <span style="font-weight: bold">Phone:</span> 
-                            +88 (0) 101 0000 000
-                        </li>
-                        <li>
-                            <span style="font-weight: bold">Fax:</span> 
-                            +88 (0) 202 0000 001
+                            +7 (923) 456-32-321
                         </li>
                     </ul>
                 </div>
@@ -104,7 +97,7 @@
                     <div id="contact_ajax_form" class="contactForm">
                         <div class="form-group colum-row row">
                             <div class="col-sm-6">
-                                <input type="text" id="contact_name" name="name" class="form-control" placeholder="Name">
+                                <input type="text" id="contact_name" name="name" class="form-control" placeholder="Имя">
                             </div>
                             <div class="col-sm-6">
                                 <input type="email" id="contact_email" name="email" class="form-control" placeholder="Email">
@@ -112,17 +105,17 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input type="text" id="contact_subject" name="subject" class="form-control" placeholder="Subject">
+                                <input type="text" id="contact_subject" name="subject" class="form-control" placeholder="Тема">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <textarea id="contact_message" name="message" cols="30" rows="5" class="form-control message" placeholder="Message"></textarea>
+                                <textarea id="contact_message" name="message" cols="30" rows="5" class="form-control message" placeholder="Сообщение"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <button id="contact_send" class="contact_send_btn">Send Message</button>
+                                <button id="contact_send" class="contact_send_btn">Отправить сообщение</button>
                             </div>
                         </div>
                     </div>
