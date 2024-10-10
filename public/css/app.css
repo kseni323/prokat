@@ -82,7 +82,6 @@ body, html {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: .5rem 1rem;
-    --bs-navbar-hover-color: #04DBC0;
 
 }
 
