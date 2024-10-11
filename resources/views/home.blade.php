@@ -53,6 +53,20 @@
 </div>
 
 
+<section class="reservation_section" style="padding:50px 0px" id="reserve">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5"></div>
+			<div class="col-md-7">
+				<form method="POST" action="reserve.php" id="reservation_form" class="car-reservation-form"><div class="text_header"><span>
+							Найдите свой автомобиль
+						</span></div> <div><div class="form-group"><label for="pickup_location">Место получения</label> <input type="text" name="pickup_location" placeholder="Кольцовская, 54" class="form-control"> <!----></div> <div class="form-group"><label for="return_location">Место возврата</label> <input type="text" name="return_location" placeholder="Кольцовская, 54" class="form-control"> <!----></div> <div class="form-group"><label for="pickup_date">Дата аренды</label> <input type="date" min="2024-10-02" name="pickup_date" class="form-control"> <!----></div> <div class="form-group"><label for="return_date">Дата возврата</label> <input type="date" min="2024-10-03" name="return_date" class="form-control"> <!----></div> <button type="submit" name="reserve_car" class="btn sbmt-bttn">Бронируйте мгновенно</button></div></form>
+			</div>
+		</div>
+	</div>
+</section>
+
+
 <section class="widget_section">
     <div class="container">
         <div class="row">
