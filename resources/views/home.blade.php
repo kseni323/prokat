@@ -66,62 +66,24 @@
 </section>
 
 
-<section class="contact-section" id="contact-us">
+<section id="subscribe-block" class="pt-50 pb-50 pt-md-100 pb-md-100 text-center light spr-edit-el spr-oc-show spr-wout">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 sm-padding">
-                <div class="contact-info">
-                    <h2>
-                        Свяжитесь с нами!
-                    </h2>
-                    <p>
-                        Путешествие с хорошими друзьями подарит вам незабываемые впечатления.
-                    </p>
-                    <h3>
-                        Воронеж, ул. Антона Овсеенка, 31/2
-                    </h3>
-                    <ul>
-                        <li>
-                            <span style="font-weight: bold">Email:</span> 
-                            contactDriveGo@gmail.com
-                        </li>
-                        <li>
-                            <span style="font-weight: bold">Телефон:</span> 
-                            +7 (923) 456-32-321
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-6 sm-padding">
-                <div class="contact-form">
-                    <div id="contact_ajax_form" class="contactForm">
-                        <div class="form-group colum-row row">
-                            <div class="col-sm-6">
-                                <input type="text" id="contact_name" name="name" class="form-control" placeholder="Имя">
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="email" id="contact_email" name="email" class="form-control" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <input type="text" id="contact_subject" name="subject" class="form-control" placeholder="Тема">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <textarea id="contact_message" name="message" cols="30" rows="5" class="form-control message" placeholder="Сообщение"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <button id="contact_send" class="contact_send_btn">Отправить сообщение</button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-md-6 ml-auto mr-auto">
+                <div class="content-box padding-x3 bg-default shadow" style="background-image: url(./images/gallery/envelope-bg.png); background-size: contain; background-position: center top; background-repeat: no-repeat;">
+                    <h3 class="mb-20">Подписаться</h3>
+                    <form action="scripts/request.php" class="contact_form form-vertical mb-30" id="subscribe-block-form" novalidate="novalidate">
+                        <div class="form-group text-field-group"><input type="text" class="spr-text-field form-control spr-form-required" placeholder="Имя*" name="NAME" size="10"></div>
+                        <div class="form-group email-field-group"><input type="email" class="spr-email-field form-control spr-form-required" placeholder="Email*" name="EMAIL" size="10"></div>
+                        <button type="submit" data-loading-text="•••" data-complete-text="Completed!" data-reset-text="Try again later..." class="btn btn-primary mt-30"><strong>Подписаться</strong></button>
+                    </form>
+                    <p class="small mb-0">Ничего не пропустите! Подпишитесь, чтобы получать ежедневные предложения.</p>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="bg-wrap">
+        <div class="bg"></div>
     </div>
 </section>
 
