@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main/app.css"/>
-    <link rel="stylesheet" href="main/custom.css"/>
-    <link rel="stylesheet" href="main/index.css"/>
-    <link rel="stylesheet" href="main/fx.css"/>
-    <link rel="stylesheet" href="main/bootstrap.weber.css"/>
+    <link rel="stylesheet" href="main/app.css"/>
+</head>
 </head>
 
 <body>
@@ -53,41 +51,6 @@
         </div>
     </div>
 </div>
-
-
-<section class="reservation_section" style="padding:50px 0px" id="reserve">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-5"></div>
-			<div class="col-md-7">
-				<form method="POST" action="reserve.php" id="reservation_form" class="car-reservation-form"><div class="text_header"><span>
-							Найдите свой автомобиль
-						</span></div> <div><div class="form-group"><label for="pickup_location">Место получения</label> <input type="text" name="pickup_location" placeholder="Кольцовская, 54" class="form-control"> <!----></div> <div class="form-group"><label for="return_location">Место возврата</label> <input type="text" name="return_location" placeholder="Кольцовская, 54" class="form-control"> <!----></div> <div class="form-group"><label for="pickup_date">Дата аренды</label> <input type="date" min="2024-10-02" name="pickup_date" class="form-control"> <!----></div> <div class="form-group"><label for="return_date">Дата возврата</label> <input type="date" min="2024-10-03" name="return_date" class="form-control"> <!----></div> <button type="submit" name="reserve_car" class="btn sbmt-bttn">Бронируйте мгновенно</button></div></form>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section id="subscribe-block" class="pt-50 pb-50 pt-md-100 pb-md-100 text-center light spr-edit-el spr-oc-show spr-wout">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 ml-auto mr-auto">
-                <div class="content-box padding-x3 bg-default shadow" style="background-image: url('.../images/envelope-bg.png'); background-size: contain; background-position: center top; background-repeat: no-repeat;">
-                    <h3 class="mb-20">Подписаться</h3>
-                    <form action="scripts/request.php" class="contact_form form-vertical mb-30" id="subscribe-block-form" novalidate="novalidate">
-                        <div class="form-group text-field-group"><input type="text" class="spr-text-field form-control spr-form-required" placeholder="Имя*" name="NAME" size="10"></div>
-                        <div class="form-group email-field-group"><input type="email" class="spr-email-field form-control spr-form-required" placeholder="Email*" name="EMAIL" size="10"></div>
-                        <button type="submit" data-loading-text="•••" data-complete-text="Completed!" data-reset-text="Try again later..." class="btn btn-primary mt-30"><strong>Подписаться</strong></button>
-                    </form>
-                    <p class="small mb-0">Путешествие с хорошими друзьями подарит вам незабываемые впечатления..</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="bg-wrap">
-        <div class="bg"></div>
-    </div>
-</section>
 
 
 <section class="widget_section">
