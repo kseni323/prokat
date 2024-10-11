@@ -65,7 +65,6 @@
 	</div>
 </section>
 
-
 <section id="subscribe-block" class="pt-50 pb-50 pt-md-100 pb-md-100 text-center light spr-edit-el spr-oc-show spr-wout">
     <div class="container">
         <div class="row">
@@ -77,7 +76,7 @@
                         <div class="form-group email-field-group"><input type="email" class="spr-email-field form-control spr-form-required" placeholder="Email*" name="EMAIL" size="10"></div>
                         <button type="submit" data-loading-text="•••" data-complete-text="Completed!" data-reset-text="Try again later..." class="btn btn-primary mt-30"><strong>Подписаться</strong></button>
                     </form>
-                    <p class="small mb-0">Ничего не пропустите! Подпишитесь, чтобы получать ежедневные предложения.</p>
+                    <p class="small mb-0">Путешествие с хорошими друзьями подарит вам незабываемые впечатления..</p>
                 </div>
             </div>
         </div>
