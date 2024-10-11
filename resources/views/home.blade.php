@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main/app.css"/>
+    <link rel="stylesheet" href="main/custom.css"/>
+    <link rel="stylesheet" href="main/index.css"/>
+    <link rel="stylesheet" href="main/fx.css"/>
+    <link rel="stylesheet" href="main/bootstrap.weber.css"/>
 </head>
 </head>
 
@@ -69,7 +73,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 ml-auto mr-auto">
-                <div class="content-box padding-x3 bg-default shadow" style="background-image: url(./images/gallery/envelope-bg.png); background-size: contain; background-position: center top; background-repeat: no-repeat;">
+                <div class="content-box padding-x3 bg-default shadow" style="background-image: url(.../images/envelope-bg.png); background-size: contain; background-position: center top; background-repeat: no-repeat;">
                     <h3 class="mb-20">Подписаться</h3>
                     <form action="scripts/request.php" class="contact_form form-vertical mb-30" id="subscribe-block-form" novalidate="novalidate">
                         <div class="form-group text-field-group"><input type="text" class="spr-text-field form-control spr-form-required" placeholder="Имя*" name="NAME" size="10"></div>
