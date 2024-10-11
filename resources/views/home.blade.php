@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="main/fx.css"/>
     <link rel="stylesheet" href="main/bootstrap.weber.css"/>
 </head>
-</head>
 
 <body>
     <div class="hero-section">
