@@ -59,20 +59,17 @@
     <h3 class="text-center">НАШИ АВТОМОБИЛИ</h3>
     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="images/car1.jpg" class="d-block w-100" alt="Hyundai Solaris">
+            <div class="carousel-item active car-item-1">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Hyundai Solaris</h8>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="images/car2.jpg" class="d-block w-100" alt="Car 2">
+            <div class="carousel-item car-item-2">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Car 2</h8>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="images/car3.jpg" class="d-block w-100" alt="Car 3">
+            <div class="carousel-item car-item-3">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Car 3</h8>
                 </div>
