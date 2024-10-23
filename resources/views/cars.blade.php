@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img src="images/solaris.jpg" class="card-img-top" alt="Hyundai Solaris">
+                    <img src="images/car1.jpg" class="card-img-top" alt="Hyundai Solaris">
                     <div class="card-body">
                         <h5 class="card-title">Hyundai Solaris</h5>
                         <p class="card-text">Эконом. Автоматическая трансмиссия, кондиционер</p>
@@ -71,7 +71,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <img src="images/polo.jpg" class="card-img-top" alt="VW Polo 2022 liftback">
+                    <img src="images/car2.jpg" class="card-img-top" alt="VW Polo 2022 liftback">
                     <div class="card-body">
                         <h5 class="card-title">VW Polo 2022 liftback</h5>
                         <p class="card-text">Эконом. Автоматическая трансмиссия, кондиционер</p>
@@ -82,7 +82,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <img src="images/creta.jpg" class="card-img-top" alt="Hyundai Creta">
+                    <img src="images/car3.jpg" class="card-img-top" alt="Hyundai Creta">
                     <div class="card-body">
                         <h5 class="card-title">Hyundai Creta</h5>
                         <p class="card-text">Внедорожник. Автоматическая трансмиссия, кондиционер</p>
