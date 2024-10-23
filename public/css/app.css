@@ -411,36 +411,3 @@ div {
     font-size: 14px;
     color: #ddd;
 }
-
-.carousel-item {
-    height: 400px; /* Задай необходимую высоту карусели */
-    background-size: cover;
-    background-position: center;
-}
-
-.car-item-1 {
-    background-image: url('images/car1.jpg'); /* Замените на реальный путь */
-}
-
-.car-item-2 {
-    background-image: url('images/car2.jpg');
-}
-
-.car-item-3 {
-    background-image: url('images/car3.jpg');
-}
-
-.carousel-caption h8 {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.btn-success {
-    background-color: #04DBC0;
-    border: none;
-}
-
-.btn-success:hover {
-    background-color: #028c7d;
-}
