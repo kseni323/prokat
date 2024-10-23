@@ -43,6 +43,7 @@
 .text-primary {
     font-size: 22px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 /* Filter Inputs */

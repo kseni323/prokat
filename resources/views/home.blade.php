@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/car3.jpg" class="d-block w-100" alt="car 3">
+                <img src="images/car3.jpg" class="d-block w-100" alt="c ar 3">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Porshe</h8>
                 </div>
