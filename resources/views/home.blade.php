@@ -52,11 +52,6 @@
     </div>
 </div>
 
-
-<h5>CSS-only Carousel</h5>
-
-<p>This carousel is created with HTML and CSS only.</p>
-
 <section class="reservation_section" style="padding:50px 0px" id="reserve">
 	<div class="container">
 		<div class="row">
