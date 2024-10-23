@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main/app.css"/>
     <link rel="stylesheet" href="main/app.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 </head>
 
@@ -61,19 +63,19 @@
     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/car1.jpg" class="d-block w-100" alt="Hyundai Solaris">
+                <img src="../images/car1.jpg" class="d-block w-100" alt="Hyundai Solaris">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Hyundai Solaris</h8>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/car2.jpg" class="d-block w-100" alt="Car 2">
+                <img src="../images/car2.jpg" class="d-block w-100" alt="Car 2">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Car 2</h8>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/car3.jpg" class="d-block w-100" alt="Car 3">
+                <img src="../images/car3.jpg" class="d-block w-100" alt="Car 3">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Car 3</h8>
                 </div>
