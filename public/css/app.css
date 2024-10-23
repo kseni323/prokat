@@ -411,3 +411,18 @@ div {
     font-size: 14px;
     color: #ddd;
 }
+
+.carousel-caption h8 {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-success {
+    background-color: #04DBC0;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #028c7d;
+}

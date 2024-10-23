@@ -54,6 +54,48 @@
 </div>
 </section>
 
+
+
+<div class="container my-4">
+    <h3 class="text-center">НАШИ АВТОМОБИЛИ</h3>
+    <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/car1.jpg" class="d-block w-100" alt="Hyundai Solaris">
+                <div class="carousel-caption d-none d-md-block">
+                    <h8>Hyundai Solaris</h8>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/car2.jpg" class="d-block w-100" alt="Car 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h8>Car 2</h8>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/car3.jpg" class="d-block w-100" alt="Car 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <h8>Car 3</h8>
+                </div>
+            </div>
+        </div>
+        <!-- Стрелки переключения -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Кнопка для перехода на другую страницу -->
+    <div class="text-center mt-4">
+        <a href="all-cars.html" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
+    </div>
+</div>
+
 <section class="reservation_section" style="padding:50px 0px" id="reserve">
 	<div class="container">
 		<div class="row">

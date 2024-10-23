@@ -7,12 +7,22 @@
     <link rel="icon" href="{{asset ('images/ава.jpg')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <style>
+        .nav-link:hover {
+            color: #04DBC0 !important;
+        }
+        
+         .drive-text:hover {
+              color: #04DBC0 !important; 
+              }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                drive<span style="color:#04DBC0">Go</span>&nbsp;
+        <span class="drive-text">drive</span><span style="color:#04DBC0">Go</span>&nbsp;
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#yahyaNavbar" aria-controls="yahyaNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
