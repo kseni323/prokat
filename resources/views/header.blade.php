@@ -52,6 +52,5 @@
 @yield('main_content')
 
 @yield('avto_content')
-
 </body>
 </html>

@@ -90,7 +90,7 @@
 
     <!-- Кнопка для перехода на другую страницу -->
     <div class="text-center mt-4">
-        <a href="/cars" class="btn btn-primary">ПОСМОТРЕТЬ ВСЕ</a>
+        <a href="/cars" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
     </div>
 </div>
 
