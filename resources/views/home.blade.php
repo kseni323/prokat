@@ -22,6 +22,7 @@
         </div>
     </div>
 
+<section class="services_section" style="padding:50px 0px" id="services">    
     <div class="container marketing"> 
     <div class="section-title"> Какие услуги мы предлагаем нашим клиентам</div>
     <div class="row text-center">
@@ -51,6 +52,7 @@
         </div>
     </div>
 </div>
+</section>
 
 <section class="reservation_section" style="padding:50px 0px" id="reserve">
 	<div class="container">
