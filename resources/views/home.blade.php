@@ -54,7 +54,7 @@
 </div>
 </section>
 
-
+<section class="cars_section" id="cars"></section>
 <div class="container my-4">
     <h3 class="text-center">НАШИ АВТОМОБИЛИ</h3>
     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -75,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <!-- Стрелки переключения -->
+   
         <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -91,6 +91,7 @@
         <a href="/cars" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
     </div>
 </div>
+</section>
 
 <section class="reservation_section" style="padding:50px 0px" id="reserve">
 	<div class="container">
