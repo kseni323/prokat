@@ -54,6 +54,7 @@
 </div>
 </section>
 
+<section class="cars_section" id="cars">
 <div class="container my-4">
     <h3 class="text-center">НАШИ АВТОМОБИЛИ</h3>
     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
