@@ -118,10 +118,10 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="copyright">
-							driveGo © 
+							driveGo© 
 							<script type="text/javascript"> 
 								document.write(new Date().getFullYear())
-							</script>2024
+							</script>
 							Все правы защищены
 						</div>
 					</div>
