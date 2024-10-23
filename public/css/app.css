@@ -403,15 +403,11 @@ div {
     unicode-bidi: isolate;
 }
 
-
 .footer_section {
     display: block;
     background-color: #222227;
     border-top: 1px solid #333;
     padding: 15px 0;
-}
-
-.footer_section .copyright {
     font-size: 14px;
     color: #ddd;
 }
