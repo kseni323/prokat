@@ -22,7 +22,7 @@
         </div>
     </div>
 
-<section class="services_section" style="padding:50px 0px" id="services">    
+<section class="services_section" id="services">    
     <div class="container marketing"> 
     <div class="section-title"> Какие услуги мы предлагаем нашим клиентам</div>
     <div class="row text-center">
@@ -68,7 +68,7 @@
 </section>
 
 
-<section class="widget_section">
+<section class="widget_section" id="contact-us">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6">
