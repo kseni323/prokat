@@ -419,15 +419,15 @@ div {
 }
 
 .car-item-1 {
-    background-image: url('../images/car1.jpg'); /* Замените на реальный путь */
+    background-image: url('images/car1.jpg'); /* Замените на реальный путь */
 }
 
 .car-item-2 {
-    background-image: url('../images/car2.jpg');
+    background-image: url('images/car2.jpg');
 }
 
 .car-item-3 {
-    background-image: url('../images/car3.jpg');
+    background-image: url('images/car3.jpg');
 }
 
 .carousel-caption h8 {
