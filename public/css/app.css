@@ -413,13 +413,13 @@ div {
 }
 
 .carousel-item {
-    height: 400px; /* Задай необходимую высоту карусели */
+    height: 400px; 
     background-size: cover;
     background-position: center;
 }
 
 .car-item-1 {
-    background-image: url('..images/car1.jpg'); /* Замените на реальный путь */
+    background-image: url('..images/car1.jpg'); 
 }
 
 .car-item-2 {
@@ -444,3 +444,6 @@ div {
 .btn-success:hover {
     background-color: #028c7d;
 }
+
+
+
