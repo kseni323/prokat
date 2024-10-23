@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img src="images/car5.jpg" class="card-img-top" alt="Hyundai Solaris">
+                    <img src="images/car4.jpg" class="card-img-top" alt="Hyundai Solaris">
                     <div class="card-body">
                         <h5 class="card-title">MINI Cooper</h5>
                         <p class="card-text">Эконом. Автоматическая трансмиссия, кондиционер</p>
