@@ -409,8 +409,12 @@ div {
     border-top: 1px solid #333;
     padding: 15px 0;
     font-size: 14px;
+}
+
+.footer_section .copyright {
     color: #ddd;
 }
+
 
 .carousel-item {
     height: 400px; 
@@ -445,6 +449,3 @@ div {
     background-color: #028c7d;
 }
 
-.footer_section .copyright {
-    color: #ddd;
-}
