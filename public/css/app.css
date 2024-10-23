@@ -409,29 +409,7 @@ div {
     border-top: 1px solid #333;
     padding: 15px 0;
     font-size: 14px;
-}
-
-.footer_section .copyright {
     color: #ddd;
-}
-
-
-.carousel-item {
-    height: 400px; 
-    background-size: cover;
-    background-position: center;
-}
-
-.car-item-1 {
-    background-image: url('..images/car1.jpg'); 
-}
-
-.car-item-2 {
-    background-image: url('../images/car2.jpg');
-}
-
-.car-item-3 {
-    background-image: url('../images/car3.jpg');
 }
 
 .carousel-caption h8 {
@@ -448,4 +426,3 @@ div {
 .btn-success:hover {
     background-color: #028c7d;
 }
-

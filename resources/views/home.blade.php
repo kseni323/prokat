@@ -54,28 +54,30 @@
 </div>
 </section>
 
-<section class="cars_section" id="cars"></section>
 <div class="container my-4">
     <h3 class="text-center">НАШИ АВТОМОБИЛИ</h3>
     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active car-item-1">
+            <div class="carousel-item active">
+                <img src="images/car1.jpg" class="d-block w-100" alt="Hyundai Solaris">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Hyundai Solaris</h8>
                 </div>
             </div>
-            <div class="carousel-item car-item-2">
+            <div class="carousel-item">
+                <img src="images/car2.jpg" class="d-block w-100" alt="Car 2">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Car 2</h8>
                 </div>
             </div>
-            <div class="carousel-item car-item-3">
+            <div class="carousel-item">
+                <img src="images/car3.jpg" class="d-block w-100" alt="Car 3">
                 <div class="carousel-caption d-none d-md-block">
                     <h8>Car 3</h8>
                 </div>
             </div>
         </div>
-   
+        <!-- Стрелки переключения -->
         <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -114,13 +116,6 @@
                 <div class="footer_widget">
                     <a class="navbar-brand" href=""><ya-tr-span data-index="123-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="drive" data-translation="drive" data-ch="0" data-type="trSpan" style="visibility: inherit !important;">drive</ya-tr-span><span style="color:#04DBC0"><ya-tr-span data-index="123-1" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Go" data-translation="Вперед" data-ch="0" data-type="trSpan" style="visibility: inherit !important;">Go</ya-tr-span></span><ya-tr-span data-index="123-2" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="" data-translation="" data-ch="0" data-type="trSpan" style="visibility: inherit !important;"> </ya-tr-span></a>
                     <p><ya-tr-span data-index="113-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Путешествие с хорошими друзьями подарит вам незабываемые впечатления. " data-translation="Путешествие с хорошими друзьями подарит вам незабываемые впечатления. " data-ch="0" data-type="trSpan" style="visibility: inherit !important;">Путешествие с хорошими друзьями подарит вам незабываемые впечатления. </ya-tr-span></p>
-                    <ul class="widget_social">
-                        <li><a href="#" data-toggle="tooltip" title="Facebook"><i class="fab fa-facebook-f fa-2x"></i></a></li>
-                        <li><a href="#" data-toggle="tooltip" title="Twitter"><i class="fab fa-twitter fa-2x"></i></a></li>
-                        <li><a href="#" data-toggle="tooltip" title="Instagram"><i class="fab fa-instagram fa-2x"></i></a></li>
-                        <li><a href="#" data-toggle="tooltip" title="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                        <li><a href="#" data-toggle="tooltip" title="Google+"><i class="fab fa-google-plus-g fa-2x"></i></a></li>
-                    </ul>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
