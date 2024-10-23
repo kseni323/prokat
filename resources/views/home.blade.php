@@ -82,7 +82,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="footer_widget">
                     <h3><ya-tr-span data-index="102-0" data-translated="true" data-source-lang="en" data-target-lang="ru" data-value="Контактная информация" data-translation="Контактная информация" data-ch="0" data-type="trSpan" style="visibility: inherit !important;" data-selected="false">Контактная информация</ya-tr-span></h3>
                     <ul class="contact_info">
