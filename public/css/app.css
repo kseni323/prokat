@@ -411,12 +411,3 @@ div {
     color: #ddd;
 }
 
-.carousel-item-active{
-    background-image: url('../images/car1.jpg'); 
-    background-position: 50% 50%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 500px;
-    padding: 150px 0px;
-}
- 
