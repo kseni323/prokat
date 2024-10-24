@@ -1,41 +1,58 @@
 .cars_section {
-    padding: 0;
-    margin: 0;
     margin-bottom: 50px; /* Отступ снизу от другой секции */
 }
 
+/* Контейнер карусели */
 .carousel-inner {
     position: relative;
-    height: 500px; /* Устанавливаем высоту для карусели */
-    background-color: rgba(0, 0, 0, 0.6); /* Затемнение картинки */
+    width: 100%;
+    height: 500px; /* Высота карусели */
     display: flex;
-    align-items: center; /* Центрируем изображение по вертикали */
+    align-items: center;
 }
 
-.car-image {
-    object-fit: cover; /* Масштабируем изображение, чтобы оно отображалось полностью */
-    height: 100%;
+.carousel-item {
+    position: relative;
     width: 100%;
 }
 
+/* Изображения автомобилей */
+.car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Масштабируем изображение, чтобы оно заполняло контейнер */
+}
+
+/* Затемнение изображения */
+.carousel-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Затемняем изображение */
+    z-index: 1;
+}
+
+/* Контейнер для текста и кнопки */
 .carousel-caption {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%); /* Центрируем контент по вертикали */
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Размещаем элементы по разным сторонам */
-    padding: 0 50px; /* Отступы по краям */
+    bottom: 20px; /* Смещение к низу */
+    right: 20px; /* Смещение к правому углу */
+    z-index: 2; /* Контент поверх затемненного изображения */
+    text-align: right; /* Выравнивание текста по правому краю */
 }
 
+/* Текст заголовка */
 .carousel-caption h8 {
-    font-size: 2em;
+    font-size: 1.8em;
     color: #fff;
-    margin: 0;
+    margin-bottom: 10px;
 }
 
+/* Кнопка "Посмотреть все" */
 .carousel-caption .btn {
-    display: inline-block;
     padding: 10px 20px;
     background: #04DBC0;
     color: white;
@@ -47,23 +64,4 @@
 
 .carousel-caption .btn:hover {
     background-color: #357fce;
-}
-
-.carousel-item {
-    position: relative;
-}
-
-.carousel-item::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Затемнение изображения */
-    z-index: 1;
-}
-
-.carousel-caption {
-    z-index: 2; /* Контент поверх затемнения */
 }
