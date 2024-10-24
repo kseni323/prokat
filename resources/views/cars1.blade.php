@@ -2,13 +2,22 @@
 
 @section('cars_content')
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автомобиль</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
 <body>
     <div class="container my-5">
         <div class="row">
             <!-- Car Image and Details -->
             <div class="col-md-8">
-                <h2 class="car-title">Аренда Hyundai Solaris 2019 AC</h2>
-                <img src="images/hyundai-solaris.jpg" class="img-fluid car-detail-image" alt="Hyundai Solaris">
+                <h2 class="car-title">Аренда Mercedes Benz E-class</h2>
+                <img src="images/car4.jpg" class="img-fluid car-detail-image" alt="Hyundai Solaris">
                 
                 <div class="car-features mt-4">
                     <h5><strong>Характеристики автомобиля</strong></h5>
