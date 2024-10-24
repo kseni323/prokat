@@ -8,6 +8,7 @@
     <title>Аренда автомобилей</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/app3.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -55,30 +56,30 @@
 </section>
 
 <section class="cars_section" id="cars">
-<div class="container my-4">
-    <h3 class="text-center">НАШИ АВТОМОБИЛИ</h3>
     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/car1.jpg" class="d-block w-100" alt="car 1">
-                <div class="carousel-caption d-none d-md-block">
+                <img src="images/car1.jpg" class="d-block w-100 car-image" alt="car 1">
+                <div class="carousel-caption text-left">
                     <h8>MINI</h8>
+                    <a href="/cars" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/car2.jpg" class="d-block w-100" alt="car 2">
-                <div class="carousel-caption d-none d-md-block">
+                <img src="images/car2.jpg" class="d-block w-100 car-image" alt="car 2">
+                <div class="carousel-caption text-left">
                     <h8>Mercedes Benz</h8>
+                    <a href="/cars" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/car3.jpg" class="d-block w-100" alt="c ar 3">
-                <div class="carousel-caption d-none d-md-block">
+                <img src="images/car3.jpg" class="d-block w-100 car-image" alt="car 3">
+                <div class="carousel-caption text-left">
                     <h8>Porshe</h8>
+                    <a href="/cars" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
                 </div>
             </div>
         </div>
-        <!-- Стрелки переключения -->
         <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -88,13 +89,8 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
-    <!-- Кнопка для перехода на другую страницу -->
-    <div class="text-center mt-4">
-        <a href="/cars" class="btn btn-success">ПОСМОТРЕТЬ ВСЕ</a>
-    </div>
-</div>
 </section>
+       
 
 <section class="reservation_section" style="padding:50px 0px" id="reserve">
 	<div class="container">

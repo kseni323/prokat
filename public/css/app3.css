@@ -1,0 +1,51 @@
+.cars_section {
+    padding: 0;
+    margin: 0;
+}
+
+.carousel-inner {
+    height: 500px; /* Высота секции, как в hero-section */
+    background-color: rgba(0, 0, 0, 0.6); /* Затемнение картинки */
+    position: relative;
+}
+
+.car-image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    z-index: 2;
+    color: #fff;
+}
+
+.carousel-caption h8 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.carousel-caption p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.carousel-caption .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #04DBC0;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-caption .btn:hover {
+    background-color: #357fce;
+}
