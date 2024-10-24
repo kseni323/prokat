@@ -11,8 +11,8 @@ Route::get('/cars', function () {
     return view('cars');
 });
 
-Route::get('/car1', function () {
-    return view('car1');
+Route::get('/cars1', function () {
+    return view('cars1');
 });
 
 require __DIR__.'/auth.php';
