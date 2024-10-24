@@ -1,58 +1,42 @@
 .cars_section {
-    margin-bottom: 50px; /* Отступ снизу от другой секции */
+    padding: 0;
+    margin: 0;
 }
 
-/* Контейнер карусели */
 .carousel-inner {
+    height: 500px; /* Высота секции, как в hero-section */
+    background-color: rgba(0, 0, 0, 0.6); /* Затемнение картинки */
     position: relative;
-    width: 100%;
-    height: 500px; /* Высота карусели */
-    display: flex;
-    align-items: center;
 }
 
-.carousel-item {
-    position: relative;
-    width: 100%;
-}
-
-/* Изображения автомобилей */
 .car-image {
-    width: 100%;
+    object-fit: cover;
     height: 100%;
-    object-fit: cover; /* Масштабируем изображение, чтобы оно заполняло контейнер */
+    width: 100%;
 }
 
-/* Затемнение изображения */
-.carousel-item::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Затемняем изображение */
-    z-index: 1;
-}
-
-/* Контейнер для текста и кнопки */
 .carousel-caption {
     position: absolute;
-    bottom: 20px; /* Смещение к низу */
-    right: 20px; /* Смещение к правому углу */
-    z-index: 2; /* Контент поверх затемненного изображения */
-    text-align: right; /* Выравнивание текста по правому краю */
-}
-
-/* Текст заголовка */
-.carousel-caption h8 {
-    font-size: 1.8em;
+    top: 30%;
+    left: 10%;
+    z-index: 2;
     color: #fff;
-    margin-bottom: 10px;
 }
 
-/* Кнопка "Посмотреть все" */
+.carousel-caption h5 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.carousel-caption p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
 .carousel-caption .btn {
+    display: inline-block;
     padding: 10px 20px;
     background: #04DBC0;
     color: white;
