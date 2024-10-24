@@ -14,7 +14,7 @@
 <body>
     <!-- Фильтры для поиска автомобилей -->
     <section class="container my-4">
-        <h2 class="text-center">АВТОМОБИЛИ</h2>
+        <h12 class="text-center">АВТОМОБИЛИ</h12>
         <form class="row g-3">
             <div class="col-md-4">
                 <label for="pickupLocation" class="form-label">Место получения</label>
