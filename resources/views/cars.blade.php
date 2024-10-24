@@ -64,7 +64,7 @@
                         <h5 class="card-title">MINI Cooper</h5>
                         <p class="card-text">Эконом. Автоматическая трансмиссия, кондиционер</p>
                         <p class="card-text"><strong>2933 ₽</strong></p>
-                        <a href="#" class="btn btn-outline-primary">Подробнее</a>
+                        <a href="/car1" class="btn btn-outline-primary">Подробнее</a>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                         <h5 class="card-title">Mercedes Benz E-class</h5>
                         <p class="card-text">Эконом. Автоматическая трансмиссия, кондиционер</p>
                         <p class="card-text"><strong>3048 ₽</strong></p>
-                        <a href="#" class="btn btn-outline-primary">Подробнее</a>
+                        <a href="/cars1" class="btn btn-outline-primary">Подробнее</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                         <h5 class="card-title">Porsche Cayenne Hybrid</h5>
                         <p class="card-text">Внедорожник. Автоматическая трансмиссия, кондиционер</p>
                         <p class="card-text"><strong>2950 ₽</strong></p>
-                        <a href="#" class="btn btn-outline-primary">Подробнее</a>
+                        <a href="/cars1" class="btn btn-outline-primary">Подробнее</a>
                     </div>
                 </div>
             </div>

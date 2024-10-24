@@ -55,5 +55,7 @@
 @yield('main_content')
 
 @yield('avto_content')
+
+@yield('cars_content')
 </body>
 </html>
